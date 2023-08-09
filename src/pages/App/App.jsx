@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { getUser } from '../../utilities/users-service';
-import './App.css';
+
+// Utility Imports
+import { getUser } from '../../utilities/services/users-service';
+
+// Page Imports
 import AuthPage from '../AuthPage/AuthPage';
+import NavBar from '../../components/NavBar/NavBar';
+import Home from '../Home/Home';
+import Trip from '../Trip/Trip';
 import NewOrderPage from '../NewOrderPage/NewOrderPage';
 import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
-import NavBar from '../../components/NavBar/NavBar';
+
+// Style Imports
+import './App.css';
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -17,8 +25,11 @@ export default function App() {
             <NavBar user={user} setUser={setUser} />
             <Routes>
               {/* Route components in here */}
-              <Route path="/orders/new" element={<NewOrderPage />} />
-              <Route path="/orders" element={<OrderHistoryPage />} />
+              <Route path="/" element={<Home user={user} />} />
+              {/* <Route path="/orders/new" element={<NewOrderPage />} />
+              <Route path="/orders" element={<OrderHistoryPage />} /> */}
+              <Route path="/trips" element={<Trip user={user} />} />
+              <Route path="/*" element={<Home user={user} />} />
             </Routes>
           </>
           :

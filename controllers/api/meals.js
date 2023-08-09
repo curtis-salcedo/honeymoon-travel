@@ -1,4 +1,4 @@
-const meal = require('../../models/meal');
+const Meal = require('../../models/meal');
 
 module.exports = {
   create,
@@ -9,7 +9,7 @@ module.exports = {
 async function create(req, res) {
   try {
     // Create and save the meal entry in the database
-    const meal = await meal.create(req.body);
+    const meal = await Meal.create(req.body);
     res.json(meal);
   } catch (err) {
     res.status(400).json(err);
@@ -19,12 +19,12 @@ async function create(req, res) {
 async function update(req, res) {
   try {
     // Update the meal entry in the database
-    const updatedmeal = await meal.findByIdAndUpdate(
+    const updatedMeal = await Meal.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
-    res.json(updatedmeal);
+    res.json(updatedMeal);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -33,8 +33,8 @@ async function update(req, res) {
 async function remove(req, res) {
   try {
     // Remove the meal entry from the database
-    const removedmeal = await meal.findByIdAndRemove(req.params.id);
-    res.json(removedmeal);
+    const removedMeal = await Meal.findByIdAndRemove(req.params.id);
+    res.json(removedMeal);
   } catch (err) {
     res.status(400).json(err);
   }

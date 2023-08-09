@@ -1,4 +1,4 @@
-import sendRequest from "./send-request";
+import sendRequest from "../send-request";
 const BASE_URL = '/api/travels';
 
 export async function createTravel(TravelData) {

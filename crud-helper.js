@@ -11,48 +11,48 @@ const Meal = require('./models/meal');
 const Travel = require('./models/travel');
 const Trip = require('./models/trip');
 
-// Utility functions for API calls
-const {
-  signUp,
-  login,
-  checkToken
-} = require('./utilities/users-api');
+// // Utility functions for API calls
+// const {
+//   signUp,
+//   login,
+//   checkToken
+// } = require('./utilities/users-api');
 
-const {
-  createAccommodation,
-  updateAccommodation,
-  deleteAccommodation
-} = require('./utilities/accommodations-api');
+// const {
+//   createAccommodation,
+//   updateAccommodation,
+//   deleteAccommodation
+// } = require('./utilities/accommodations-api');
 
-const {
-  createActivity,
-  updateActivity,
-  deleteActivity
-} = require('./utilities/activities-api');
+// const {
+//   createActivity,
+//   updateActivity,
+//   deleteActivity
+// } = require('./utilities/activities-api');
 
-const {
-  createAddress,
-  updateAddress,
-  deleteAddress
-} = require('./utilities/addresses-api');
+// const {
+//   createAddress,
+//   updateAddress,
+//   deleteAddress
+// } = require('./utilities/addresses-api');
 
-const {
-  createMeal,
-  updateMeal,
-  deleteMeal
-} = require('./utilities/meals-api');
+// const {
+//   createMeal,
+//   updateMeal,
+//   deleteMeal
+// } = require('./utilities/meals-api');
 
-const {
-  createTravel,
-  updateTravel,
-  deleteTravel
-} = require('./utilities/travels-api');
+// const {
+//   createTravel,
+//   updateTravel,
+//   deleteTravel
+// } = require('./utilities/travels-api');
 
-const {
-  createTrip,
-  updateTrip,
-  deleteTrip
-} = require('./utilities/trips-api');
+// const {
+//   createTrip,
+//   updateTrip,
+//   deleteTrip
+// } = require('./utilities/trips-api');
 
 // Local variables will come in handy for holding retrieved documents
 let user, accommodation, activity, address, meal, travel, trip;

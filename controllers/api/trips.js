@@ -4,12 +4,46 @@ module.exports = {
   create,
   update,
   remove,
+  index,
+  show,
 };
 
+async function show(req, res) {
+  try {
+    // Get one trip from the database
+    const trip = await Trip.findById(req.params.id);
+    res.json(trip);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function index(req, res) {
+  try {
+    // Get all trips from the database
+    const trips = await Trip.find({});
+    console.log(trips)
+    res.json(trips);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
 async function create(req, res) {
+  console.log('req.body', req.body)
   try {
     // Create and save the trip in the database
-    const trip = await Trip.create(req.body);
+    const trip = await Trip.create({
+      'user': req.body.user,
+      'name': req.body.name,
+      'startDate': req.body.startDate,
+      'endDate': req.body.endDate,
+      'tripDays': req.body.tripDays,
+      'travelDays': req.body.travelDays,
+      'nonTravelDays': req.body.nonTravelDays,
+    });
+    trip.save();
+    console.log(trip)
     res.json(trip);
   } catch (err) {
     res.status(400).json(err);

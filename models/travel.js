@@ -3,6 +3,7 @@ const Address = require('./address'); // Assuming you have an Address model
 
 const travelSchema = new mongoose.Schema({
   tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
+  date: { type: Date, required: true },
   type: { type: String, enum: ['Flight', 'Train', 'Cab', 'Bus', 'Ferry'], required: true },
   startLocation: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
   endLocation: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },

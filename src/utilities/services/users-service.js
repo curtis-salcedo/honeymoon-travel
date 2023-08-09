@@ -3,7 +3,7 @@
 // Service modules often depend upon API modules
 // for making AJAX requests to the server.
 
-import * as usersAPI from './users-api';
+import * as usersAPI from '../api/users-api';
 
 export async function signUp(userData) {
   const token = await usersAPI.signUp(userData);
@@ -26,10 +26,9 @@ export function logOut() {
 export function getToken() {
   // getItem will return null if the key does not exists
   const token = localStorage.getItem('token');
-
   if (!token) return null;
   const payload = JSON.parse(atob(token.split('.')[1]));
-  console.log(payload)
+  // console.log(payload)
   // A JWT's exp is expressed in seconds, not miliseconds
   // if (payload.exp * 1000 > Date.now()) {
   //   // Token has expired

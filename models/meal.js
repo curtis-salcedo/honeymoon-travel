@@ -3,16 +3,17 @@ const Address = require('./address'); // Assuming you have an Address model
 
 const mealSchema = new mongoose.Schema({
   tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
-  category: { type: String, required: true },
+  date: { type: Date, required: true },
+  type: { enum: ['Breakfast', 'Lunch', 'Dinner','Libations', 'Other'] },
   isReservation: { type: Boolean, default: false, required: true },
   businessName: { type: String, required: true },
-  location: { type: mongoose.Schema.Types.ObjectId, ref: 'Address'},
+  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address'},
   phone: { type: String },
   email: { type: String },
   instagram: { type: String },
   googleMapsLink: { type: String }
 });
 
-const meal = mongoose.model('meal', mealSchema);
+const meal = mongoose.model('Meal', mealSchema);
 
 module.exports = meal;
