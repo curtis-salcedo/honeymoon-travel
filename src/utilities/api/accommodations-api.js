@@ -2,6 +2,7 @@ import sendRequest from "../send-request";
 const BASE_URL = '/api/accommodations';
 
 export async function createAccommodation(accommodationData) {
+  console.log('api accommodation data', accommodationData)
   return sendRequest(BASE_URL, 'POST', accommodationData);
 }
 

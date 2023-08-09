@@ -13,27 +13,27 @@ import { Button } from '@mui/material';
 export default function Meal({ id, day, tripDays }) {
   const [show, setShow] = useState(false)
   const [activeMeals, setActiveMeals] = useState([])
+  
+    useEffect(() => {
+      // Get the meals for each day
+      fetchMeals();
+    }, [])
 
+  // Show the meal form
   const handleShow = () => {
     setShow(!show)
   }
 
-  // Render the meals with useEffect to get the meals for the day
-  useEffect(() => {
-    // Get the meals for the day
-    const fetchMeals = async () => {
-      try {
-        const meals = await mealsAPI.getAllMeals(id);
-        setActiveMeals(meals)
-
-      } catch (err) {
-        console.log('Error at fetching meals', err)
-      }
+  const fetchMeals = async () => {
+    try {
+      const meals = await mealsAPI.getAllMeals(id);
+      setActiveMeals(meals)
+    } catch (err) {
+      console.log('Error at fetching meals', err)
     }
-    fetchMeals();
-  }, [])
+  }
 
-  console.log(activeMeals, tripDays)
+  console.log('activeMeals', activeMeals)
 
   return (
     <div className='MealContainer'>
@@ -46,8 +46,8 @@ export default function Meal({ id, day, tripDays }) {
           // Render nothing if date doesn't match
           return null; 
       })}
-      <Button variant="contained" onClick={handleShow}>Show Meal Component</Button>
-      {show ? <MealForm id={id} day={day} setShow={setShow} /> : null}
+      <Button variant="contained" onClick={handleShow}>Show Meal Form</Button>
+      { show ? <MealForm id={id} day={day} setShow={setShow} /> : null }
   </div>
   );
 }

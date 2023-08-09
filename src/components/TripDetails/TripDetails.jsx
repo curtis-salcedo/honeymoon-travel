@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 // Component Imports
+import Accommodation from '../Accommodation/Accommodation';
+import Activity from '../Activity/Activity';
 import Meal from '../Meal/Meal';
+import Travel from '../Travel/Travel';
+
 
 // Style Imports
 import { 
@@ -34,11 +38,17 @@ export default function TripDetails({ activeTrip }) {
 
             <h1>{activeTrip.name}</h1>
 
+            <h2>Meals</h2>
             <Meal id={activeTrip._id} day={day} tripDays={tripDays} />
 
-            <h2>Accomodations Component</h2>
+            <h2>Accomodations</h2>
+            <Accommodation id={activeTrip._id} day={day} tripDays={tripDays} />
+            
+            <h2>Activities</h2>
+            <Activity id={activeTrip._id} day={day} tripDays={tripDays} />
 
-            <h2>Travel Component</h2>
+            <h2>Travels</h2>
+            <Travel id={activeTrip._id} day={day} tripDays={tripDays} />
 
           </CardContent>
         </Card>

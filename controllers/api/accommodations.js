@@ -7,6 +7,7 @@ module.exports = {
 };
 
 async function create(req, res) {
+  console.log(req.body)
   try {
     // Create and save the accommodation in the database
     const accommodation = await Accommodation.create(req.body);
