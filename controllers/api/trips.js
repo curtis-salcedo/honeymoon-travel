@@ -22,7 +22,6 @@ async function index(req, res) {
   try {
     // Get all trips from the database
     const trips = await Trip.find({});
-    console.log(trips)
     res.json(trips);
   } catch (err) {
     res.status(400).json(err);
@@ -30,7 +29,6 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
-  console.log('req.body', req.body)
   try {
     // Create and save the trip in the database
     const trip = await Trip.create({
@@ -43,7 +41,6 @@ async function create(req, res) {
       'nonTravelDays': req.body.nonTravelDays,
     });
     trip.save();
-    console.log(trip)
     res.json(trip);
   } catch (err) {
     res.status(400).json(err);

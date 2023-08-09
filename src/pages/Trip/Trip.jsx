@@ -12,7 +12,7 @@ import * as tripsAPI from '../../utilities/api/trips-api';
 // Page Imports
 
 // Component Imports
-import TripForm from '../../components/TripForm/TripForm';
+import TripForm from '../../components/forms/TripForm/TripForm';
 import TripDetails from '../../components/TripDetails/TripDetails';
 
 // Style Imports

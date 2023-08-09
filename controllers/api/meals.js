@@ -4,7 +4,29 @@ module.exports = {
   create,
   update,
   remove,
+  index,
+  show,
 };
+
+async function index(req, res) {
+  try {
+    // Get all meal entries with the matching tripId from the database
+    const meals = await Meal.find({ tripId: req.query.tripId });
+    res.json(meals);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function show(req, res) {
+  try {
+    // Get one meal entry from the database
+    const meal = await Meal.findById(req.params.id);
+    res.json(meal);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
 async function create(req, res) {
   try {

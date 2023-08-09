@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 // Service Imports
 
 // API Imports
-import * as tripsAPI from '../../utilities/api/trips-api';
+import * as tripsAPI from '../../../utilities/api/trips-api';
 
 // Utility Imports
 
