@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
 // API Imports
-import * as activitiesAPI from '../../../utilities/api/activities-api';
+import * as travelsAPI from '../../../utilities/api/travels-api';
 
 // Style Imports
-import './ActivityForm.css';
+import './TravelForm.css';
 import {
   TextField,
   FormControl,
@@ -21,39 +21,40 @@ import {
   Switch,
 } from '@mui/material';
 
-export default function ActivityForm({ id, day, setShow }) {
+export default function TravelForm({ id, day, setShow }) {
   const { activeTrip } = useContext(DataContext)
   const [tripId, setTripId] = useState(activeTrip)
-  const [activityData, setActivityData] = useState({
+  const [travelData, setTravelData] = useState({
     tripId: activeTrip._id,
-    name: '',
-    type: '',
-    date: '',
-    startTime: '',
-    endTime: '',
-    location: '',
-    details: '',
+    type: '', // This is an ENUM ['Flight', 'Train', 'Cab', 'Bus', 'Ferry']
+    startLocation: '', // Eventual Address
+    endLocation: '', // Eventual Address
+    identifier: '',
+    departure: '',
+    arrival: '',
+    isBooked: false,
+    cost: '',
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
     console.log(name,value, type, checked, newValue)
-    setActivityData((prevData) => ({
+    setTravelData((prevData) => ({
       ...prevData,
       [name]: newValue,
     }));
   };
   
   const handleSubmit = async (e) => {
-    console.log('activity data in submit', activityData)
+    console.log('travelData in submit', travelData)
     e.preventDefault();
     try {
       // Handle form submission to the backend here
-      console.log('activity data in submit', activityData)
-      await activitiesAPI.createActivity(activityData);
+      console.log('travelData in submit', travelData)
+      await travelsAPI.createTravel(travelData);
     } catch (err) {
-      console.log('Error at submitting activity', err)
+      console.log('Error at submitting travelData', err)
     }
     setShow(false)
   };
@@ -69,12 +70,30 @@ export default function ActivityForm({ id, day, setShow }) {
       <Container>
         <Grid container spacing={2}>
 
+        <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Type</InputLabel>
+                <Select
+                  name="type"
+                  value={travelData.type}
+                  onChange={handleChange}
+                  required
+                >
+                  <MenuItem value="Flight">Flight</MenuItem>
+                  <MenuItem value="Train">Train</MenuItem>
+                  <MenuItem value="Cab">Cab</MenuItem>
+                  <MenuItem value="Bus">Bus</MenuItem>
+                  <MenuItem value="Ferry">Ferry</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel>Type</InputLabel>
               <Select
                 name="type"
-                value={activityData.type}
+                value={travelData.type}
                 onChange={handleChange}
                 required
               >
@@ -89,7 +108,7 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="text"
               name="name"
-              value={activityData.name}
+              value={travelData.name}
               onChange={handleChange}
               fullWidth
               />
@@ -100,7 +119,7 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="text"
               name="type"
-              value={activityData.type}
+              value={travelData.type}
               onChange={handleChange}
               fullWidth
               />
@@ -111,14 +130,14 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="time"
               name="startTime"
-              value={activityData.startTime}
+              value={travelData.startTime}
               onChange={handleChange}
               fullWidth
               />
             <TextField
               type="time"
               name="endTime"
-              value={activityData.endTime}
+              value={travelData.endTime}
               onChange={handleChange}
               fullWidth
               />
@@ -129,7 +148,7 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="text"
               name="location"
-              value={activityData.location}
+              value={travelData.location}
               onChange={handleChange}
               fullWidth
               />
@@ -140,7 +159,7 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="textarea"
               name="details"
-              value={activityData.details}
+              value={travelData.details}
               onChange={handleChange}
               fullWidth
               />

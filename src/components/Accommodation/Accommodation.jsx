@@ -25,12 +25,12 @@ export default function Accommodation({ id, day }) {
     setAccommodations(activeAccommodations)
   }, [activeAccommodations])
 
-  // Show the meal form
+  // Show the accommodation form
   const handleShow = (e) => {
     setShow(!show)
   }
 
-  // Show the meal details
+  // Show the accommodation details
   const handleShowDetails = (e, id) => {
     console.log('Here is the meal id needed to find all the details for that meal and edit it.', id)
   }
