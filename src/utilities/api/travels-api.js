@@ -13,4 +13,6 @@ export async function deleteTravel(TravelId) {
   return sendRequest(`${BASE_URL}/${TravelId}`, 'DELETE');
 }
 
-// Additional utility functions as needed
+export async function getTravelsForTrip(id) {
+  return sendRequest(`${BASE_URL}?tripId=${id}`, 'GET');
+}

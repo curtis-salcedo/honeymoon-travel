@@ -9,7 +9,7 @@ const accommodationSchema = new mongoose.Schema({
   checkInTime: { type: Date },
   checkOutTime: { type: Date },
   location: { type: String },
-  hasWasherDryer: { type: Boolean }
+  hasWasherDryer: { type: Boolean, default: false },
 });
 
 const Accommodation = mongoose.model('Accommodation', accommodationSchema);

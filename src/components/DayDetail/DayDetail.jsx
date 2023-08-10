@@ -32,33 +32,24 @@ export default function DayDetail({ activeDay, activeTrip }) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const convertDate = (dateString) => {
-    if ( dateString === '' ) {
-      return 'Placeholder inside convertDate function to give the range of the trip'
-    }
-    const dateObject = new Date(dateString);
-    const reformat = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return dateObject.toLocaleDateString(undefined, reformat);
+  const handleMeals = () => {
+    console.log('handleMeals clicked')
   }
   
   useEffect(() => {
     setTripDays(activeTrip.tripDays)
-    setDate(convertDate(activeDay))
   }, [activeTrip, activeDay])
 
   return (
     <div className='DayDetailContainer'>
       <h3>Day Detail</h3>
-        <p>{date}</p>
+        <p>{activeDay}</p>
       <Accordion>
         <AccordionSummary>
           <Typography>Accommodations</Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <Accommodation day={activeDay} />
           <Typography>
             This is where details for the accommodations of the day go.
           </Typography>
@@ -70,6 +61,7 @@ export default function DayDetail({ activeDay, activeTrip }) {
           <Typography>Activites</Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <Activity day={activeDay} />
           <Typography>
             This is where details for the activites of the day go.
           </Typography>

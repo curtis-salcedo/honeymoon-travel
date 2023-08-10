@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
 // API Imports
-import * as accommodationsAPI from '../../../utilities/api/accommodations-api';
+import * as activitiesAPI from '../../../utilities/api/activities-api';
 
 // Style Imports
-import './AccommodationForm.css';
+import './ActivityForm.css';
 import {
   TextField,
   FormControl,
@@ -21,7 +21,7 @@ import {
   Switch,
 } from '@mui/material';
 
-export default function AccommodationForm({ id, day, setShow }) {
+export default function ActivityForm({ id, day, setShow }) {
   const { activeTrip } = useContext(DataContext)
   const [tripId, setTripId] = useState(activeTrip)
   const [accommodationData, setAccommodationData] = useState({
@@ -46,14 +46,14 @@ export default function AccommodationForm({ id, day, setShow }) {
   };
   
   const handleSubmit = async (e) => {
-    console.log('accommodation data in submit', accommodationData)
+    console.log('activity data in submit', accommodationData)
     e.preventDefault();
     try {
       // Handle form submission to the backend here
-      console.log('accommodation data in submit', accommodationData)
-      await accommodationsAPI.createAccommodation(accommodationData);
+      console.log('activity data in submit', accommodationData)
+      await activitiesAPI.createAccommodation(accommodationData);
     } catch (err) {
-      console.log('Error at submitting accommodation', err)
+      console.log('Error at submitting activity', err)
     }
     setShow(false)
   };

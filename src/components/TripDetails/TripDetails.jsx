@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState} from 'react';
 
 // Component Imports
 import Accommodation from '../Accommodation/Accommodation';
@@ -10,45 +10,41 @@ import Travel from '../Travel/Travel';
 // Style Imports
 import './TripDetails.css';
 import { 
-  Container,
-  Card,
-  CardContent,
   Button,
-
+  Typography,
 } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 
 export default function TripDetails({ activeTrip, handleDayDetailClick }) {
-  const [tripDays, setTripDays] = React.useState(activeTrip.tripDays)
-  const [expanded, setExpanded] = React.useState(false);
+  const [tripDays, setTripDays] = useState([])
+  const [expanded, setExpanded] = useState(false);
+
+  console.log(activeTrip)
+
+  useEffect(() => {
+    setTripDays(activeTrip.tripDays)
+  }, [activeTrip])
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
   // Function to convert the array of dates into an array of objects with the date and a list of activities
 
   // Send any component the active trip id and the date
-
 
   return (
     <div className='TripDetailsContainer'>
       <div>
       {tripDays ? tripDays.map((day, index) => {
-          const date = new Date(day);
-          const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
-          const dayAndMonth = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
           
           return (
             <>
             <div className='TripDetailsDays'>
               <Button sx={{ width: 200 }} onClick={(e) => handleDayDetailClick(e, day)}>
                 <Typography sx={{ flexShrink: 0 }}>
-                  <p>Day {index + 1}: {dayOfWeek}, {dayAndMonth}</p>
+                  <p>Day {index + 1}: {day}</p>
                 </Typography>
               </Button>
             </div>

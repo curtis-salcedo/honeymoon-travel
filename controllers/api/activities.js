@@ -4,7 +4,29 @@ module.exports = {
   create,
   update,
   remove,
+  index,
+  show,
 };
+
+async function show(req, res) {
+  try {
+    // Find the activity by the ID in the URL
+    const activity = await Activity.findById(req.params.id);
+    res.json(activity);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function index(req, res) {
+  try {
+    // Find all activities
+    const activities = await Activity.find({});
+    res.json(activities);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
 async function create(req, res) {
   try {

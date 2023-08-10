@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { DataContext } from '../../utilities/DataContext';
+
 
 // Component Imports
 import MealForm from '../forms/MealForm/MealForm';
@@ -10,18 +12,23 @@ import * as mealsAPI from '../../utilities/api/meals-api';
 import './Meal.css';
 import {
   Button,
-  Typography,
+  IconButton,
+  Tooltip,
 
 } from '@mui/material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+
 
 export default function Meal({ id, day, tripDays }) {
+  // Get the active meals from the data context
+  const { activeMeals } = useContext(DataContext)
+
   const [show, setShow] = useState(false)
-  const [activeMeals, setActiveMeals] = useState([])
   
-    useEffect(() => {
-      // Get the meals for each day
-      fetchMeals();
-    }, [])
+  useEffect(() => {
+    // // Get the meals for each day
+    // fetchMeals();
+  }, [])
 
   // Show the meal form
   const handleShow = () => {
@@ -33,16 +40,9 @@ export default function Meal({ id, day, tripDays }) {
     console.log('Here is the meal id needed to find all the details for that meal and edit it.', id)
   }
 
-  const fetchMeals = async () => {
-    try {
-      const meals = await mealsAPI.getAllMeals(id);
-      setActiveMeals(meals)
-    } catch (err) {
-      console.log('Error at fetching meals', err)
-    }
+  const handleClick = (e, id) => {
+    console.log('Here is the meal id needed to find all the details for that meal and edit it.', id)
   }
-
-  console.log('activeMeals', activeMeals)
 
   return (
     <div className='MealContainer'>
@@ -61,6 +61,9 @@ export default function Meal({ id, day, tripDays }) {
               <p key={meal._id}>{meal.businessName}</p>
               <p>{meal.isReservation ? 'Reservation' : ''}</p>
               <Button onClick={(e) => handleShowDetails(e, meal._id)}></Button>
+              <Tooltip title="Options">
+                <MoreHorizIcon icon={MoreHorizIcon} onClick={(e) => handleClick(e, meal._id)} />
+              </Tooltip>
             </div>
           );
         }

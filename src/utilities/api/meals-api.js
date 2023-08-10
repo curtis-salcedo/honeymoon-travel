@@ -13,8 +13,10 @@ export async function deleteMeal(mealId) {
   return sendRequest(`${BASE_URL}/${mealId}`, 'DELETE');
 }
 
-export async function getAllMeals(id) {
+export async function getMealsForTrip(id) {
   return sendRequest(`${BASE_URL}?tripId=${id}`, 'GET');
 }
 
-// Additional utility functions as needed
+export async function getAllMeals(id) {
+  return sendRequest(`${BASE_URL}?tripId=${id}`, 'GET');
+}

@@ -13,4 +13,6 @@ export async function deleteActivity(activityId) {
   return sendRequest(`${BASE_URL}/${activityId}`, 'DELETE');
 }
 
-// Additional utility functions as needed
+export async function getActivitiesForTrip(id) {
+  return sendRequest(`${BASE_URL}?tripId=${id}`, 'GET');
+}

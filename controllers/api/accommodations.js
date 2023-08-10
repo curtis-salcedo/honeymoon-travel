@@ -4,7 +4,29 @@ module.exports = {
   create,
   update,
   remove,
+  index,
+  show,
 };
+
+async function show(req, res) {
+  try {
+    // Get one accommodation from the database
+    const accommodation = await Accommodation.findById(req.params.id);
+    res.json(accommodation);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function index(req, res) {
+  try {
+    // Find all accommodations for a trip
+    const accommodations = await Accommodation.find({ tripId: req.query.tripId });
+    res.json(accommodations);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
 async function create(req, res) {
   console.log(req.body)
