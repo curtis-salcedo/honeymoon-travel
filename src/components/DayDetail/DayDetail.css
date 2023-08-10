@@ -1,0 +1,8 @@
+.DayDetailContainer {
+  background-color: lightseagreen;
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  min-height: 100vh;
+}

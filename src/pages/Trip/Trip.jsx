@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Service Imports
 import { getTrips } from '../../utilities/services/trips-service';
@@ -14,6 +15,7 @@ import * as tripsAPI from '../../utilities/api/trips-api';
 // Component Imports
 import TripForm from '../../components/forms/TripForm/TripForm';
 import TripDetails from '../../components/TripDetails/TripDetails';
+import DayDetail from '../../components/DayDetail/DayDetail';
 
 // Style Imports
 import {
@@ -29,12 +31,13 @@ import {
   CardContent,
   CardActions,
 } from '@mui/material';
-import { set } from 'mongoose';
+import './Trip.css';
 
 export default function Trip({ user }) {
   const [trips, setTrips] = useState(getTrips)
   const [show, setShow] = useState(false)
-  const [activeTrip, setActiveTrip] = useState(null)
+  const [activeTrip, setActiveTrip] = useState('')
+  const [activeDay, setActiveDay] = useState('')
 
   useEffect(() => {
     async function fetchTrips() {
@@ -46,7 +49,7 @@ export default function Trip({ user }) {
       }
     }
     fetchTrips();
-  }, []);
+  }, [activeDay]);
 
   const handleShow = () => {
     setShow(!show)
@@ -63,50 +66,41 @@ export default function Trip({ user }) {
     }
   };
 
+  const handleDayDetailClick = (e, day) => {
+    setActiveDay(day)
+  }
+
   console.log(activeTrip)
 
   return (
-    <main>
-      <Button onClick={handleShow}>Add New Trip</Button>
-      { show ? 
-      <TripForm user={user} />
-      : null  
-      }
-    <div>
+    <div className="TripContainer">
+      <div className="TripSideBar">
+      <p>Your Trips</p>
     { trips && trips.length > 0 ? 
         trips.map((trip) => (
-          <div key={trip._id}>
-            <Card sx={{ maxWidth: 350 }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18 }} color="text.secondary" gutterBottom>
-                  Here is your trip info:
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {trip.name}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Starts: {Date(trip.startDate)}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Ends: {Date(trip.endDate)}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="medium" onClick={(e) => handleMore(e, trip._id)}>More</Button>
-              </CardActions>
-            </Card>
+          <div key={trip._id} className="TripSideBarButtonContainer">
+              <Button variant="outlined" onClick={handleShow}>New Trip</Button>
+              { show ? 
+                <TripForm user={user} />
+              : null }
+              <Button variant="outlined" size="medium" onClick={(e) => handleMore(e, trip._id)}>
+                {trip.name}
+              </Button>
+            <div>
+              { activeTrip ?
+                <div>
+                  <TripDetails activeTrip={activeTrip} handleDayDetailClick={handleDayDetailClick} />
+                </div>
+              : null }
+            </div>
           </div>
         ))
-        : 
-        <div>no trips</div> }
-        { activeTrip ?
-        <div>
-          Active trip
-          <TripDetails activeTrip={activeTrip} />
-          </div>
-          : null }
+        : null }
+        </div>
+      <div>
+        <DayDetail activeTrip={activeTrip} activeDay={activeDay} />
       </div>
-    </main>
+    </div>
     )
   };
   

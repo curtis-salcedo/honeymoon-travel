@@ -1,3 +1,22 @@
 .MealContainer {
   background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.MealContainer button {
+  width: 100px;
+  text-align: center;
+}
+
+.ExpandedDetails {
+  background-color: lightgreen;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  justify-content: space-evenly;
+  overflow-y: hidden;
+  width: 100%;
 }
