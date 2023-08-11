@@ -43,98 +43,57 @@ export default function DayDetail({ activeDay, activeTrip }) {
   return (
     <div className='DayDetailContainer'>
       <h3>Day Detail</h3>
-        <p>{activeDay}</p>
-      <Accordion>
-        <AccordionSummary>
-          <Typography>Accommodations</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Accommodation day={activeDay} />
-          <Typography>
-            This is where details for the accommodations of the day go.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary>
-          <Typography>Activites</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Activity day={activeDay} />
-          <Typography>
-            This is where details for the activites of the day go.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary>
-          <Typography>Meals</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Meal id={activeTrip._id} day={activeDay} tripDays={tripDays} />
-          <Typography>
-            This is where details for the meal of the day go.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary>
-          <Typography>Travel</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            This is where details for the travel of the day go.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      {/* { tripDays ? tripDays.map((day, index) => {
-          const date = new Date(day);
-          const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
-          const dayAndMonth = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-          
-          return (
-            <>
-            <Accordion
-              key={index}
-              expanded={expanded === `panel${index}`}
-              onChange={handleChange(`panel${index}`)}
-              >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={`panel${index}bh-content`}
-                id={`panel${index}bh-header`}
-              >
-                <Typography sx={{ flexShrink: 0 }}>
-                  <p>{dayOfWeek}, {dayAndMonth}</p>
-                </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
-                  <p>{activeTrip.name}</p>
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-
-                <Meal id={activeTrip._id} day={day} tripDays={tripDays} />
-
-                <p>Accomodations</p>
-                <Accommodation id={activeTrip._id} day={day} tripDays={tripDays} />
-                
-                <p>Activities</p>
-                <Activity id={activeTrip._id} day={day} tripDays={tripDays} />
-
-                <p>Travels</p>
-                <Travel id={activeTrip._id} day={day} tripDays={tripDays} />
+      { activeDay ?
+        <div>
+          <Accordion>
+            <AccordionSummary>
+              <Typography>Accommodations</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Accommodation day={activeDay} />
+              <Typography>
+                This is where details for the accommodations of the day go.
               </Typography>
             </AccordionDetails>
-            </Accordion>
-        </>
-          );
-        }) : null} */}
+          </Accordion>
 
+          <Accordion>
+            <AccordionSummary>
+              <Typography>Activites</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Activity day={activeDay} />
+              <Typography>
+                This is where details for the activites of the day go.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary>
+              <Typography>Meals</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Meal id={activeTrip._id} day={activeDay} tripDays={tripDays} />
+              <Typography>
+                This is where details for the meal of the day go.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary>
+              <Typography>Travel</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Travel day={activeDay} />
+              <Typography>
+                This is where details for the travel of the day go.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+      : null }
     </div>
   );
 }

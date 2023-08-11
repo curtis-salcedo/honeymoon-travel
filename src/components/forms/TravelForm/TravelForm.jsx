@@ -19,6 +19,7 @@ import {
   Container,
   FormControlLabel,
   Switch,
+  Checkbox,
 } from '@mui/material';
 
 export default function TravelForm({ id, day, setShow }) {
@@ -33,7 +34,6 @@ export default function TravelForm({ id, day, setShow }) {
     departure: '',
     arrival: '',
     isBooked: false,
-    cost: '',
   });
 
   const handleChange = (e) => {
@@ -47,14 +47,14 @@ export default function TravelForm({ id, day, setShow }) {
   };
   
   const handleSubmit = async (e) => {
-    console.log('travelData in submit', travelData)
+    console.log('travel data in submit', travelData)
     e.preventDefault();
     try {
       // Handle form submission to the backend here
-      console.log('travelData in submit', travelData)
+      console.log('travel data in submit', travelData)
       await travelsAPI.createTravel(travelData);
     } catch (err) {
-      console.log('Error at submitting travelData', err)
+      console.log('Error at submitting travel data', err)
     }
     setShow(false)
   };
@@ -67,112 +67,107 @@ export default function TravelForm({ id, day, setShow }) {
     <main>
     <h1>Activity Form</h1>
     <form onSubmit={handleSubmit}>
-      <Container>
-        <Grid container spacing={2}>
+    <Container>
+    <Grid container spacing={2}>
 
-        <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Type</InputLabel>
-                <Select
-                  name="type"
-                  value={travelData.type}
-                  onChange={handleChange}
-                  required
-                >
-                  <MenuItem value="Flight">Flight</MenuItem>
-                  <MenuItem value="Train">Train</MenuItem>
-                  <MenuItem value="Cab">Cab</MenuItem>
-                  <MenuItem value="Bus">Bus</MenuItem>
-                  <MenuItem value="Ferry">Ferry</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <InputLabel>Type</InputLabel>
+          <Select
+            name="type"
+            value={travelData.type}
+            onChange={handleChange}
+            required
+          >
+            <MenuItem value="Flight">Flight</MenuItem>
+            <MenuItem value="Train">Train</MenuItem>
+            <MenuItem value="Cab">Cab</MenuItem>
+            <MenuItem value="Bus">Bus</MenuItem>
+            <MenuItem value="Ferry">Ferry</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
 
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Type</InputLabel>
-              <Select
-                name="type"
-                value={travelData.type}
-                onChange={handleChange}
-                required
-              >
-                <MenuItem value="Hotel">Hotel</MenuItem>
-                <MenuItem value="Airbnb">Airbnb</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+      <Grid item xs={12}>
+        <TextField
+          type="text"
+          label="Start Location"
+          name="startLocation"
+          value={travelData.startLocation}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+      </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Activity Name</div>
-            <TextField
-              type="text"
-              name="name"
-              value={travelData.name}
+      <Grid item xs={12}>
+        <TextField
+          type="text"
+          label="End Location"
+          name="endLocation"
+          value={travelData.endLocation}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <label>Departure</label>
+        <TextField
+          type="datetime-local"
+          name="departure"
+          value={travelData.departure}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <label>Arrival</label>
+        <TextField
+          type="datetime-local"
+          name="arrival"
+          value={travelData.arrival}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <TextField
+          type="text"
+          label="Identifier"
+          name="identifier"
+          value={travelData.identifier}
+          onChange={handleChange}
+          fullWidth
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="isBooked"
+              checked={travelData.isBooked}
               onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
+            />
+          }
+          label="Is Booked"
+        />
+      </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Type</div>
-            <TextField
-              type="text"
-              name="type"
-              value={travelData.type}
-              onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
+      <Grid item xs={12}>
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
+      </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Time</div>
-            <TextField
-              type="time"
-              name="startTime"
-              value={travelData.startTime}
-              onChange={handleChange}
-              fullWidth
-              />
-            <TextField
-              type="time"
-              name="endTime"
-              value={travelData.endTime}
-              onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <div>Location</div>
-            <TextField
-              type="text"
-              name="location"
-              value={travelData.location}
-              onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <div>Details</div>
-            <TextField
-              type="textarea"
-              name="details"
-              value={travelData.details}
-              onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </Grid>
-
-        </Grid>
-      </Container>
+    </Grid>
+  </Container>
     </form>
   </main>
   );

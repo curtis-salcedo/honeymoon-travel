@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
+// Serivce Imports
+import { convertDate } from '../../utilities/services/business-service';
+
 // Component Imports
 import AccommodationForm from '../forms/AccommodationForm/AccommodationForm';
 
@@ -16,7 +19,6 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 export default function Accommodation({ id, day }) {
   const { activeTrip, activeAccommodations } = useContext(DataContext)
   const [accommodations, setAccommodations] = useState([])
-  console.log('day', day ? day : 'no day selected')
 
   const [show, setShow] = useState(false)
 
@@ -45,8 +47,8 @@ export default function Accommodation({ id, day }) {
       
       <div className='AccommodationContainer'>
       {accommodations.map((accommodation) => {
-        const isCheckInDay = accommodation.checkInDate === day;
-        const isCheckOutDay = accommodation.checkOutDate === day;
+        const isCheckInDay = convertDate(accommodation.checkInDate) === day;
+        const isCheckOutDay = convertDate(accommodation.checkOutDate) === day;
 
         if (isCheckInDay || isCheckOutDay) {
           return (

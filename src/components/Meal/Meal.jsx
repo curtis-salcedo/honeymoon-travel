@@ -5,6 +5,9 @@ import { DataContext } from '../../utilities/DataContext';
 // Component Imports
 import MealForm from '../forms/MealForm/MealForm';
 
+// Service Imports
+import { convertDate } from '../../utilities/services/business-service';
+
 // API Imports
 import * as mealsAPI from '../../utilities/api/meals-api';
 
@@ -22,7 +25,6 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 export default function Meal({ id, day, tripDays }) {
   // Get the active meals from the data context
   const { activeMeals } = useContext(DataContext)
-
   const [show, setShow] = useState(false)
   
   useEffect(() => {
@@ -47,15 +49,15 @@ export default function Meal({ id, day, tripDays }) {
   return (
     <div className='MealContainer'>
 
-      <h3>Meals</h3>
+      <h3>Meal Component</h3>
 
       <Button variant="contained" onClick={handleShow}>Add</Button>
       
       { show ? <MealForm id={id} day={day} setShow={setShow} /> : null }
 
-      {activeMeals.map((meal) => {
+      { activeMeals.map((meal) => {
         // Check if the date matches the day and display the meal if it matches
-        if (meal.date === day) {
+        if (convertDate(meal.date) === day) {
           return (
             <div className='ExpandedDetails'>
               <p key={meal._id}>{meal.businessName}</p>

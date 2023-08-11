@@ -4,6 +4,7 @@ import { DataContext } from '../../utilities/DataContext';
 // Service Imports
 import { getTrips } from '../../utilities/services/trips-service';
 import { getTripById } from '../../utilities/api/trips-api';
+import { convertDate } from '../../utilities/services/business-service';
 
 // API Imports
 import * as tripsAPI from '../../utilities/api/trips-api';
@@ -59,7 +60,8 @@ export default function Trip({ user }) {
 
   const handleDayDetailClick = (e, day) => {
     console.log('day at handle click', day)
-    setActiveDay(day)
+    console.log(convertDate(day))
+    setActiveDay(convertDate(day))
   }
 
   return (

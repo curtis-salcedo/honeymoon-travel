@@ -64,11 +64,11 @@ export default function ActivityForm({ id, day, setShow }) {
 
   return (
     <main>
-    <h1>Activity Form</h1>
-    <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
       <Container>
         <Grid container spacing={2}>
 
+          {/* Type */}
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel>Type</InputLabel>
@@ -78,74 +78,98 @@ export default function ActivityForm({ id, day, setShow }) {
                 onChange={handleChange}
                 required
               >
-                <MenuItem value="Hotel">Hotel</MenuItem>
-                <MenuItem value="Airbnb">Airbnb</MenuItem>
+                <MenuItem value="Tour">Tour</MenuItem>
+                <MenuItem value="Class">Class</MenuItem>
+                <MenuItem value="Hike">Hike</MenuItem>
+                <MenuItem value="Adventure">Adventure</MenuItem>
+                <MenuItem value="Relaxation">Relaxation</MenuItem>
+                <MenuItem value="Shopping">Shopping</MenuItem>
+                <MenuItem value="Nightlife">Nightlife</MenuItem>
+                <MenuItem value="Workshop">Workshop</MenuItem>
+                <MenuItem value="Cultural Event">Cultural Event</MenuItem>
+                <MenuItem value="Entertainment">Entertainment</MenuItem>
+                <MenuItem value="Museum">Museum</MenuItem>
+                <MenuItem value="Sightseeing">Sightseeing</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
               </Select>
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Activity Name</div>
+          {/* Activity Name */}
+          <Grid item xs={12}>
             <TextField
               type="text"
+              label="Activity Name"
               name="name"
               value={activityData.name}
               onChange={handleChange}
               fullWidth
-              />
+              required
+            />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Type</div>
-            <TextField
-              type="text"
-              name="type"
-              value={activityData.type}
-              onChange={handleChange}
-              fullWidth
-              />
-          </Grid>
+          {/* Date */}
+          {/* Note: You might want to add a Date picker component here */}
 
+          {/* Start Time and End Time */}
           <Grid item xs={12} sm={6}>
             <div>Time</div>
+            <label htmlFor="">Start Time</label>
             <TextField
               type="time"
               name="startTime"
               value={activityData.startTime}
               onChange={handleChange}
               fullWidth
-              />
+              required
+            />
+            <label htmlFor="">End Time</label>
             <TextField
               type="time"
               name="endTime"
               value={activityData.endTime}
               onChange={handleChange}
               fullWidth
+            />
+            <label>Date</label>
+            <TextField
+              type="date"
+              name="date"
+              value={activityData.arrival}
+              onChange={handleChange}
+              fullWidth
+              required
               />
           </Grid>
 
+          {/* Location */}
           <Grid item xs={12} sm={6}>
             <div>Location</div>
             <TextField
               type="text"
+              label="Location"
               name="location"
               value={activityData.location}
               onChange={handleChange}
               fullWidth
-              />
+            />
           </Grid>
 
+          {/* Details */}
           <Grid item xs={12} sm={6}>
             <div>Details</div>
             <TextField
-              type="textarea"
+              type="text"
+              label="Details"
               name="details"
               value={activityData.details}
               onChange={handleChange}
               fullWidth
-              />
+              multiline
+            />
           </Grid>
 
+          {/* Submit Button */}
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
               Submit

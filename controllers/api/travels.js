@@ -11,7 +11,7 @@ module.exports = {
 async function index(req, res) {
   try {
     // Find all travels
-    const travels = await Travel.find({});
+    const travels = await Travel.find({ tripId: req.query.tripId });
     res.json(travels);
   } catch (err) {
     res.status(400).json(err);
@@ -31,8 +31,8 @@ async function show(req, res) {
 async function create(req, res) {
   try {
     // Create and save the travel situation in the database
-    const Travel = await Travel.create(req.body);
-    res.json(Travel);
+    const travel = await Travel.create(req.body);
+    res.json(travel);
   } catch (err) {
     res.status(400).json(err);
   }

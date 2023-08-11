@@ -2,6 +2,7 @@ import sendRequest from "../send-request";
 const BASE_URL = '/api/activities';
 
 export async function createActivity(activityData) {
+  console.log('activityData', activityData)
   return sendRequest(BASE_URL, 'POST', activityData);
 }
 

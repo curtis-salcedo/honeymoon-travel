@@ -47,14 +47,14 @@ export const DataProvider = (props) => {
       const meals = await getMealsForTrip(activeTrip._id);
       setActiveMeals(meals);
 
-      // const activities = await getActivitiesForTrip(activeTrip._id);
-      // setActiveActivities(activities);
+      const activities = await getActivitiesForTrip(activeTrip._id);
+      setActiveActivities(activities);
 
       const accommodations = await getAccommodationsForTrip(activeTrip._id);
       setActiveAccommodations(accommodations);
 
-      // const travels = await getTravelsForTrip(activeTrip._id);
-      // setActiveTravels(travels);
+      const travels = await getTravelsForTrip(activeTrip._id);
+      setActiveTravels(travels);
         
     } catch (err) {
       console.log('Error at DataContext.js fetchTripDetailsData', err);
