@@ -7,13 +7,6 @@
 .TripDetailsDays {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 250px;
-    background-color: lightgreen;
-}
-
-.TripDetailsDays button {
-    width: 100%;
-    text-align: center;
 }

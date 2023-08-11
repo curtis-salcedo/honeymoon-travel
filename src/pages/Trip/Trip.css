@@ -1,31 +1,36 @@
 .TripContainer {
-    display: flex;
-    flex-direction: row;
-    background-color: purple;
-    width: 250px;
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  margin: 0 auto;
+  min-height: 100%;
+  flex: 1;
 }
 
 .TripSideBar {
   width: 250px;
-  background-color: yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.TripSideBarButtonContainer {
-  background-color: green;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.TripSideBarButtonContainer button {
-  background-color: white;
-  width: 175px;
   text-align: center;
+  border-right: 1px solid blue;
+}
+
+.TripButtonContainer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+}
+
+
+#side-bar-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
   margin-top: 2px;
   margin-bottom: 2px;
+  border: 1px solid red;
 }

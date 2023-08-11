@@ -9,11 +9,6 @@ import Activity from '../Activity/Activity';
 // Style imports
 import './DayDetail.css';
 import { 
-  Container,
-  Card,
-  CardContent,
-  Button,
-
 
 } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
@@ -21,6 +16,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { KeyboardArrowRight, KeyboardArrowDown } from '@mui/icons-material';
 
 export default function DayDetail({ activeDay, activeTrip }) {
   const [tripDays, setTripDays] = useState(activeTrip.tripDays)
@@ -46,7 +42,10 @@ export default function DayDetail({ activeDay, activeTrip }) {
       { activeDay ?
         <div>
           <Accordion>
-            <AccordionSummary>
+            <AccordionSummary
+              expandIcon={<KeyboardArrowDown />}
+              aria-controls="panel1a-content"
+              id="panel1a-header">
               <Typography>Accommodations</Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -58,7 +57,10 @@ export default function DayDetail({ activeDay, activeTrip }) {
           </Accordion>
 
           <Accordion>
-            <AccordionSummary>
+            <AccordionSummary
+              expandIcon={<KeyboardArrowDown />}
+              aria-controls="panel1a-content"
+              id="panel1a-header">
               <Typography>Activites</Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -70,7 +72,10 @@ export default function DayDetail({ activeDay, activeTrip }) {
           </Accordion>
 
           <Accordion>
-            <AccordionSummary>
+            <AccordionSummary
+              expandIcon={<KeyboardArrowDown />}
+              aria-controls="panel1a-content"
+              id="panel1a-header">
               <Typography>Meals</Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -82,7 +87,10 @@ export default function DayDetail({ activeDay, activeTrip }) {
           </Accordion>
 
           <Accordion>
-            <AccordionSummary>
+            <AccordionSummary
+              expandIcon={<KeyboardArrowDown />}
+              aria-controls="panel1a-content"
+              id="panel1a-header">
               <Typography>Travel</Typography>
             </AccordionSummary>
             <AccordionDetails>

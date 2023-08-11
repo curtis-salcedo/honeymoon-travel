@@ -1,9 +1,6 @@
 .App {
   display: flex;
   flex-direction: column;
-}
-
-.AppMain {
-  display: flex;
-  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
 }

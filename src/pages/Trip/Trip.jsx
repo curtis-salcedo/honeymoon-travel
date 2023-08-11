@@ -68,25 +68,25 @@ export default function Trip({ user }) {
     <div className="TripContainer">
       <div className="TripSideBar">
       <p>Your Trips</p>
-    { allUserTrips && allUserTrips.length > 0 ? 
-        allUserTrips.map((trip) => (
-          <div key={trip._id} className="TripSideBarButtonContainer">
-              <Button variant="outlined" onClick={handleShow}>New Trip</Button>
-              { show ? 
-                <TripForm user={user} />
-              : null }
-              <Button variant="outlined" size="medium" onClick={(e) => handleChoice(e, trip._id)}>
-                {trip.name}
-              </Button>
-            <div>
-              { activeTrip ?
-                <div>
-                  <TripDetails activeTrip={activeTrip} handleDayDetailClick={handleDayDetailClick} />
-                </div>
-              : null }
+        { allUserTrips && allUserTrips.length > 0 ? 
+          allUserTrips.map((trip) => (
+            <div key={trip._id} className="TripButtonContainer">
+                <Button id='side-bar-button' variant="outlined" onClick={handleShow}>New Trip</Button>
+                { show ? 
+                  <TripForm user={user} />
+                : null }
+                <Button id='side-bar-button' variant="outlined" size="medium" onClick={(e) => handleChoice(e, trip._id)}>
+                  {trip.name}
+                </Button>
+              <div>
+                { activeTrip ?
+                  <div>
+                    <TripDetails activeTrip={activeTrip} handleDayDetailClick={handleDayDetailClick} />
+                  </div>
+                : null }
+              </div>
             </div>
-          </div>
-        ))
+          ))
         : null }
         </div>
       <div>

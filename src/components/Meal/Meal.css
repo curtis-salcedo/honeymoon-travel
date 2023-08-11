@@ -6,11 +6,6 @@
   align-items: center;
 }
 
-.MealContainer button {
-  width: 100px;
-  text-align: center;
-}
-
 .ExpandedDetails {
   background-color: lightgreen;
   display: flex;

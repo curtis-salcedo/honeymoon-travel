@@ -26,7 +26,6 @@ export default function App() {
       { user ?
           <>
             <NavBar user={user} setUser={setUser} />
-            <div className="AppMain">
               <Routes>
                 {/* Route components in here */}
                 <Route path="/" element={<Home user={user} />} />
@@ -35,7 +34,6 @@ export default function App() {
                 <Route path="/trips" element={<Trip user={user} />} />
                 <Route path="/*" element={<Home user={user} />} />
               </Routes>
-            </div>
           </>
           :
           <AuthPage setUser={setUser} />

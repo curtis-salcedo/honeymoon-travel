@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/services/users-service';
-import React, { useState, MouseEvent } from 'react';
+import React, { useState } from 'react';
 
 // Style Imports
 import './NavBar.css';
@@ -12,7 +12,6 @@ import {
   Box,
   IconButton,
   Menu,
-  MenuItem,
   Avatar,
   Tooltip,
   Button,
