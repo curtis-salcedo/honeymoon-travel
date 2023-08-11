@@ -17,6 +17,10 @@ export const DataProvider = (props) => {
   const [activeTravels, setActiveTravels] = useState([]);
   const [user, setUser] = useState(null);
 
+  const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
+
+  console.log('active accommodations from data context', activeAccommodations)
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -61,9 +65,6 @@ export const DataProvider = (props) => {
     }
   };
 
-
-  console.log('activeTrip', activeTrip)
-
   return (
     <DataContext.Provider
       value={{
@@ -73,6 +74,7 @@ export const DataProvider = (props) => {
         activeActivities: activeActivities || [],
         activeAccommodations: activeAccommodations || [],
         activeTravels: activeTravels || [],
+        allData,
       }}
     >
       {props.children}

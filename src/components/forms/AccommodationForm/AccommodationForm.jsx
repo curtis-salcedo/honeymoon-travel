@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
+// Service Imports
+import { convertDate } from '../../../utilities/services/business-service';
+
 // API Imports
 import * as accommodationsAPI from '../../../utilities/api/accommodations-api';
 
@@ -14,19 +17,18 @@ import {
   MenuItem,
   Button,
   Grid,
-  Card,
-  CardContent,
   Container,
   FormControlLabel,
   Switch,
 } from '@mui/material';
 
-export default function AccommodationForm({ id, day, setShow }) {
+export default function AccommodationForm({ selectedData, id, day, setShow, setShowEdit }) {
   const { activeTrip } = useContext(DataContext)
   const [tripId, setTripId] = useState(activeTrip)
   const [accommodationData, setAccommodationData] = useState({
     tripId: activeTrip._id,
     type: '',
+    name: '',
     checkInDate: '',
     checkOutDate: '',
     checkInTime: '',
@@ -35,6 +37,32 @@ export default function AccommodationForm({ id, day, setShow }) {
     hasWasherDryer: false,
   });
 
+  console.log('selected data here', selectedData)
+
+  useEffect(() => {
+    setTripId(activeTrip._id)
+    handleTest(selectedData)
+  }, [activeTrip, selectedData])
+
+  const handleTest = (selectedData) => {
+    if (selectedData) {
+      setAccommodationData((prevData) => ({
+        ...prevData,
+        tripId: activeTrip._id,
+        type: selectedData ? selectedData.type : '',
+        name: selectedData ? selectedData.name : '',
+        checkInDate: convertDate(selectedData.checkInDate),
+        checkOutDate: convertDate(selectedData.checkOutDate),
+        checkInTime: selectedData.checkInTime,
+        checkOutTime: selectedData.checkOutTime,
+        location: selectedData.location,
+        hasWasherDryer: selectedData.hasWasherDryer,
+      })
+      )
+      console.log('accommodation data in useEffect', accommodationData)
+    }
+  }
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
@@ -51,16 +79,17 @@ export default function AccommodationForm({ id, day, setShow }) {
     try {
       // Handle form submission to the backend here
       console.log('accommodation data in submit', accommodationData)
-      await accommodationsAPI.createAccommodation(accommodationData);
+      if ( setShowEdit ) {
+        await accommodationsAPI.updateAccommodation(selectedData._id, accommodationData);
+      } else {
+        await accommodationsAPI.createAccommodation(accommodationData);
+      }
     } catch (err) {
       console.log('Error at submitting accommodation', err)
     }
     setShow(false)
   };
 
-  useEffect(() => {
-    setTripId(activeTrip._id)
-  }, [activeTrip])
 
   return (
     <main>
@@ -84,19 +113,33 @@ export default function AccommodationForm({ id, day, setShow }) {
             </FormControl>
           </Grid>
 
+          { accommodationData && accommodationData.type === 'Hotel' ?  
+            <Grid item xs={12}>
+            <FormControl fullWidth>
+            <InputLabel>Name</InputLabel>
+            <TextField
+            type="text"
+            name="name"
+            value={accommodationData.name}
+            onChange={handleChange}
+            />
+            </FormControl>
+            </Grid>
+          : null } 
+
           <Grid item xs={12} sm={6}>
             <div>Check-in Date</div>
             <TextField
               type="date"
               name="checkInDate"
-              value={accommodationData.startDate}
+              value={accommodationData.checkInDate}
               onChange={handleChange}
               fullWidth
               />
             <TextField
               type="time"
               name="checkInTime"
-              value={accommodationData.startDate}
+              value={accommodationData.checkInTime}
               onChange={handleChange}
               fullWidth
               />
@@ -106,14 +149,14 @@ export default function AccommodationForm({ id, day, setShow }) {
             <TextField
               type="date"
               name="checkOutDate"
-              value={accommodationData.startDate}
+              value={accommodationData.checkOutDate}
               onChange={handleChange}
               fullWidth
               />
             <TextField
               type="time"
               name="checkOutTime"
-              value={accommodationData.startDate}
+              value={accommodationData.checkOutTime}
               onChange={handleChange}
               fullWidth
               />

@@ -3,11 +3,12 @@ const Address = require('./address'); // Assuming you have an Address model
 
 const accommodationSchema = new mongoose.Schema({
   tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
-  type: { enum: ['Hotel', 'Airbnb'] },
+  type: { type: String, required: true },
+  name: { type: String },
   checkInDate: { type: Date, required: true },
   checkOutDate: { type: Date, required: true },
-  checkInTime: { type: Date },
-  checkOutTime: { type: Date },
+  checkInTime: { type: String },
+  checkOutTime: { type: String },
   location: { type: String },
   hasWasherDryer: { type: Boolean, default: false },
 });

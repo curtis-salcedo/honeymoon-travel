@@ -28,8 +28,9 @@ export default function Trip({ user }) {
   const { activeTrip, setActiveTrip } = useContext(DataContext)
   const [allUserTrips, setAllUserTrips] = useState(getTrips)
   const [show, setShow] = useState(false)
-  // const [activeTrip, setActiveTrip] = useState('')
-  const [activeDay, setActiveDay] = useState('')
+  // Change the way Day Detail displays data, either all or by day.
+  const [viewAll, setViewAll] = useState(true);
+  const [activeDay, setActiveDay] = useState(null)
 
   useEffect(() => {
     async function fetchTrips() {
@@ -41,7 +42,7 @@ export default function Trip({ user }) {
       }
     }
     fetchTrips();
-  }, [activeDay]);
+  }, [activeDay, viewAll]);
 
   const handleShow = () => {
     setShow(!show)
@@ -59,40 +60,64 @@ export default function Trip({ user }) {
   };
 
   const handleDayDetailClick = (e, day) => {
-    console.log('day at handle click', day)
-    console.log(convertDate(day))
     setActiveDay(convertDate(day))
+  };
+  
+  // Create a function that sets the day detail to display all of the data in the trip.
+  const handleViewAll = (e) => {
+    setViewAll(!viewAll)
+    setActiveDay(null)
   }
 
   return (
-    <div className="TripContainer">
+<div className="TripContainer">
       <div className="TripSideBar">
-      <p>Your Trips</p>
-        { allUserTrips && allUserTrips.length > 0 ? 
+        <p>Your Trips</p>
+        {allUserTrips && allUserTrips.length > 0 ? (
           allUserTrips.map((trip) => (
             <div key={trip._id} className="TripButtonContainer">
-                <Button id='side-bar-button' variant="outlined" onClick={handleShow}>New Trip</Button>
-                { show ? 
-                  <TripForm user={user} />
-                : null }
-                <Button id='side-bar-button' variant="outlined" size="medium" onClick={(e) => handleChoice(e, trip._id)}>
-                  {trip.name}
-                </Button>
+              <Button
+                id='side-bar-button'
+                variant="outlined"
+                onClick={handleShow}
+                className="NewTripButton"
+              >
+                New Trip
+              </Button>
+              {show ? <TripForm user={user} /> : null}
+              <Button
+                id='side-bar-button'
+                variant="outlined"
+                size="medium"
+                onClick={(e) => handleChoice(e, trip._id)}
+                className="TripNameButton"
+              >
+                {trip.name}
+              </Button>
               <div>
-                { activeTrip ?
+                {activeTrip ? (
                   <div>
-                    <TripDetails activeTrip={activeTrip} handleDayDetailClick={handleDayDetailClick} />
+                    <TripDetails
+                      activeTrip={activeTrip}
+                      handleDayDetailClick={handleDayDetailClick}
+                      handleViewAll={handleViewAll}
+                    />
                   </div>
-                : null }
+                ) : null}
               </div>
             </div>
           ))
-        : null }
-        </div>
+        ) : null}
+      </div>
       <div>
-        <DayDetail activeTrip={activeTrip} activeDay={activeDay} />
+        <DayDetail
+          activeTrip={activeTrip}
+          activeDay={activeDay}
+          viewAll={viewAll}
+          setViewAll={setViewAll}
+        />
       </div>
     </div>
-    )
+);
   };
   

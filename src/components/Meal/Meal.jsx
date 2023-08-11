@@ -17,6 +17,10 @@ import {
   Button,
   IconButton,
   Tooltip,
+  Typography,
+  Card,
+  CardActions,
+  CardContent,
 
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -48,30 +52,33 @@ export default function Meal({ id, day, tripDays }) {
 
   return (
     <div className='MealContainer'>
+    <Typography variant="h6">Meal Component</Typography>
 
-      <h3>Meal Component</h3>
+    <Button variant="contained" onClick={handleShow}>Add</Button>
 
-      <Button variant="contained" onClick={handleShow}>Add</Button>
-      
-      { show ? <MealForm id={id} day={day} setShow={setShow} /> : null }
+    {show ? <MealForm id={id} day={day} setShow={setShow} /> : null}
 
-      { activeMeals.map((meal) => {
-        // Check if the date matches the day and display the meal if it matches
-        if (convertDate(meal.date) === day) {
-          return (
-            <div className='ExpandedDetails'>
-              <p key={meal._id}>{meal.businessName}</p>
-              <p>{meal.isReservation ? 'Reservation' : ''}</p>
-              <Button onClick={(e) => handleShowDetails(e, meal._id)}></Button>
+    {activeMeals.map((meal) => {
+      if (convertDate(meal.date) === day) {
+        return (
+          <Card key={meal._id} className='ExpandedDetails'>
+            <CardContent>
+              <Typography variant="body1">{meal.businessName}</Typography>
+              {meal.isReservation && <Typography variant="body2">Reservation</Typography>}
+            </CardContent>
+            <CardActions>
+              <Button onClick={(e) => handleShowDetails(e, meal._id)} size="small">Details</Button>
               <Tooltip title="Options">
-                <MoreHorizIcon icon={MoreHorizIcon} onClick={(e) => handleClick(e, meal._id)} />
+                <IconButton onClick={(e) => handleClick(e, meal._id)}>
+                  <MoreHorizIcon />
+                </IconButton>
               </Tooltip>
-            </div>
-          );
-        }
-          // Render nothing if date doesn't match
-          return null; 
-      })}
+            </CardActions>
+          </Card>
+        );
+      }
+      return null;
+    })}
   </div>
   );
 }

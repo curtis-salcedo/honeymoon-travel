@@ -17,13 +17,11 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function TripDetails({ activeTrip, handleDayDetailClick }) {
+export default function TripDetails({ activeTrip, handleDayDetailClick, handleViewAll }) {
   const [tripDays, setTripDays] = useState([])
   const [expanded, setExpanded] = useState(false);
   // Highlight the selected day
   const [selectedDay, setSelectedDay] = useState(null);
-
-  console.log(activeTrip)
 
   useEffect(() => {
     setTripDays(activeTrip.tripDays)
@@ -45,10 +43,22 @@ export default function TripDetails({ activeTrip, handleDayDetailClick }) {
   return (
     <div className='TripDetailsContainer'>
     <div>
+      <div className='TripDetailsDays' >
+      { activeTrip && activeTrip.tripDays ?
+        <Button
+          id='side-bar-button'
+          variant="outlined"
+          color="primary"
+          onClick={handleViewAll}
+          className="ViewAllButton">
+          <Typography variant="body1">
+            View All
+          </Typography></Button>
+      : null }
       {activeTrip && activeTrip.tripDays ? 
         activeTrip.tripDays.map((day, index) => (
-          <div className='TripDetailsDays' key={day._id}>
             <Button
+              key={day._id}
               id='side-bar-button'
               varient='outlined'
               size="medium"
@@ -58,15 +68,13 @@ export default function TripDetails({ activeTrip, handleDayDetailClick }) {
               }}
               onClick={(e) => handleDaySelected(e, day)}
             >
-              { console.log('look here', selectedDay, convertDate(day)) }
-
               <Typography variant="body1">
                 {day}
               </Typography>
             </Button>
-          </div>
         ))
-      : null}
+        : null}
+      </div>
     </div>
   </div>
   );
