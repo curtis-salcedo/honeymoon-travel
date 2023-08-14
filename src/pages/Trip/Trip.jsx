@@ -70,9 +70,10 @@ export default function Trip({ user }) {
   }
 
   return (
-<div className="TripContainer">
+    <div className="TripContainer">
+
       <div className="TripSideBar">
-        <p>Your Trips</p>
+        <p>{user.name}, here are your trips!</p>
         {allUserTrips && allUserTrips.length > 0 ? (
           allUserTrips.map((trip) => (
             <div key={trip._id} className="TripButtonContainer">
@@ -82,7 +83,7 @@ export default function Trip({ user }) {
                 onClick={handleShow}
                 className="NewTripButton"
               >
-                New Trip
+                Add a new Trip
               </Button>
               {show ? <TripForm user={user} /> : null}
               <Button
@@ -94,7 +95,6 @@ export default function Trip({ user }) {
               >
                 {trip.name}
               </Button>
-              <div>
                 {activeTrip ? (
                   <div>
                     <TripDetails
@@ -104,12 +104,12 @@ export default function Trip({ user }) {
                     />
                   </div>
                 ) : null}
-              </div>
             </div>
           ))
         ) : null}
       </div>
-      <div>
+
+      <div className="DayDetailContainer">
         <DayDetail
           activeTrip={activeTrip}
           activeDay={activeDay}
@@ -117,7 +117,8 @@ export default function Trip({ user }) {
           setViewAll={setViewAll}
         />
       </div>
+
     </div>
-);
-  };
+  );
+};
   

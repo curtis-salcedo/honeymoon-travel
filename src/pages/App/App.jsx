@@ -25,19 +25,24 @@ export default function App() {
     <main className="App">
       { user ?
           <>
+          <div className="navbar">
             <NavBar user={user} setUser={setUser} />
+          </div>
+            <div className="main-content">
               <Routes>
                 {/* Route components in here */}
-                <Route path="/" element={<Home user={user} />} />
+                {/* <Route path="/" element={<Home user={user} />} /> */}
                 {/* <Route path="/orders/new" element={<NewOrderPage />} />
                 <Route path="/orders" element={<OrderHistoryPage />} /> */}
-                <Route path="/trips" element={<Trip user={user} />} />
+                {/* <Route path="/trips" element={<Trip user={user} />} /> */}
+                  {/* <SideBar user={user} /> */}
                 <Route path="/*" element={<Home user={user} />} />
               </Routes>
+            </div>
           </>
           :
           <AuthPage setUser={setUser} />
-      }
+        }
     </main>
   );
 }

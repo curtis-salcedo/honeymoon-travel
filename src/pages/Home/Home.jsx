@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 // Component imports
 import SideBar from '../../components/SideBar/SideBar';
+import Map from '../../components/Map/Map'
 
 // Page imports
 import Trip from '../Trip/Trip';
@@ -11,12 +12,14 @@ import './Home.css';
 
 export default function Home({ user }) {
 
-
   return (
     <div className="HomeContainer">
-      {/* <SideBar user={user} /> */}
-      <Trip user={user} />
+      <div className="Trip">
+        <Trip user={user} />
+      </div>
+      <div className="Map">
+        <Map />
+      </div>
     </div>
   );
-} 
-
+}

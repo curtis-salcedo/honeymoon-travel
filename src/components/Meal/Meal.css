@@ -1,5 +1,4 @@
 .MealContainer {
-  background-color: lightblue;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,7 +6,6 @@
 }
 
 .ExpandedDetails {
-  background-color: lightgreen;
   display: flex;
   flex-direction: row;
   text-align: left;

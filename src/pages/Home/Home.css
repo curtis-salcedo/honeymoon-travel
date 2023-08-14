@@ -1,6 +1,18 @@
 .HomeContainer {
     display: flex;
-    flex: 1;
     flex-direction: row;
-    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.Trip {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.Map {
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }

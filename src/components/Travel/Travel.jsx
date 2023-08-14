@@ -27,10 +27,10 @@ export default function Travel({ id, day }) {
   }
 
   return (
-    <div>
+    <div className="AccordionCardInfo">
       <h1>Travel Component</h1>
 
-      <Button variant="contained" onClick={handleShow}>Show Travel Form</Button>
+      <Button variant="contained" onClick={handleShow}>Add Travel</Button>
 
       { show ? <TravelForm id={id} day={day} setShow={setShow} /> : null }
 

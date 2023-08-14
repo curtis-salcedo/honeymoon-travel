@@ -116,10 +116,9 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
           { accommodationData && accommodationData.type === 'Hotel' ?  
             <Grid item xs={12}>
             <FormControl fullWidth>
-            <InputLabel>Name</InputLabel>
+            <label>Name</label>
             <TextField
             type="text"
-            name="name"
             value={accommodationData.name}
             onChange={handleChange}
             />

@@ -28,13 +28,11 @@ export default function Activity({ id, day, tripDays }) {
   }
   
   return (
-    <div className="ActivityContainer">
-      <h1>Activity Component</h1>
-
-      <Button variant="contained" onClick={handleShow}>Show Activity Form</Button>
-
-      { show ? <ActivityForm id={id} day={day} setShow={setShow} /> : null }
-
+    <div className="DayDetailAccordion">
+        <div className='DayDetailButton'>
+          <Button variant="contained" onClick={handleShow}>Add Activity</Button>
+          { show ? <Activity id={id} day={day} setShow={setShow} /> : null }
+        </div>
       { activeActivities.map((activity) => {
         // Check if the date matches the day and display the activity if it matches
         if (convertDate(activity.date) === day) {

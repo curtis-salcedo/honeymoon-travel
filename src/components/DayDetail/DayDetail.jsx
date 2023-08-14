@@ -43,13 +43,13 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
     <div className='DayDetailContainer'>
 
       <Typography>{ viewAll ? 'Viewing all dates' : `Viewing ${activeDay}`}</Typography>
+      {/* <div> */}
 
       { viewAll ? 
-        <div>
+        <div className="DayDetailContent">
           <Accordion>
             <AccordionSummary
-
-              expandIcon={<KeyboardArrowDown />}
+            expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
               <Typography>Accommodations - All</Typography>
@@ -106,13 +106,9 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
               </Typography>
             </AccordionDetails>
           </Accordion>
-        </div>
-
-
-        :
-
-
-        <div>
+          </div>
+:
+          <div className="DayDetailContent">
         <Accordion>
           <AccordionSummary
             expandIcon={<KeyboardArrowDown />}
@@ -174,6 +170,6 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
         </Accordion>
       </div>
       }
-    </div>
+      </div>
   );
 }

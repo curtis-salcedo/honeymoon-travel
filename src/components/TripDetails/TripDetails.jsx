@@ -63,14 +63,12 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
               varient='outlined'
               size="medium"
               sx={{
-                backgroundColor: selectedDay === convertDate(day) ? 'lightblue' : 'inherit',
+                backgroundColor: selectedDay === convertDate(day) ? 'lightskyblue' : 'lightblue',
                 border: 'inherit'
               }}
               onClick={(e) => handleDaySelected(e, day)}
             >
-              <Typography variant="body1">
-                {day}
-              </Typography>
+              {day}
             </Button>
         ))
         : null}

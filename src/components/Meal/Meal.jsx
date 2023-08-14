@@ -26,7 +26,7 @@ import {
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
-export default function Meal({ id, day, tripDays }) {
+export default function Meal({ id, day, tripDays, viewAll }) {
   // Get the active meals from the data context
   const { activeMeals } = useContext(DataContext)
   const [show, setShow] = useState(false)
@@ -34,7 +34,7 @@ export default function Meal({ id, day, tripDays }) {
   useEffect(() => {
     // // Get the meals for each day
     // fetchMeals();
-  }, [])
+  }, [viewAll])
 
   // Show the meal form
   const handleShow = () => {
@@ -51,34 +51,65 @@ export default function Meal({ id, day, tripDays }) {
   }
 
   return (
-    <div className='MealContainer'>
-    <Typography variant="h6">Meal Component</Typography>
+    <div className='DayDetailAccordion'>
+        <div className='DayDetailButton'>
+        <Button variant="contained" onClick={handleShow}>Add Meal</Button>
+        {show ? <MealForm id={id} day={day} setShow={setShow} /> : null}
+      </div>
+    { viewAll === true ? 
 
-    <Button variant="contained" onClick={handleShow}>Add</Button>
+    <div>
+    { activeMeals.map((meal) => (
+      <Card elevation={3} className='DetailDayCard' key={meal._id}>
+        <CardContent className='DetailDayCardExpanded'>
+          <Typography variant="body1">{meal.businessName}</Typography>
+          {meal.isReservation && <Typography variant="body2">Reservation</Typography>}
+        </CardContent>
+        <CardActions>
+          {/* <Tooltip title="Options">
+            <IconButton onClick={(e) => handleClick(e, meal._id)}>
+            <MoreHorizIcon />
+            </IconButton>
+          </Tooltip> */}
+            <Button >Edit</Button>
+            <Button >Remove</Button>
+            <Button >Map</Button>
+        </CardActions>
+      </Card>
+      ))
+    }
+    </div>
 
-    {show ? <MealForm id={id} day={day} setShow={setShow} /> : null}
+    :
 
-    {activeMeals.map((meal) => {
+    <div>
+    { activeMeals.map((meal) => {
       if (convertDate(meal.date) === day) {
         return (
-          <Card key={meal._id} className='ExpandedDetails'>
-            <CardContent>
+          <Card key={meal._id} className='DetailDayCard'>
+            <CardContent className='DetailDayCardExpanded'>
               <Typography variant="body1">{meal.businessName}</Typography>
               {meal.isReservation && <Typography variant="body2">Reservation</Typography>}
             </CardContent>
             <CardActions>
-              <Button onClick={(e) => handleShowDetails(e, meal._id)} size="small">Details</Button>
+              {/* <Button onClick={(e) => handleShowDetails(e, meal._id)} size="small">Details</Button>
               <Tooltip title="Options">
                 <IconButton onClick={(e) => handleClick(e, meal._id)}>
                   <MoreHorizIcon />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
+              <Button >Edit</Button>
+              <Button >Remove</Button>
+              <Button >Map</Button>
             </CardActions>
           </Card>
         );
       }
       return null;
-    })}
+      })
+    }
+    </div>
+    }
   </div>
   );
 }

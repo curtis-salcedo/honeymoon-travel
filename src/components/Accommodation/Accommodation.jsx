@@ -10,6 +10,7 @@ import Detail from '../Detail/Detail';
 
 // Style Imports
 import './Accommodation.css';
+import '../DayDetail/DayDetail.css'
 import {
   Button,
   IconButton,
@@ -21,7 +22,6 @@ import {
   Grid,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { set } from 'mongoose';
 
 export default function Accommodation({ id, day, viewAll }) {
   const { activeAccommodations } = useContext(DataContext)
@@ -29,9 +29,6 @@ export default function Accommodation({ id, day, viewAll }) {
   const [show, setShow] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const [all, setAll] = useState(null)
-
-  console.log(activeAccommodations)
 
   useEffect(() => {
     setAccommodations(activeAccommodations);
@@ -54,15 +51,19 @@ export default function Accommodation({ id, day, viewAll }) {
   }
 
   return (
-      <div className='AccommodationContainer'>
+      <div className='DayDetailAccordion'>
+        <div className='DayDetailButton'>
+          <Button variant="contained" onClick={handleShow}>Add Accommodation</Button>
+          { show ? <AccommodationForm id={id} day={day} setShow={setShow} /> : null }
+        </div>
+        
         { viewAll === true ? (
             <div>
-            <div>This should be working</div>
             {accommodations.map((accommodation) => (
               
-              <Card elevation={3} className='ExpandedDetails' key={accommodation._id}>
+              <Card elevation={3} className='DetailDayCard' key={accommodation._id}>
                   
-              <CardContent>
+              <CardContent className='DetailDayCardExpanded'>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} sm={4}>
                     <Typography variant="h6" gutterBottom>{accommodation.type}</Typography>
@@ -70,24 +71,26 @@ export default function Accommodation({ id, day, viewAll }) {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Typography variant="body1">{accommodation.location}</Typography>
-                    <Typography variant="body2">Check-in</Typography>
-                    <Typography variant="body2">Check-out</Typography>
+                    <Typography variant="body2">Check-in: { accommodation.checkInTime ? accommodation.checkInTime : 'None' }</Typography>
+                    <Typography variant="body2">Check-out: { accommodation.checkOutTime ? accommodation.checkOutTime : 'None' } </Typography>
                   </Grid>
                   <Grid item xs={12} sm={4}>
-                    <Typography variant="body2">{accommodation.checkInTime}</Typography>
+                    <Typography variant="body2">Space for more data</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
-
-              <CardActions>
-                <Button onClick={(e) => handleEdit(e, accommodation._id)} size="small">Edit</Button>
-                <Tooltip title="Options">
-                  <IconButton onClick={() => handleClick(accommodation._id)}>
+                <CardActions>
+                  {/* <Button onClick={(e) => handleEdit(e, accommodation._id)}>Edit</Button> */}
+                  <Button >Remove</Button>
+                  <Button >Map</Button>
+                  {/* <Tooltip title="Options">
+                    <IconButton onClick={() => handleClick(accommodation._id)}>
                     <MoreHorizIcon />
-                  </IconButton>
-                </Tooltip>
-              </CardActions>
-              
+                    </IconButton>
+                  </Tooltip> */}
+                </CardActions>
+                  { showEdit ? <AccommodationForm selectedData={selectedData} id={id} day={day} setShowEdit={setShowEdit} /> : null }
+
             </Card>
             ))}
             
@@ -102,9 +105,9 @@ export default function Accommodation({ id, day, viewAll }) {
   
             if (isCheckInDay || isCheckOutDay) {
               return (
-                <Card elevation={3} className='ExpandedDetails' key={accommodation._id}>
+                <Card elevation={3} className='DetailDayCard' key={accommodation._id}>
                   
-                  <CardContent>
+                  <CardContent className='DetailDayCardExpanded'>
                     <Grid container spacing={2} alignItems="center">
                       <Grid item xs={12} sm={4}>
                         <Typography variant="h6" gutterBottom>{accommodation.type}</Typography>
@@ -123,11 +126,11 @@ export default function Accommodation({ id, day, viewAll }) {
 
                   <CardActions>
                     <Button onClick={(e) => handleEdit(e, accommodation._id)} size="small">Edit</Button>
-                    <Tooltip title="Options">
+                    {/* <Tooltip title="Options">
                       <IconButton onClick={() => handleClick(accommodation._id)}>
                         <MoreHorizIcon />
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                   </CardActions>
                   
                 </Card>
@@ -136,11 +139,6 @@ export default function Accommodation({ id, day, viewAll }) {
             return null;
           })
         )}
-  
-        <Button variant="contained" onClick={handleShow}>Show Accommodation Form</Button>
-        { show ? <AccommodationForm id={id} day={day} setShow={setShow} /> : null }
-  
-        { showEdit ? <AccommodationForm selectedData={selectedData} id={id} day={day} setShowEdit={setShowEdit} /> : null }
       </div>
   );
 }
