@@ -16,10 +16,11 @@ export const DataProvider = (props) => {
   const [activeAccommodations, setActiveAccommodations] = useState([]);
   const [activeTravels, setActiveTravels] = useState([]);
   const [user, setUser] = useState(null);
+  const [address, setAddress] = useState(null);
 
   const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
 
-  console.log('active accommodations from data context', activeAccommodations)
+  console.log(address)
 
   useEffect(() => {
     fetchData();
@@ -40,6 +41,7 @@ export const DataProvider = (props) => {
       const trip = await getTripById();
       setActiveTrip(trip);
 
+
     } catch (err) {
       console.log('Error at DataContext.js fetchData', err);
     }
@@ -48,6 +50,7 @@ export const DataProvider = (props) => {
 
   const fetchTripDetails = async () => {
     try {
+
       const meals = await getMealsForTrip(activeTrip._id);
       setActiveMeals(meals);
 
@@ -65,6 +68,8 @@ export const DataProvider = (props) => {
     }
   };
 
+  console.log(address)
+
   return (
     <DataContext.Provider
       value={{
@@ -74,7 +79,9 @@ export const DataProvider = (props) => {
         activeActivities: activeActivities || [],
         activeAccommodations: activeAccommodations || [],
         activeTravels: activeTravels || [],
-        allData,
+        allData: allData,
+        address: address || [],
+        setAddress: setAddress,
       }}
     >
       {props.children}

@@ -58,7 +58,7 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
       {activeTrip && activeTrip.tripDays ? 
         activeTrip.tripDays.map((day, index) => (
             <Button
-              key={day._id}
+              key={day._id || index}
               id='side-bar-button'
               varient='outlined'
               size="medium"

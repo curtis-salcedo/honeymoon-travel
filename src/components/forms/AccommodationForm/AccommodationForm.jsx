@@ -1,5 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
+import { MapContext } from '../../../utilities/MapContext';
+
+// Form Imports
+import AddressForm from '../AddressForm/AddressForm';
 
 // Service Imports
 import { convertDate } from '../../../utilities/services/business-service';
@@ -23,6 +27,7 @@ import {
 } from '@mui/material';
 
 export default function AccommodationForm({ selectedData, id, day, setShow, setShowEdit }) {
+  const { address, setAddress } = useContext(MapContext)
   const { activeTrip } = useContext(DataContext)
   const [tripId, setTripId] = useState(activeTrip)
   const [accommodationData, setAccommodationData] = useState({
@@ -35,9 +40,10 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     checkOutTime: '',
     location: '',
     hasWasherDryer: false,
+    address: address,
   });
 
-  console.log('selected data here', selectedData)
+  // console.log('selected data here', selectedData)
 
   useEffect(() => {
     setTripId(activeTrip._id)
@@ -72,13 +78,22 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
       [name]: newValue,
     }));
   };
+
+  const handleNameChange = (e) => {
+    const { value } = e.target;
+  
+    setAccommodationData((prevData) => ({
+      ...prevData,
+      name: value,
+    }));
+  };
   
   const handleSubmit = async (e) => {
-    console.log('accommodation data in submit', accommodationData)
+    // console.log('accommodation data in submit', accommodationData)
     e.preventDefault();
     try {
       // Handle form submission to the backend here
-      console.log('accommodation data in submit', accommodationData)
+      // console.log('accommodation data in submit', accommodationData)
       if ( setShowEdit ) {
         await accommodationsAPI.updateAccommodation(selectedData._id, accommodationData);
       } else {
@@ -90,9 +105,14 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     setShow(false)
   };
 
+  const handleSubmitAddress = (e) => {
+    e.preventDefault();
+    console.log('address data in submit', address)
+    // setAddress({})
+  }
 
   return (
-    <main>
+    <div className='form-container'>
     <h1>Accommodation Form</h1>
     <form onSubmit={handleSubmit}>
       <Container>
@@ -120,14 +140,14 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
             <TextField
             type="text"
             value={accommodationData.name}
-            onChange={handleChange}
+            onChange={handleNameChange}
             />
             </FormControl>
             </Grid>
           : null } 
 
           <Grid item xs={12} sm={6}>
-            <div>Check-in Date</div>
+            <div>Check-in</div>
             <TextField
               type="date"
               name="checkInDate"
@@ -144,7 +164,7 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
               />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <div>Check-Out Date</div>
+            <div>Check-Out</div>
             <TextField
               type="date"
               name="checkOutDate"
@@ -177,14 +197,8 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
           </Grid>
 
           <Grid item xs={12}>
-            <TextField
-              label="location"
-              type="text"
-              name="location"
-              value={accommodationData.location}
-              onChange={handleChange}
-              fullWidth
-            />
+            <AddressForm
+            handleSubmitAddress={handleSubmitAddress} />
           </Grid>
 
           <Grid item xs={12}>
@@ -196,6 +210,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
         </Grid>
       </Container>
     </form>
-  </main>
+  </div>
   );
 }

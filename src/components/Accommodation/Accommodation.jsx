@@ -4,6 +4,8 @@ import { DataContext } from '../../utilities/DataContext';
 // Serivce Imports
 import { convertDate } from '../../utilities/services/business-service';
 
+import * as AddressesAPI from '../../utilities/api/addresses-api';
+
 // Component Imports
 import AccommodationForm from '../forms/AccommodationForm/AccommodationForm';
 import Detail from '../Detail/Detail';
@@ -50,6 +52,11 @@ export default function Accommodation({ id, day, viewAll }) {
     setShowEdit(!showEdit)
   }
 
+  const getMapLocation = (e, address) => {
+    console.log('getMapLocation', address)
+    AddressesAPI.getAddress(address)
+  }
+
   return (
       <div className='DayDetailAccordion'>
         <div className='DayDetailButton'>
@@ -82,7 +89,9 @@ export default function Accommodation({ id, day, viewAll }) {
                 <CardActions>
                   {/* <Button onClick={(e) => handleEdit(e, accommodation._id)}>Edit</Button> */}
                   <Button >Remove</Button>
-                  <Button >Map</Button>
+                  <Button
+                    onClick={(e) => getMapLocation(e, accommodation.address)}
+                  >Map</Button>
                   {/* <Tooltip title="Options">
                     <IconButton onClick={() => handleClick(accommodation._id)}>
                     <MoreHorizIcon />

@@ -11,6 +11,7 @@ const accommodationSchema = new mongoose.Schema({
   checkOutTime: { type: String },
   location: { type: String },
   hasWasherDryer: { type: Boolean, default: false },
+  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }
 });
 
 const Accommodation = mongoose.model('Accommodation', accommodationSchema);

@@ -56,9 +56,6 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
             </AccordionSummary>
             <AccordionDetails>
               <Accommodation viewAll={viewAll}  />
-              <Typography>
-                This is where details for the accommodations of the day go.
-              </Typography>
             </AccordionDetails>
           </Accordion>
 

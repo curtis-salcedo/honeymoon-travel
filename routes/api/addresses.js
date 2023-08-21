@@ -10,5 +10,9 @@ router.post('/', addressesCtrl.create);
 router.put('/:id', addressesCtrl.update);
 // DELETE /api/addresses/:id
 router.delete('/:id', addressesCtrl.remove);
+// GET /api/addresses
+router.get('/', addressesCtrl.index);
+// GET /api/addresses/:id
+router.get('/:id', addressesCtrl.show);
 
 module.exports = router;

@@ -18,7 +18,6 @@ export async function getAll() {
 }
 
 export async function getTripById(id) {
-
   return sendRequest(`${BASE_URL}/${id}`);
 }
 // Additional utility functions as needed

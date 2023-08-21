@@ -4,14 +4,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './pages/App/App';
 import { DataProvider } from './utilities/DataContext';
+import { MapProvider } from './utilities/MapContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <DataProvider>
-      <Router>
-        <App />
-      </Router>
+      <MapProvider>
+        <Router>
+          <App />
+        </Router>
+      </MapProvider>
     </DataProvider>
   </React.StrictMode>
 );

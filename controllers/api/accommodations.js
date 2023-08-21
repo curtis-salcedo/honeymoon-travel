@@ -1,4 +1,5 @@
 const Accommodation = require('../../models/accommodation');
+const Addresses = require('../../models/address');
 
 module.exports = {
   create,
@@ -31,8 +32,15 @@ async function index(req, res) {
 async function create(req, res) {
   console.log(req.body)
   try {
+    const address = await Addresses.create(req.body.address);
+    console.log(address)
+    address.save();
     // Create and save the accommodation in the database
-    const accommodation = await Accommodation.create(req.body);
+    const accommodation = await Accommodation.create({
+      ...req.body,
+      address: address._id
+    });
+    accommodation.save();
     res.json(accommodation);
   } catch (err) {
     res.status(400).json(err);
