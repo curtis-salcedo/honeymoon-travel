@@ -37,10 +37,9 @@ export const DataProvider = (props) => {
     try {
       const user = await getUser();
       setUser(user);
-      
+
       const trip = await getTripById();
       setActiveTrip(trip);
-
 
     } catch (err) {
       console.log('Error at DataContext.js fetchData', err);

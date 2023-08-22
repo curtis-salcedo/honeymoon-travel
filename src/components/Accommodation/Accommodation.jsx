@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../utilities/DataContext';
+import { MapContext } from '../../utilities/MapContext';
 
 // Serivce Imports
 import { convertDate } from '../../utilities/services/business-service';
 
-import * as AddressesAPI from '../../utilities/api/addresses-api';
+import * as MapService from '../../utilities/services/maps-service';
 
 // Component Imports
 import AccommodationForm from '../forms/AccommodationForm/AccommodationForm';
@@ -27,6 +28,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export default function Accommodation({ id, day, viewAll }) {
   const { activeAccommodations } = useContext(DataContext)
+  const { mapLocation, setMapLocation } = useContext(MapContext)
   const [accommodations, setAccommodations] = useState([])
   const [show, setShow] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
@@ -54,7 +56,7 @@ export default function Accommodation({ id, day, viewAll }) {
 
   const getMapLocation = (e, address) => {
     console.log('getMapLocation', address)
-    AddressesAPI.getAddress(address)
+    MapService.getAddressLocation(address, setMapLocation)
   }
 
   return (

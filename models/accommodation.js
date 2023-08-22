@@ -5,13 +5,12 @@ const accommodationSchema = new mongoose.Schema({
   tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
   type: { type: String, required: true },
   name: { type: String },
-  checkInDate: { type: Date, required: true },
-  checkOutDate: { type: Date, required: true },
+  checkInDate: { type: String, required: true },
+  checkOutDate: { type: String, required: true },
   checkInTime: { type: String },
   checkOutTime: { type: String },
-  location: { type: String },
   hasWasherDryer: { type: Boolean, default: false },
-  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }
+  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
 });
 
 const Accommodation = mongoose.model('Accommodation', accommodationSchema);

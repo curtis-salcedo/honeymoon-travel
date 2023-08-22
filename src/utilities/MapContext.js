@@ -4,26 +4,19 @@ export const MapContext = createContext();
 
 export const MapProvider = (props) => {
   const [address, setAddress] = useState(null);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [mapLocation, setMapLocation] = useState(null);
 
   useEffect(() => {
     console.log('addresscontext', address)
   }, [address]);
-  
-  const fetchData = async () => {
-
-  };
-
-  console.log('addresscontext', address)
 
   return (
     <MapContext.Provider
       value={{
         address: address,
         setAddress: setAddress,
+        mapLocation: mapLocation,
+        setMapLocation: setMapLocation,
       }}
     >
       {props.children}

@@ -9,11 +9,8 @@ import {
 } from '@mui/material';
 
 
-export default function AddressForm({ handleSubmitAddress, addressData, setAddressData }) {
-  const { setAddress } = useContext(MapContext)
+export default function AddressForm({ handleSaveAddress, setAddress, address }) {
   const [resultData, setResultData] = useState(null);
-
-
   const autoCompleteRef = useRef();
   const autoCompleteInputRef = useRef();
   const options = {
@@ -30,27 +27,26 @@ export default function AddressForm({ handleSubmitAddress, addressData, setAddre
     autoCompleteRef.current.addListener('place_changed', async function () {
       const place = await autoCompleteRef.current.getPlace();
       console.log({ place });
-      setResultData(place);
-      setAddressData(place)
-      console.log(resultData)
+      setResultData(place)
     });
   }, []);
 
   useEffect(() => {
-    setAddress({
-      addressNumber: resultData ? resultData.address_components[0].long_name : '',
-      streetName: resultData ? resultData.address_components[1].long_name : '',
-      city: resultData ? resultData.address_components[3].long_name : '',
-      state: resultData ? resultData.address_components[5].long_name : '',
-      zipCode: resultData ? resultData.address_components[7].long_name : '',
-      country: resultData ? resultData.address_components[6].long_name : '',
-      longitude: resultData ? resultData.geometry.location.lng() : '',
-      latitude: resultData ? resultData.geometry.location.lat() : '',
-      name: resultData ? resultData.name : '',
-    })
-  }, [resultData])
+    setAddress(prevAddress => ({
+      ...prevAddress,
+      addressNumber: resultData ? resultData.address_components[0]?.long_name || '' : '',
+      streetName: resultData ? resultData.address_components[1]?.long_name || '' : '',
+      city: resultData ? resultData.address_components[3]?.long_name || '' : '',
+      state: resultData ? resultData.address_components[5]?.long_name || '' : '',
+      zipCode: resultData ? resultData.address_components[7]?.long_name || '' : '',
+      country: resultData ? resultData.address_components[6]?.long_name || '' : '',
+      longitude: resultData ? resultData.geometry.location.lng() || '' : '',
+      latitude: resultData ? resultData.geometry.location.lat() || '' : '',
+      name: resultData ? resultData.name || '' : '',
+    }));
+  }, [resultData]);
+  
 
-  console.log(addressData)
 
   return (
     <Container>
@@ -62,7 +58,7 @@ export default function AddressForm({ handleSubmitAddress, addressData, setAddre
             inputRef={autoCompleteInputRef}
           />
         <Button
-          onClick={handleSubmitAddress}
+          onClick={handleSaveAddress}
         >Save</Button>
         </Grid>
       </Grid>

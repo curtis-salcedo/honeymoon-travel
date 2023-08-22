@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { DataContext } from '../../utilities/DataContext';
+import { MapContext } from '../../utilities/MapContext';
 
 import * as MapsService from '../../utilities/services/maps-service';
 
@@ -7,12 +8,15 @@ import './Map.css'
 
 export default function Map({}) {
   const { address } = useContext(DataContext)
-  console.log('map address', address)
+  const { mapLocation, setMapLocation, findOne } = useContext(MapContext)
 
   useEffect(() => {
-    console.log('map address', address)
-  }, [address])
+    console.log('map address', mapLocation)
+  }, [address, mapLocation])
   
+  // Create the seach Query for Long/Lat from the address
+  const query = mapLocation ? `${mapLocation.latitude},${mapLocation.longitude}` : 'denver';
+
   return (
     <div className='MapContainer'>
         <iframe 
@@ -21,7 +25,7 @@ export default function Map({}) {
         style={{ border: '0' }}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC-cmS2g3Y3yti-MmZe9A4TbISPziKMEP4&q=denver">
+        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC-cmS2g3Y3yti-MmZe9A4TbISPziKMEP4&q=${query}`}>
         </iframe>
     </div>
   );

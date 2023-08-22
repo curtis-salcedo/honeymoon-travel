@@ -1,10 +1,11 @@
 import sendRequest from "../send-request";
 const BASE_URL = '/api/accommodations';
 
-export async function createAccommodation(accommodationData) {
-  console.log('api accommodation data', accommodationData)
-  return sendRequest(BASE_URL, 'POST', accommodationData);
+export async function createAccommodation(accommodationData, address) {
+  console.log('api accommodation data', accommodationData, address);
+  return sendRequest(BASE_URL, 'POST', { accommodationData, address });
 }
+
 
 export async function updateAccommodation(accommodationId, updatedData) {
   return sendRequest(`${BASE_URL}/${accommodationId}`, 'PUT', updatedData);

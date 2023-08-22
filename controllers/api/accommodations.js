@@ -30,17 +30,18 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    const address = await Addresses.create(req.body.address);
-    console.log(address)
-    address.save();
+    const { accommodationData, address } = req.body;
+    // Create and save the address in the database
+    const createdAddress = await Addresses.create(address);
+    console.log('Address created at accommodation create', createdAddress);
     // Create and save the accommodation in the database
     const accommodation = await Accommodation.create({
-      ...req.body,
-      address: address._id
+      ...accommodationData,
+      address: createdAddress._id
     });
-    accommodation.save();
+    console.log('Accommodation created at accommodation create', accommodation);
     res.json(accommodation);
   } catch (err) {
     res.status(400).json(err);

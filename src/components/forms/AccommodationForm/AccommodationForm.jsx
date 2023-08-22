@@ -24,12 +24,15 @@ import {
   Container,
   FormControlLabel,
   Switch,
+  Typography,
 } from '@mui/material';
+import { getAddress } from '../../../utilities/api/addresses-api';
 
 export default function AccommodationForm({ selectedData, id, day, setShow, setShowEdit }) {
-  const { address, setAddress } = useContext(MapContext)
+  const [address, setAddress] = useState(null)
   const { activeTrip } = useContext(DataContext)
   const [tripId, setTripId] = useState(activeTrip)
+  const [activeAddress, setActiveAddress] = useState(null)
   const [accommodationData, setAccommodationData] = useState({
     tripId: activeTrip._id,
     type: '',
@@ -38,36 +41,30 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     checkOutDate: '',
     checkInTime: '',
     checkOutTime: '',
-    location: '',
     hasWasherDryer: false,
-    address: address,
   });
-
-  // console.log('selected data here', selectedData)
 
   useEffect(() => {
     setTripId(activeTrip._id)
-    handleTest(selectedData)
-  }, [activeTrip, selectedData])
-
-  const handleTest = (selectedData) => {
-    if (selectedData) {
-      setAccommodationData((prevData) => ({
-        ...prevData,
-        tripId: activeTrip._id,
-        type: selectedData ? selectedData.type : '',
-        name: selectedData ? selectedData.name : '',
-        checkInDate: convertDate(selectedData.checkInDate),
-        checkOutDate: convertDate(selectedData.checkOutDate),
-        checkInTime: selectedData.checkInTime,
-        checkOutTime: selectedData.checkOutTime,
-        location: selectedData.location,
-        hasWasherDryer: selectedData.hasWasherDryer,
-      })
-      )
-      console.log('accommodation data in useEffect', accommodationData)
+    const handleTest = (selectedData) => {
+      if (selectedData) {
+        setAccommodationData((prevData) => ({
+          ...prevData,
+          tripId: activeTrip._id,
+          type: selectedData ? selectedData.type : '',
+          name: selectedData ? selectedData.name : '',
+          checkInDate: convertDate(selectedData.checkInDate),
+          checkOutDate: convertDate(selectedData.checkOutDate),
+          checkInTime: selectedData.checkInTime,
+          checkOutTime: selectedData.checkOutTime,
+          hasWasherDryer: selectedData.hasWasherDryer,
+        })
+        )
+        console.log('accommodation data in useEffect', accommodationData)
+      }
     }
-  }
+    handleTest(selectedData)
+  }, [activeTrip, selectedData, activeAddress])
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -89,15 +86,13 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
   };
   
   const handleSubmit = async (e) => {
-    // console.log('accommodation data in submit', accommodationData)
     e.preventDefault();
+    console.log('accommodation data in handleSubmit', accommodationData)
     try {
-      // Handle form submission to the backend here
-      // console.log('accommodation data in submit', accommodationData)
       if ( setShowEdit ) {
         await accommodationsAPI.updateAccommodation(selectedData._id, accommodationData);
       } else {
-        await accommodationsAPI.createAccommodation(accommodationData);
+        await accommodationsAPI.createAccommodation(accommodationData, address);
       }
     } catch (err) {
       console.log('Error at submitting accommodation', err)
@@ -105,10 +100,10 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     setShow(false)
   };
 
-  const handleSubmitAddress = (e) => {
+  const handleSaveAddress = (e) => {
     e.preventDefault();
-    console.log('address data in submit', address)
-    // setAddress({})
+    console.log('address data in handleSaveAddress', address)
+    setActiveAddress(address)
   }
 
   return (
@@ -117,7 +112,16 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     <form onSubmit={handleSubmit}>
       <Container>
         <Grid container spacing={2}>
-
+          <Grid item xs={12}>
+            <Typography>Search for location</Typography>
+            <AddressForm
+              handleSaveAddress={handleSaveAddress} 
+              setAddress={setAddress}
+              address={address}
+            />
+          </Grid>
+          <>
+          
           <Grid item xs={12}>
             <FormControl fullWidth>
               <InputLabel>Type</InputLabel>
@@ -195,19 +199,16 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
               label="Washer/Dryer"
             />
           </Grid>
-
-          <Grid item xs={12}>
-            <AddressForm
-            handleSubmitAddress={handleSubmitAddress} />
-          </Grid>
-
+          { activeTrip ?
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
               Submit
             </Button>
           </Grid>
-
+          : null }
+          </>
         </Grid>
+
       </Container>
     </form>
   </div>
