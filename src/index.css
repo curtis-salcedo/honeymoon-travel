@@ -1,6 +1,31 @@
 /* CSS Custom Properties */
 :root {
-
+  --blue: #3498db;
+  --indigo: #4964e3;
+  --purple: #7b5faf;
+  --pink: #e43c8c;
+  --red: #e0425a;
+  --orange: #f56a40;
+  --yellow: #ed9d3b;
+  --green: #18c080;
+  --teal: #49cfcf;
+  --cyan: #16aeb8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #4964e3;
+  --secondary: #6c757d;
+  --success: #18c080;
+  --info: #16aeb8;
+  --warning: #ed9d3b;
+  --danger: #e0425a;
+  --light: #f3f4f5;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
 }
 
 *, *:before, *:after {

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { convertDateToLongDetail } from '../../utilities/services/business-service';
+
 // Component imports
 import Meal from '../Meal/Meal';
 import Travel from '../Travel/Travel';
@@ -9,7 +11,7 @@ import Activity from '../Activity/Activity';
 // Style imports
 import './DayDetail.css';
 import { 
-
+  Container,
 } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -42,7 +44,9 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
   return (
     <div className='DayDetailContainer'>
 
-      <Typography>{ viewAll ? 'Viewing all dates' : `Viewing ${activeDay}`}</Typography>
+      <Container>
+
+      <Typography>{ viewAll ? 'Viewing all dates' : `${convertDateToLongDetail(activeDay)}`}</Typography>
       {/* <div> */}
 
       { viewAll ? 
@@ -52,7 +56,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
             expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
-              <Typography>Accommodations - All</Typography>
+              <Typography style={{fontWeight:'bold'}}>Accommodations</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Accommodation viewAll={viewAll}  />
@@ -64,7 +68,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
               expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
-              <Typography>Activites</Typography>
+              <Typography style={{fontWeight:'bold'}}>Activites</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Activity />
@@ -79,7 +83,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
               expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
-              <Typography>Meals</Typography>
+              <Typography style={{fontWeight:'bold'}}>Meals</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Meal viewAll={viewAll} />
@@ -94,7 +98,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
               expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
-              <Typography>Travel</Typography>
+              <Typography style={{fontWeight:'bold'}}>Travel</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Travel day={activeDay} />
@@ -167,6 +171,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
         </Accordion>
       </div>
       }
-      </div>
+      </Container>
+  </div>
   );
 }

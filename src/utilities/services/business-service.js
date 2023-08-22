@@ -12,11 +12,30 @@ export function convertDate(date) {
   }
 }
 
-export async function getItemData(modelName, modelId) {
-  console.log(modelName, modelId)
-  // if (data.`active${modelName}`) {
-  //   console.log('active model', data.active`${modelName}`)
-  //   const item = data.active`${modelName}`.find(item => item._id === modelId);
-  //   console.log('item', item)
-  // }
+export function convertDateToDetail(date) {
+  const detailedDay = new Date(date);
+
+  const dayOfWeekShort = detailedDay.toLocaleString('default', { weekday: 'short' });
+  const monthNumber = detailedDay.getMonth() + 1;
+  const dayOfMonth = detailedDay.getDate();
+
+  return `${dayOfWeekShort} ${monthNumber}/${dayOfMonth}`;
+}
+
+export function convertDateToLongDetail(date) {
+  const detailedDay = new Date(date);
+  const dayOfWeek = detailedDay.toLocaleString('default', { weekday: 'long' });
+  const month = detailedDay.toLocaleString('default', { month: 'long' });
+  const dayOfMonth = detailedDay.getDate();
+  let daySuffix;
+  if (dayOfMonth === 1 || dayOfMonth === 21 || dayOfMonth === 31) {
+    daySuffix = 'st';
+  } else if (dayOfMonth === 2 || dayOfMonth === 22) {
+    daySuffix = 'nd';
+  } else if (dayOfMonth === 3 || dayOfMonth === 23) {
+    daySuffix = 'rd';
+  } else {
+    daySuffix = 'th';
+  }
+  return `${dayOfWeek}, ${month} ${dayOfMonth}${daySuffix}`;
 }

@@ -4,13 +4,6 @@
   height: 100%;
 }
 
-.TripSideBar {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  
-}
-
 .DayDetailContainer {
   display: flex;
   flex-direction: column;
@@ -21,13 +14,8 @@
 .TripButtonContainer {
   display: flex;
   flex-direction: column;
-
+  margin-top: 10px;
 }
-
-.TripButtonContainer Button {
-
-}
-
 
 #side-bar-button {
   margin-top: 10px;

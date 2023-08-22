@@ -22,6 +22,7 @@ import DayDetail from '../../components/DayDetail/DayDetail';
 import './Trip.css';
 import {
   Button,
+  Container,
 } from '@mui/material';
 
 export default function Trip({ user }) {
@@ -65,15 +66,15 @@ export default function Trip({ user }) {
   
   // Create a function that sets the day detail to display all of the data in the trip.
   const handleViewAll = (e) => {
+    console.log(viewAll)
     setViewAll(!viewAll)
-    setActiveDay(null)
+    // setActiveDay(null)
   }
 
   return (
     <div className="TripContainer">
-
-      <div className="TripSideBar">
-        <p>{user.name}, here are your trips!</p>
+      <Container>
+        <p>{user.email}, here are your trips!</p>
         {allUserTrips && allUserTrips.length > 0 ? (
           allUserTrips.map((trip) => (
             <div key={trip._id} className="TripButtonContainer">
@@ -101,22 +102,25 @@ export default function Trip({ user }) {
                       activeTrip={activeTrip}
                       handleDayDetailClick={handleDayDetailClick}
                       handleViewAll={handleViewAll}
+                      viewAll={viewAll}
                     />
                   </div>
                 ) : null}
             </div>
           ))
         ) : null}
-      </div>
+      </Container>
 
-      <div className="DayDetailContainer">
-        <DayDetail
-          activeTrip={activeTrip}
-          activeDay={activeDay}
-          viewAll={viewAll}
-          setViewAll={setViewAll}
-        />
-      </div>
+      <Container>
+        <div className="DayDetailContainer">
+          <DayDetail
+            activeTrip={activeTrip}
+            activeDay={activeDay}
+            viewAll={viewAll}
+            setViewAll={setViewAll}
+            />
+        </div>
+      </Container>
 
     </div>
   );
