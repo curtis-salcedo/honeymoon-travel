@@ -1,4 +1,5 @@
 const Activity = require('../../models/activity');
+const Addresses = require('../../models/address');
 
 module.exports = {
   create,
@@ -29,9 +30,17 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
+  console.log('activity create req.body at controller', req.body)
   try {
+    const { activityData, address } = req.body;
+    // Create and save the address in the database
+    const createdAddress = await Addresses.create(address);
     // Create and save the activity in the database
-    const activity = await Activity.create(req.body);
+    const activity = await Activity.create({
+      ...activityData,
+      address: createdAddress._id
+    });
+    console.log('activity created at activity create', activity)
     res.json(activity);
   } catch (err) {
     res.status(400).json(err);

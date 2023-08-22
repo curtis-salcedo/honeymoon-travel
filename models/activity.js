@@ -11,7 +11,7 @@ const activitySchema = new mongoose.Schema({
   startTime: { type: String, required: true },
   endTime: { type: String },
   details: { type: String },
-  location: { type: String },
+  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
 });
 
 const Activity = mongoose.model('Activity', activitySchema);

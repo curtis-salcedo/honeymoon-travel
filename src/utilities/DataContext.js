@@ -33,7 +33,6 @@ export const DataProvider = (props) => {
   }, [activeTrip]);
   
   const fetchData = async () => {
-    
     try {
       const user = await getUser();
       setUser(user);
@@ -62,12 +61,12 @@ export const DataProvider = (props) => {
       const travels = await getTravelsForTrip(activeTrip._id);
       setActiveTravels(travels);
         
+      console.log(activities)
     } catch (err) {
       console.log('Error at DataContext.js fetchTripDetailsData', err);
     }
   };
 
-  console.log(address)
 
   return (
     <DataContext.Provider

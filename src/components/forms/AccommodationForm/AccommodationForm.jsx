@@ -26,7 +26,6 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
-import { getAddress } from '../../../utilities/api/addresses-api';
 
 export default function AccommodationForm({ selectedData, id, day, setShow, setShowEdit }) {
   const [address, setAddress] = useState(null)
@@ -109,7 +108,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
   return (
     <div className='form-container'>
     <h1>Accommodation Form</h1>
-    <form onSubmit={handleSubmit}>
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -210,7 +208,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
         </Grid>
 
       </Container>
-    </form>
   </div>
   );
 }

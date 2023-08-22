@@ -53,7 +53,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
         <div className="DayDetailContent">
           <Accordion>
             <AccordionSummary
-            expandIcon={<KeyboardArrowDown />}
+              expandIcon={<KeyboardArrowDown />}
               aria-controls="panel1a-content"
               id="panel1a-header">
               <Typography style={{fontWeight:'bold'}}>Accommodations</Typography>

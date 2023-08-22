@@ -9,6 +9,7 @@ import * as MapService from '../../utilities/services/maps-service';
 
 // Component Imports
 import AccommodationForm from '../forms/AccommodationForm/AccommodationForm';
+import AddButton from '../buttons/AddButton';
 import Detail from '../Detail/Detail';
 
 // Style Imports
@@ -23,6 +24,7 @@ import {
   CardActions,
   CardContent,
   Grid,
+  Container,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
@@ -61,8 +63,15 @@ export default function Accommodation({ id, day, viewAll }) {
 
   return (
       <div className='DayDetailAccordion'>
+        <Container>
         <div className='DayDetailButton'>
-          <Button variant="contained" onClick={handleShow}>Add Accommodation</Button>
+          <AddButton
+              text='Add Stay'
+              primaryColor={`${'var(--dark)'}`}
+              secondaryColor={`${'var(--white)'}`}
+              onClick={handleShow}
+            />
+          {/* <Button variant="contained" onClick={handleShow}>Add Accommodation</Button> */}
           { show ? <AccommodationForm id={id} day={day} setShow={setShow} /> : null }
         </div>
         
@@ -70,9 +79,9 @@ export default function Accommodation({ id, day, viewAll }) {
             <div>
             {accommodations.map((accommodation) => (
               
-              <Card elevation={3} className='DetailDayCard' key={accommodation._id}>
+              <Card elevation={3} key={accommodation._id}>
                   
-              <CardContent className='DetailDayCardExpanded'>
+              <CardContent>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} sm={4}>
                     <Typography variant="h6" gutterBottom>{accommodation.type}</Typography>
@@ -116,13 +125,15 @@ export default function Accommodation({ id, day, viewAll }) {
   
             if (isCheckInDay || isCheckOutDay) {
               return (
-                <Card elevation={3} className='DetailDayCard' key={accommodation._id}>
+                <Card elevation={3} key={accommodation._id}>
                   
-                  <CardContent className='DetailDayCardExpanded'>
+                  <CardContent>
                     <Grid container spacing={2} alignItems="center">
                       <Grid item xs={12} sm={4}>
                         <Typography variant="h6" gutterBottom>{accommodation.type}</Typography>
-                        {accommodation.name && <Typography variant="body1">{accommodation.name}</Typography>}
+                        {accommodation.name &&
+                          <Typography variant="body1">{accommodation.name}</Typography>
+                        }
                       </Grid>
                       <Grid item xs={12} sm={4}>
                         <Typography variant="body1">{accommodation.location}</Typography>
@@ -150,6 +161,7 @@ export default function Accommodation({ id, day, viewAll }) {
             return null;
           })
         )}
+        </Container>
       </div>
   );
 }
