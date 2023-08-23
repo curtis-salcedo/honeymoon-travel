@@ -11,7 +11,7 @@ module.exports = {
 async function index(req, res) {
   try {
     // Get all meal entries with the matching tripId from the database
-    const meals = await Meal.find({ tripId: req.query.tripId });
+    const meals = (await Meal.find({ tripId: req.query.tripId })).populate('address');
     res.json(meals);
   } catch (err) {
     res.status(400).json(err);

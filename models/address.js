@@ -10,6 +10,8 @@ const addressSchema = new mongoose.Schema({
   state: { type: String },
   streetName: { type: String },
   zipCode: { type: String },
+  placeId: { type: String },
+  images: [{ type: String }],
 });
 
 const Address = mongoose.model('Address', addressSchema);

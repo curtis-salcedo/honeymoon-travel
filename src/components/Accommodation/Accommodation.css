@@ -7,6 +7,8 @@
     margin-bottom: 10px;
 }
 
-.ExpandedDetails {
-    
+.hotel-card-media {
+    object-fit: 'cover';
+    border-radius: 1vmin;
+    background-color: var(--light);
 }

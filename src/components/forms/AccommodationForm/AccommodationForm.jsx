@@ -28,8 +28,9 @@ import {
 } from '@mui/material';
 
 export default function AccommodationForm({ selectedData, id, day, setShow, setShowEdit }) {
-  const [address, setAddress] = useState(null)
   const { activeTrip } = useContext(DataContext)
+  const [googleMapType, setGoogleMapType] = useState('lodging')
+  const [address, setAddress] = useState(null)
   const [tripId, setTripId] = useState(activeTrip)
   const [activeAddress, setActiveAddress] = useState(null)
   const [accommodationData, setAccommodationData] = useState({
@@ -116,6 +117,7 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
               handleSaveAddress={handleSaveAddress} 
               setAddress={setAddress}
               address={address}
+              googleMapType={googleMapType}
             />
           </Grid>
           <>
@@ -199,7 +201,7 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
           </Grid>
           { activeTrip ?
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
+            <Button onClick={handleSubmit} variant="contained" color="primary">
               Submit
             </Button>
           </Grid>

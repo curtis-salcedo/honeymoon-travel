@@ -23,6 +23,7 @@ async function index(req, res) {
   try {
     // Find all addresses for a trip
     const addresses = await Address.find({ tripId: req.query.tripId });
+    console.log(addresses)
     res.json(addresses);
   } catch (err) {
     res.status(400).json(err);

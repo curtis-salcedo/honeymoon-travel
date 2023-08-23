@@ -9,13 +9,13 @@ import {
 } from '@mui/material';
 
 
-export default function AddressForm({ handleSaveAddress, setAddress, address }) {
+export default function AddressForm({ handleSaveAddress, setAddress, address, googleMapType }) {
   const [resultData, setResultData] = useState(null);
   const autoCompleteRef = useRef();
   const autoCompleteInputRef = useRef();
   const options = {
-    types: ['address'],
-    fields: ['address_components', 'geometry', 'name'],
+    types: [googleMapType ? googleMapType : 'address'],
+    fields: ['place_id', 'address_components', 'geometry', 'name', 'photos']
   };
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function AddressForm({ handleSaveAddress, setAddress, address }) 
     autoCompleteRef.current.addListener('place_changed', async function () {
       const place = await autoCompleteRef.current.getPlace();
       console.log({ place });
-      setResultData(place)
+      setResultData(place); // Clear the result data if not a hotel
     });
   }, []);
 
@@ -43,25 +43,26 @@ export default function AddressForm({ handleSaveAddress, setAddress, address }) 
       longitude: resultData ? resultData.geometry.location.lng() || '' : '',
       latitude: resultData ? resultData.geometry.location.lat() || '' : '',
       name: resultData ? resultData.name || '' : '',
+      placeId: resultData ? resultData.place_id || '' : '',
+      images: resultData && resultData.photos ? resultData.photos.slice(0, 5).map(photo => photo.getUrl()) : [],
     }));
   }, [resultData]);
+
   
 
 
   return (
     <Container>
+    <Grid>
       <Grid>
-        <Grid>
-          <TextField
-            label="Enter address"
-            variant="outlined"
-            inputRef={autoCompleteInputRef}
-          />
-        <Button
-          onClick={handleSaveAddress}
-        >Save</Button>
-        </Grid>
+        <TextField
+          label="Enter address"
+          variant="outlined"
+          inputRef={autoCompleteInputRef}
+        />
+        <Button onClick={handleSaveAddress}>Save</Button>
       </Grid>
-    </Container>
+    </Grid>
+  </Container>
   );
 }

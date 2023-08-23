@@ -11,7 +11,6 @@ const mealSchema = new mongoose.Schema({
   phone: { type: String },
   email: { type: String },
   instagram: { type: String },
-  googleMapsLink: { type: String }
 });
 
 const meal = mongoose.model('Meal', mealSchema);

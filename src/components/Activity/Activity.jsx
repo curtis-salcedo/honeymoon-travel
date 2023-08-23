@@ -16,17 +16,16 @@ import AddButton from '../buttons/AddButton';
 import './Activity.css';
 import {
   Button,
-  IconButton,
-  Tooltip,
   Typography,
   Card,
   CardActions,
-  CardContent,
   Grid,
   Container,
-  FormControlLabel,
-  Switch,
+  CardMedia,
+  ButtonBase,
+
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -51,21 +50,13 @@ export default function Activity({ id, day, viewAll }) {
     setShow(!show)
   }
 
-  const handleEdit = (e, id) => {
-      
-  }
-
-  const handleDelete = (e, id) => {
-        
-  }
-
   const getMapLocation = (e, address) => {
     console.log('getMapLocation', address)
     MapService.getAddressLocation(address, setMapLocation)
   }
   
 
-  console.log(activities.map((a) => a.name ))
+  console.log('activities', activities)
   
   return (
 
@@ -80,32 +71,99 @@ export default function Activity({ id, day, viewAll }) {
       { show ? <ActivityForm id={id} day={day} setShow={setShow} /> : null }
       {activities ? 
         activities.map((a) => (
-        <Card elevation={5} sx={{ backgroundColor:'#f3f4f5', margin: 0, padding: 0, marginBottom: '15px' }}>
-          <CardContent>
-            <Typography sx={{ mb:'5px',mt:'-2px'}} variant='h5'>
-              {a.name}
-            </Typography>
-            <Typography sx={{ mt:-1 }} color="text.secondary">
-              <div style={{display:'flex',justifyContent:'space-between'}}>
-                {a.type}
-                <div>
-                  {convertDateToDetail(a.date)}
-                </div>
-                  {a.startTime}
-              </div>
-            </Typography>
-            <Typography sx={{ mt:'5px'}} variant="body2">
-              {a.details}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            {/* <Button size="small">Learn More</Button>
-            <Button size="small">Edit</Button>
-            <Button size="small">Delete</Button> */}
-            <Button size="small">Map</Button>
-            <Button onClick={(e) => getMapLocation(e, a.address)}>Map</Button>
-          </CardActions>
+          <Card id='hotel-card' elevation={0} key={a._id} sx={{padding:1}}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm container>
+              <Grid item xs container
+                direction="column"
+                spacing={2}
+                sx={{
+                  backgroundColor:'var(--light)',
+                  border:'none',
+                  borderRadius:'1vmin',
+                  margin:'0',
+                  minHeight: '200px',
+                }}
+                >
+                <Grid item xs>
+                  <Typography gutterBottom variant="text" component="div">
+                    {a.name} - {a.type}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {convertDateToDetail(a.date)} - {a.startTime}
+                  </Typography>
+                  <Typography variant="body3" color="text.secondary">
+                    {a.details}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <CardActions>
+                    <Button>Remove</Button>
+                    <Button
+                      onClick={(e) => getMapLocation(e, a.address)}
+                    >Map</Button>
+                  </CardActions>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+                <ButtonBase sx={{ width: 250, height: 150 }}>
+                { a.address.images > 0 ?
+                  <CardMedia
+                    className='hotel-card-media'
+                    component="img"
+                    src={a.address.images[0]}
+                    alt="Image"
+                      />
+                : <AddIcon 
+                    // className='hotel-card-media' 
+                    sx={{
+                      backgroundColor: 'var(--light)', // Background color
+                      borderRadius: '1vmin', // Border radius
+                      color: 'var(--your-icon-color)', // Icon color
+                      height: '50%',
+                      width: '50%',
+                    }}
+                  /> }
+                </ButtonBase>
+                <Grid item xs>
+                  <Typography varient="body2" color="text.secondary" >
+                    {a.address.name}, {a.address.city}, {a.address.state}
+                    <br />
+                    {a.address.country}, {a.address.zipCode}
+                  </Typography>
+                </Grid>
+            </Grid>
+          </Grid>
         </Card>
+
+
+        // <Card elevation={5} sx={{ backgroundColor:'#f3f4f5', margin: 0, padding: 0, marginBottom: '15px' }}>
+        //   <CardContent>
+        //     <Typography sx={{ mb:'5px',mt:'-2px'}} variant='h5'>
+        //       {a.name}
+        //     </Typography>
+        //     <Typography sx={{ mt:-1 }} color="text.secondary">
+        //       <div style={{display:'flex',justifyContent:'space-between'}}>
+        //         {a.type}
+        //         <div>
+        //           {convertDateToDetail(a.date)}
+        //         </div>
+        //           {a.startTime}
+        //       </div>
+        //     </Typography>
+        //     <Typography sx={{ mt:'5px'}} variant="body2">
+        //       {a.details}
+        //     </Typography>
+        //   </CardContent>
+        //   <CardActions>
+        //     {/* <Button size="small">Learn More</Button>
+        //     <Button size="small">Edit</Button>
+        //     <Button size="small">Delete</Button> */}
+        //     <Button size="small">Map</Button>
+        //     <Button onClick={(e) => getMapLocation(e, a.address)}>Map</Button>
+        //   </CardActions>
+        // </Card>
         ))
         :null }
     </Container>

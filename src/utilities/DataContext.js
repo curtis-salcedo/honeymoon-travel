@@ -60,8 +60,7 @@ export const DataProvider = (props) => {
 
       const travels = await getTravelsForTrip(activeTrip._id);
       setActiveTravels(travels);
-        
-      console.log(activities)
+    
     } catch (err) {
       console.log('Error at DataContext.js fetchTripDetailsData', err);
     }

@@ -22,7 +22,7 @@ async function show(req, res) {
 async function index(req, res) {
   try {
     // Find all activities
-    const activities = await Activity.find({});
+    const activities = await Activity.find({ tripId: req.query.tripId }).populate('address');
     res.json(activities);
   } catch (err) {
     res.status(400).json(err);
