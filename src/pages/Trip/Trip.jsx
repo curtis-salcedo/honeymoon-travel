@@ -73,8 +73,7 @@ export default function Trip({ user }) {
 
   return (
     <div className="TripContainer">
-      <Container>
-        <p>{user.email}, here are your trips!</p>
+      <Container style={{ padding:'12px', margin:0 }}>
         {allUserTrips && allUserTrips.length > 0 ? (
           allUserTrips.map((trip) => (
             <div key={trip._id} className="TripButtonContainer">
@@ -97,21 +96,19 @@ export default function Trip({ user }) {
                 {trip.name}
               </Button>
                 {activeTrip ? (
-                  <div>
                     <TripDetails
                       activeTrip={activeTrip}
                       handleDayDetailClick={handleDayDetailClick}
                       handleViewAll={handleViewAll}
                       viewAll={viewAll}
                     />
-                  </div>
                 ) : null}
             </div>
           ))
         ) : null}
       </Container>
 
-      <Container>
+      <Container style={{ padding:0, margin:0 }}>
         <div className="DayDetailContainer">
           <DayDetail
             activeTrip={activeTrip}

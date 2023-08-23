@@ -60,11 +60,10 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
 
   return (
     <div className='TripDetailsContainer'>
-    <div>
       {/* <div className='TripDetailsDays' > */}
-      <Container style={{ padding:0, margin:0}}>
+      <Container style={{ padding:0, marginTop:50 }}>
       { activeTrip && activeTrip.tripDays ?
-      <Accordion>
+      <Accordion elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -108,7 +107,7 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
 
     { activeTrip && activeTrip.tripDays ?
     <>
-    <Accordion>
+    <Accordion elevation={0}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -121,7 +120,8 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
         <Typography>Feature to be added in the future with Explore, Notes, Places to visit</Typography>
       </AccordionDetails>
     </Accordion>
-    <Accordion>
+    
+    <Accordion elevation={0}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -167,7 +167,6 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
         : null} */}
         </Container>
       {/* </div> */}
-    </div>
   </div>
   );
 }

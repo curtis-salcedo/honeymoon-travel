@@ -44,7 +44,7 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
   return (
     <div className='DayDetailContainer'>
 
-      <Container>
+      <Container style={{ padding:'12px', margin:0 }}>
 
       <Typography>{ viewAll ? 'Viewing all dates' : `${convertDateToLongDetail(activeDay)}`}</Typography>
       {/* <div> */}
