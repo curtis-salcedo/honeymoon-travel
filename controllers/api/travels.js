@@ -1,4 +1,5 @@
 const Travel = require('../../models/travel');
+const Address = require('../../models/address');
 
 module.exports = {
   create,
@@ -11,7 +12,7 @@ module.exports = {
 async function index(req, res) {
   try {
     // Find all travels
-    const travels = await Travel.find({ tripId: req.query.tripId });
+    const travels = await Travel.find({ tripId: req.query.tripId }).populate('departureLocation').populate('arrivalLocation');
     res.json(travels);
   } catch (err) {
     res.status(400).json(err);
@@ -29,9 +30,19 @@ async function show(req, res) {
 }
 
 async function create(req, res) {
+  console.log(req.body)
   try {
+    const departure = await Address.create(req.body.departureLocation);
+    const arrival = await Address.create(req.body.arrivalLocation);
+    console.log('departure', departure)
+    console.log('arrival', arrival)
+
     // Create and save the travel situation in the database
-    const travel = await Travel.create(req.body);
+    const travel = await Travel.create({
+      ...req.body,
+      departureLocation: departure._id,
+      arrivalLocation: arrival._id,
+    });
     res.json(travel);
   } catch (err) {
     res.status(400).json(err);

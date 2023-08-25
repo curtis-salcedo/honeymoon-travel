@@ -15,30 +15,6 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
   const autoCompleteRef = useRef();
   const autoCompleteInputRef = useRef();
   console.log('google map type', googleMapType)
-  // const options = {
-  //   types: [googleMapType ? googleMapType : 'geocode'],
-  //   fields: [
-  //     'place_id',
-  //     'address_components',
-  //     'geometry',
-  //     'name',
-  //     'photos',
-  //     ...additionalFields,
-  //   ]
-  // };
-  
-  // useEffect(() => {
-  //   autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-  //     autoCompleteInputRef.current,
-  //     options
-  //   );
-
-  //   autoCompleteRef.current.addListener('place_changed', async function () {
-  //     const place = await autoCompleteRef.current.getPlace();
-  //     console.log({ place });
-  //     setResultData(place); // Clear the result data if not a hotel
-  //   });
-  // }, []);
 
   useEffect(() => {
     const options = {
@@ -53,22 +29,25 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
         'price_level',
         'formatted_phone_number',
         'website',
-      ]
+      ],
+      componentRestrictions: {
+        country: ['us', 'it'], // Restrict to US and Italy
+      },
     };
-
+  
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       autoCompleteInputRef.current,
       options
     );
-
+  
     autoCompleteRef.current.addListener('place_changed', async function () {
       const place = await autoCompleteRef.current.getPlace();
       console.log({ place });
       setResultData(place);
     });
-
-  }, [googleMapType])
-
+  
+  }, [googleMapType]);
+  
 
   useEffect(() => {
     setAddress(prevAddress => ({

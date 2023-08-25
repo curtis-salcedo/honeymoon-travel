@@ -31,6 +31,7 @@ import {
   ButtonBase,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Accommodation({ id, day, viewAll }) {
   const { activeAccommodations } = useContext(DataContext)
@@ -69,99 +70,89 @@ export default function Accommodation({ id, day, viewAll }) {
         {/* <Button variant="contained" onClick={handleShow}>Add Accommodation</Button> */}
         { show ? <AccommodationForm id={id} day={day} setShow={setShow} /> : null }
       </div>
-      {accommodations.map((accommodation) => (
-        <Card id='hotel-card' elevation={0} key={accommodation._id}>
-          <Grid container spacing={2} mt={2} >
-            {/* Left column */}
-            <Grid item xs={12} sm container>
-              <Grid
-                item
-                container
-                xs={12}
-                direction="column"
-                spacing={2}
-                sx={{
-                  padding: 2,
-                  backgroundColor:'var(--light)',
-                  border:'none',
-                  borderRadius:'1vmin',
-                  width: '425px',
-                  height: '250px',
-                }}
-                >
-
-                <Grid item xs>
-                  <Typography gutterBottom variant="text" component="div">
-                    {accommodation.name} - {accommodation.type}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Check-in: { accommodation.checkInDate ? accommodation.checkInDate : '' }
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Check-out: { accommodation.checkOutDate ? accommodation.checkOutDate : '' }
-                  </Typography>
-                </Grid>
-
-                <Grid item>
-                  <CardActions>
-                    <Button>Remove</Button>
-                    <Button
-                      onClick={(e) => getMapLocation(e, accommodation.address)}
-                    >Map</Button>
-                  </CardActions>
-                </Grid>
-                
-              </Grid>
-
-            </Grid>
-        {/* Right Column */}
-              <Grid 
-                container
-                direction="column"
-                justifyContent="space-between"
-                sx={{
-                  width: '250px', // Adjust the width as needed
-                  height: '250px', // Adjust the height as needed
-                  padding: '8px', // Add spacing as needed>
-                }}>
-
-
-              <ButtonBase sx={{ width: 250, height: 150 }}>
-              <CardMedia
-                className='hotel-card-media'
-                component="img"
-                src={accommodation.address.images[0]}
-                alt="Image"
-                />
-              </ButtonBase>
-
-              {/* <Card
-                elevation={0}
-                sx={{
-                  padding: 0,
-                  margin: 0,
-                  border:'none',
-                }}
+      {accommodations ? 
+        accommodations.map((a) => (
+        <Card id='hotel-card' elevation={0} key={a._id} sx={{padding:1}}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container>
+            <Grid item xs container
+              direction="column"
+              spacing={2}
+              sx={{
+                backgroundColor:'var(--light)',
+                border:'none',
+                borderRadius:'1vmin',
+                margin:'0',
+                height: '250px',
+                width: '400px'
+              }}
               >
-
-                <Typography varient="body2" color="text.secondary"
-                  sx={{
-                    fontSize:'0.75rem',
-                  }}
-                  >
-                  {accommodation.address.name}, {accommodation.address.city}, {accommodation.address.state}
-                  <br />
-                  {accommodation.address.country}, {accommodation.address.zipCode}
-                </Typography>
-              </Card> */}
-
-
+              <Grid item xs>
+                <Typography gutterBottom variant="text" component="div">
+                    {a.name} - {a.type}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Check-in: { a.checkInDate ? a.checkInDate : '' }
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Check-out: { a.checkOutDate ? a.checkOutDate : '' }
+                  </Typography>
+              </Grid>
+              <Grid item>
+                <CardActions>
+                  <Button>Remove</Button>
+                  <Button
+                    // onClick={(e) => getMapLocation(e, m.address)}
+                  >Map</Button>
+                </CardActions>
+              </Grid>
             </Grid>
-
           </Grid>
-
-        </Card>
-      ))}
+          <Grid item>
+              <ButtonBase sx={{ width: 200, height: 'auto' }}>
+              { a.address.images ?
+                <CardMedia
+                  className='hotel-card-media'
+                  component="img"
+                  src={a.address.images[0]}
+                  sx={{
+                    width: '200px',
+                    height: '150px',
+                    borderRadius: '1vmin',
+                  }}
+                  alt="Image"
+                    />
+              : <AddIcon 
+                  // className='hotel-card-media' 
+                  sx={{
+                    backgroundColor: 'var(--light)', // Background color
+                    borderRadius: '1vmin', // Border radius
+                    color: 'var(--your-icon-color)', // Icon color
+                    height: '50%',
+                    width: '50%',
+                  }}
+                /> }
+              </ButtonBase>
+              <Grid item xs>
+                <Typography varient="body1" color="text.secondary"
+                  sx={{
+                    width: '200px',
+                    height: '100px',
+                  }}>
+                  { a.address.name ? 
+                    <>
+                      {a.address.name}, {a.address.city}, {a.address.state}
+                      <br />
+                      {a.address.country}, {a.address.zipCode}
+                    </>
+                  : 'No address recorded' }
+                </Typography>
+              </Grid>
+          </Grid>
+        </Grid>
+      </Card>
+      ))
+      :null }
     </Container>
   );
 }

@@ -65,28 +65,24 @@ export default function Activity({ id, day, viewAll }) {
         />
       </div>
       { show ? <ActivityForm id={id} day={day} setShow={setShow} /> : null }
-      {activities ? 
+
+      { activities ? 
         activities.map((a) => (
-          <Card id='hotel-card' elevation={0} key={a._id}>
+        <Card id='hotel-card' elevation={0} key={a._id} sx={{padding:1}}>
           <Grid container spacing={2}>
-            {/* Left Column */}
             <Grid item xs={12} sm container>
-              <Grid
-                item
-                container
-                xs={12}
+              <Grid item xs container
                 direction="column"
                 spacing={2}
                 sx={{
-                  padding: 2,
                   backgroundColor:'var(--light)',
                   border:'none',
                   borderRadius:'1vmin',
-                  width: '425px',
+                  margin:'0',
                   height: '250px',
+                  width: '400px'
                 }}
                 >
-
                 <Grid item xs>
                   <Typography gutterBottom variant="text" component="div">
                     {a.name} - {a.type}
@@ -98,60 +94,61 @@ export default function Activity({ id, day, viewAll }) {
                     {a.details}
                   </Typography>
                 </Grid>
-
                 <Grid item>
                   <CardActions>
                     <Button>Remove</Button>
                     <Button
-                      onClick={(e) => getMapLocation(e, a.address)}
+                      // onClick={(e) => getMapLocation(e, m.address)}
                     >Map</Button>
                   </CardActions>
                 </Grid>
-
               </Grid>
             </Grid>
-
-            <Grid 
-              container
-              direction="column"
-              justifyContent="space-between"
-              sx={{
-                width: '250px', // Adjust the width as needed
-                height: '250px', // Adjust the height as needed
-                padding: '8px', // Add spacing as needed>
-              }}>
-
-                <ButtonBase sx={{ width: 250, height: 150 }}>
-                { a.address.images > 0 ?
-                  <CardMedia
-                    className='card-media'
-                    component="img"
-                    src={a.address.images[0]}
-                    alt="Image"
-                      />
-                : <AddIcon 
-                    // className='hotel-card-media' 
-                    sx={{
-                      backgroundColor: 'var(--light)', // Background color
-                      borderRadius: '1vmin', // Border radius
-                      color: 'var(--your-icon-color)', // Icon color
-                    }}
-                  /> }
-                </ButtonBase>
-
-                <Grid item xs>
-                  <Typography varient="body2" color="text.secondary" >
-                    {a.address.name}, {a.address.city}, {a.address.state}
-                    <br />
-                    {a.address.country}, {a.address.zipCode}
-                  </Typography>
-                </Grid>
-                
+            <Grid item>
+              <ButtonBase sx={{ width: 200, height: 'auto' }}>
+              { a.address.images ?
+                <CardMedia
+                  className='hotel-card-media'
+                  component="img"
+                  src={a.address.images[0]}
+                  sx={{
+                    width: '200px',
+                    height: '150px',
+                    borderRadius: '1vmin',
+                  }}
+                  alt="Image"
+                    />
+              : <AddIcon 
+                  // className='hotel-card-media' 
+                  sx={{
+                    backgroundColor: 'var(--light)', // Background color
+                    borderRadius: '1vmin', // Border radius
+                    color: 'var(--your-icon-color)', // Icon color
+                    height: '50%',
+                    width: '50%',
+                  }}
+                /> }
+              </ButtonBase>
+              <Grid item xs>
+                <Typography varient="body1" color="text.secondary"
+                  sx={{
+                    width: '200px',
+                    height: '100px',
+                  }}>
+                  { a.address.name ? 
+                    <>
+                      {a.address.name}, {a.address.city}, {a.address.state}
+                      <br />
+                      {a.address.country}, {a.address.zipCode}
+                    </>
+                  : 'No address recorded' }
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Card>
         ))
-        :null }
+        : null }
     </Container>
   );
 }

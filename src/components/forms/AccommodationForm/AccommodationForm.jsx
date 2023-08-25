@@ -108,7 +108,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
 
   return (
     <div className='form-container'>
-    <h1>Accommodation Form</h1>
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12}>
