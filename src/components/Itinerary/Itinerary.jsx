@@ -46,35 +46,35 @@ export default function Itinerary({ activeDay, activeTrip, viewAll }) {
   }
 
   return (
-    <div className='DayDetailContainer'>
-      <Container style={{ padding: 0, margin: 0 }}>
-        <div className="DayDetailContent">
-          <Typography>{ viewAll ? getTripRange(tripDays) : `${convertDateToLongDetail(activeDay)}` }</Typography>
-          {/* Render accordion components when there is an actual trip created with tripDays */}
-          {categories.map((category, index) => (
-            <Accordion
-              key={index}
-              expanded={expanded === category}
-              onChange={handleChange(category)}
-            >
-              <AccordionSummary
-                expandIcon={<KeyboardArrowDown />}
-                aria-controls={`panel${index + 1}-content`}
-                id={`panel${index + 1}-header`}
-              >
-                <Typography style={{ fontWeight: 'bold' }}>{category}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {/* Render component based on category list to reduce code */}
-                {category === 'Accommodations' && <Accommodation />}
-                {category === 'Activities' && <Activity />}
-                {category === 'Meals' && <Meal />}
-                {category === 'Travel' && <Travel day={activeDay} />}
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </div>
-      </Container>
-  </div>
+  <Container style={{ padding: 0, margin: 0 }}>
+    <div className="DayDetailContent">
+      <Typography>{ viewAll ? getTripRange(tripDays) : `${convertDateToLongDetail(activeDay)}` }</Typography>
+      {/* Render accordion components when there is an actual trip created with tripDays */}
+      {categories.map((category, index) => (
+        <Accordion
+          key={index}
+          expanded={expanded === category}
+          onChange={handleChange(category)}
+        >
+          <AccordionSummary
+            expandIcon={<KeyboardArrowDown />}
+            aria-controls={`panel${index + 1}-content`}
+            id={`panel${index + 1}-header`}
+          >
+            <Typography style={{ fontWeight: 'bold' }}>{category}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {/* Render component based on category list to reduce code */}
+            {category === 'Accommodations' && <Accommodation id={activeTrip} day={activeDay} viewAll={viewAll} />}
+            {category === 'Activities' && <Activity />}
+            {category === 'Meals' && <Meal />}
+            {category === 'Travel' && <Travel day={activeDay} />}
+            {/* Add button related to this category */}
+            {/* <Button onClick={handleAddButtonClick}>Add {category}</Button> */}
+          </AccordionDetails>
+        </Accordion>
+      ))}
+    </div>
+  </Container>
   );
 }

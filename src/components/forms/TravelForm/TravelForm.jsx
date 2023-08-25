@@ -33,7 +33,6 @@ export default function TravelForm({ id, day, setShow }) {
     identifier: '',
     departure: '',
     arrival: '',
-    isBooked: false,
   });
 
   const handleChange = (e) => {
@@ -93,6 +92,17 @@ export default function TravelForm({ id, day, setShow }) {
       <Grid item xs={12}>
         <TextField
           type="text"
+          label="Identifier"
+          name="identifier"
+          value={travelData.identifier}
+          onChange={handleChange}
+          fullWidth
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <TextField
+          type="text"
           label="Start Location"
           name="startLocation"
           value={travelData.startLocation}
@@ -135,30 +145,6 @@ export default function TravelForm({ id, day, setShow }) {
           onChange={handleChange}
           fullWidth
           required
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <TextField
-          type="text"
-          label="Identifier"
-          name="identifier"
-          value={travelData.identifier}
-          onChange={handleChange}
-          fullWidth
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="isBooked"
-              checked={travelData.isBooked}
-              onChange={handleChange}
-            />
-          }
-          label="Is Booked"
         />
       </Grid>
 

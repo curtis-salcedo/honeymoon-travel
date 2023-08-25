@@ -20,7 +20,7 @@ export const DataProvider = (props) => {
 
   const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
 
-  console.log(address)
+  // console.log(address)
 
   useEffect(() => {
     fetchData();
@@ -32,7 +32,7 @@ export const DataProvider = (props) => {
     }
   }, [activeTrip]);
   
-  console.log(activeTrip)
+  // console.log(activeTrip)
 
   const fetchData = async () => {
     try {

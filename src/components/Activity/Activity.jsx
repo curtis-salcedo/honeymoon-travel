@@ -40,7 +40,6 @@ export default function Activity({ id, day, viewAll }) {
   // Set the state for the activity form to be shown or not
   const [show, setShow] = useState(false)
 
-
   useEffect(() => {
     setActivities(activeActivities);
   }, [activeActivities, viewAll])
@@ -55,9 +54,6 @@ export default function Activity({ id, day, viewAll }) {
     MapService.getAddressLocation(address, setMapLocation)
   }
   
-
-  console.log('activities', activities)
-  
   return (
     <Container>
       <div className='add-button'>
@@ -68,7 +64,6 @@ export default function Activity({ id, day, viewAll }) {
           onClick={handleShow}
         />
       </div>
-      {/* <Button variant="contained" onClick={handleShow}>Add Activity</Button> */}
       { show ? <ActivityForm id={id} day={day} setShow={setShow} /> : null }
       {activities ? 
         activities.map((a) => (

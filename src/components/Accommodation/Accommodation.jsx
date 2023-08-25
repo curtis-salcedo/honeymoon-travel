@@ -48,18 +48,8 @@ export default function Accommodation({ id, day, viewAll }) {
   const handleShow = (e) => {
     setShow(!show)
   }
-
-  // Handle any actions when the user clicks on the icon
-  const handleClick = (e, id) => {
-
-  }
-
-  const handleEdit = (e, id) => {
-    const selected = accommodations.find((a) => a._id === id)
-    setSelectedData(selected)
-    setShowEdit(!showEdit)
-  }
   
+  // Find a specific location on the map
   const getMapLocation = (e, address) => {
     console.log('getMapLocation', address)
     MapService.getAddressLocation(address, setMapLocation)

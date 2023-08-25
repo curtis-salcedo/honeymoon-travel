@@ -39,7 +39,6 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
   };
 
   const handleDaySelected = (e, dayId) => {
-    console.log('handleDaySelected dayId', dayId)
     setSelectedDay(dayId)
     handleDayDetailClick(e, dayId)
   };
@@ -106,67 +105,37 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
 
 
     { activeTrip && activeTrip.tripDays ?
-    <>
-    <Accordion elevation={0}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-        onClick={handleExpandBudget}
-        >
-      <Typography style={{fontWeight:'bold'}}>Overview</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Typography>Feature to be added in the future with Explore, Notes, Places to visit</Typography>
-      </AccordionDetails>
-    </Accordion>
-    
-    <Accordion elevation={0}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-        onClick={handleExpandBudget}
-        >
-      <Typography style={{fontWeight:'bold'}}>Budget</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Typography>Feature to be added in the future where you can set budget, review costs of trip, etc.</Typography>
-      </AccordionDetails>
-    </Accordion>
-    </>
-    : null }
+      <>
+      <Accordion elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          onClick={handleExpandBudget}
+          >
+        <Typography style={{fontWeight:'bold'}}>Overview</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>Feature to be added in the future with Explore, Notes, Places to visit</Typography>
+        </AccordionDetails>
+      </Accordion>
       
-      {/* { activeTrip && activeTrip.tripDays ?
-        <Button
-          id='side-bar-button'
-          variant="outlined"
-          color="primary"
-          onClick={handleViewAll}
-          className="ViewAllButton">
-          <Typography variant="body1">
-            View All
-          </Typography></Button>
-      : null } */}
-
-      {/* {activeTrip && activeTrip.tripDays ? 
-        activeTrip.tripDays.map((day, index) => (
-            <Button
-              key={day._id || index}
-              id='side-bar-button'
-              size="medium"
-              sx={{
-                backgroundColor: selectedDay === convertDate(day) ? 'lightskyblue' : 'white',
-                border: 'none'
-              }}
-              onClick={(e) => handleDaySelected(e, day)}
-            >
-              {day}
-            </Button>
-        ))
-        : null} */}
-        </Container>
-      {/* </div> */}
+      <Accordion elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          onClick={handleExpandBudget}
+          >
+        <Typography style={{fontWeight:'bold'}}>Budget</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>Feature to be added in the future where you can set budget, review costs of trip, etc.</Typography>
+        </AccordionDetails>
+      </Accordion>
+      </>
+    : null }
+    </Container>
   </div>
   );
 }
