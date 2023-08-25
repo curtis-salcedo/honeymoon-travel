@@ -1,8 +1,9 @@
 import sendRequest from "../send-request";
 const BASE_URL = '/api/meals';
 
-export async function createMeal(mealData) {
-  return sendRequest(BASE_URL, 'POST', mealData);
+export async function createMeal(mealData, address) {
+  console.log('this is the api call', mealData, address)
+  return sendRequest(BASE_URL, 'POST', {mealData, address});
 }
 
 export async function updateMeal(mealId, updatedData) {

@@ -12,6 +12,10 @@ const addressSchema = new mongoose.Schema({
   zipCode: { type: String },
   placeId: { type: String },
   images: [{ type: String }],
+  rating: { type: String },
+  priceLevel: { type: String },
+  phoneNumber: { type: String },
+  website: { type: String },
 });
 
 const Address = mongoose.model('Address', addressSchema);

@@ -65,9 +65,11 @@ export default function TravelForm({ id, day, setShow }) {
 
   return (
     <main>
-    <h1>Activity Form</h1>
+    <h1>Travel Form</h1>
     <form onSubmit={handleSubmit}>
     <Container>
+    <div className='add-button'></div>
+
     <Grid container spacing={2}>
 
       <Grid item xs={12}>

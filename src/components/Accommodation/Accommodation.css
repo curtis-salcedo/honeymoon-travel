@@ -6,9 +6,3 @@
     width: 100%;
     margin-bottom: 10px;
 }
-
-.hotel-card-media {
-    object-fit: 'cover';
-    border-radius: 1vmin;
-    background-color: var(--light);
-}

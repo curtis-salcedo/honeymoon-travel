@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
+// Service Imports
 import { convertDate } from '../../utilities/services/business-service';
 
 // Component Imports
 import TravelForm from '../forms/TravelForm/TravelForm';
+import AddButton from '../buttons/AddButton';
 
 // Style Imports
 import './Travel.css';
@@ -27,11 +29,15 @@ export default function Travel({ id, day }) {
   }
 
   return (
-    <div className="AccordionCardInfo">
-      <h1>Travel Component</h1>
-
-      <Button variant="contained" onClick={handleShow}>Add Travel</Button>
-
+    <div className="accordion-sub-container">
+        <div className='add-button'>
+          <AddButton
+              text='Add Travel'
+              primaryColor={`${'var(--dark)'}`}
+              secondaryColor={`${'var(--white)'}`}
+              onClick={handleShow}
+            />
+        </div>
       { show ? <TravelForm id={id} day={day} setShow={setShow} /> : null }
 
       { activeTravels.map((travel) => {

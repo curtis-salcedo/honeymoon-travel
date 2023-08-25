@@ -38,7 +38,6 @@ export default function ActivityForm({ id, day, setShow }) {
     date: '',
     startTime: '',
     endTime: '',
-    location: '',
     details: '',
   });
 
@@ -126,6 +125,7 @@ export default function ActivityForm({ id, day, setShow }) {
               handleSaveAddress={handleSaveAddress} 
               setAddress={setAddress}
               address={address}
+              fullWidth
             />
           </Grid>
 

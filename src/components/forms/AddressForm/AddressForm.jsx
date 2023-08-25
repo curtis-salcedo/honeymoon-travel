@@ -11,14 +11,51 @@ import {
 
 export default function AddressForm({ handleSaveAddress, setAddress, address, googleMapType }) {
   const [resultData, setResultData] = useState(null);
+  const [additionalFields, setAdditionalFields] = useState([]);
   const autoCompleteRef = useRef();
   const autoCompleteInputRef = useRef();
-  const options = {
-    types: [googleMapType ? googleMapType : 'address'],
-    fields: ['place_id', 'address_components', 'geometry', 'name', 'photos']
-  };
+  console.log('google map type', googleMapType)
+  // const options = {
+  //   types: [googleMapType ? googleMapType : 'geocode'],
+  //   fields: [
+  //     'place_id',
+  //     'address_components',
+  //     'geometry',
+  //     'name',
+  //     'photos',
+  //     ...additionalFields,
+  //   ]
+  // };
+  
+  // useEffect(() => {
+  //   autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+  //     autoCompleteInputRef.current,
+  //     options
+  //   );
+
+  //   autoCompleteRef.current.addListener('place_changed', async function () {
+  //     const place = await autoCompleteRef.current.getPlace();
+  //     console.log({ place });
+  //     setResultData(place); // Clear the result data if not a hotel
+  //   });
+  // }, []);
 
   useEffect(() => {
+    const options = {
+      types: [googleMapType ? googleMapType : 'geocode'],
+      fields: [
+        'place_id',
+        'address_components',
+        'geometry',
+        'name',
+        'photos',
+        'rating',
+        'price_level',
+        'formatted_phone_number',
+        'website',
+      ]
+    };
+
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       autoCompleteInputRef.current,
       options
@@ -27,9 +64,11 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
     autoCompleteRef.current.addListener('place_changed', async function () {
       const place = await autoCompleteRef.current.getPlace();
       console.log({ place });
-      setResultData(place); // Clear the result data if not a hotel
+      setResultData(place);
     });
-  }, []);
+
+  }, [googleMapType])
+
 
   useEffect(() => {
     setAddress(prevAddress => ({
@@ -45,6 +84,10 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       name: resultData ? resultData.name || '' : '',
       placeId: resultData ? resultData.place_id || '' : '',
       images: resultData && resultData.photos ? resultData.photos.slice(0, 5).map(photo => photo.getUrl()) : [],
+      rating: resultData ? resultData.rating || '' : '',
+      priceLevel: resultData ? resultData.price_level || '' : '',
+      phoneNumber: resultData ? resultData.formatted_phone_number || '' : '',
+      website: resultData ? resultData.website || '' : '',
     }));
   }, [resultData]);
 
@@ -56,9 +99,10 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
     <Grid>
       <Grid>
         <TextField
-          label="Enter address"
+          label="Search by business name or address"
           variant="outlined"
           inputRef={autoCompleteInputRef}
+          fullWidth
         />
         <Button onClick={handleSaveAddress}>Save</Button>
       </Grid>

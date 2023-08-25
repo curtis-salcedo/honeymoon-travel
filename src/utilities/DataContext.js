@@ -32,6 +32,8 @@ export const DataProvider = (props) => {
     }
   }, [activeTrip]);
   
+  console.log(activeTrip)
+
   const fetchData = async () => {
     try {
       const user = await getUser();

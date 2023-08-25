@@ -18,7 +18,7 @@ export default function AddButton({ text, primaryColor, secondaryColor, onClick 
   }
 
   return (
-    <Button style={ buttonStyle } onClick={onClick} >
+    <Button className='add-button' style={ buttonStyle } onClick={onClick} >
       <Typography style={ textStyle }>
         {text}
       </Typography>

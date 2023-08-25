@@ -12,7 +12,6 @@ export default function SideBar({ user }) {
   return (
     <div className="SideBarContainer">
       <h1>SideBar</h1>
-      <p>SideBar</p>
       <Trip user={user} />
     </div>
   );

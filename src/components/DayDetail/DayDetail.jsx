@@ -7,6 +7,7 @@ import Meal from '../Meal/Meal';
 import Travel from '../Travel/Travel';
 import Accommodation from '../Accommodation/Accommodation';
 import Activity from '../Activity/Activity';
+import Itinerary from '../Itinerary/Itinerary';
 
 // Style imports
 import './DayDetail.css';
@@ -22,7 +23,7 @@ import { KeyboardArrowRight, KeyboardArrowDown } from '@mui/icons-material';
 
 export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }) {
   const [tripDays, setTripDays] = useState(activeTrip.tripDays)
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(null);
   const [date, setDate] = useState('');
   const categories = ['Accomodations', 'Activities', 'Meals', 'Travel'];
 
@@ -39,139 +40,19 @@ export default function DayDetail({ activeDay, activeTrip, setViewAll, viewAll }
     if (activeDay) {
       setViewAll(false)
     } 
-  }, [viewAll, activeDay])
+  }, [viewAll, activeDay, activeTrip])
+
+  console.log(activeTrip)
 
   return (
-    <div className='DayDetailContainer'>
-
-      <Container style={{ padding:'12px', margin:0 }}>
-
-      <Typography>{ viewAll ? 'Viewing all dates' : `${convertDateToLongDetail(activeDay)}`}</Typography>
-      {/* <div> */}
-
-      { viewAll ? 
-        <div className="DayDetailContent">
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<KeyboardArrowDown />}
-              aria-controls="panel1a-content"
-              id="panel1a-header">
-              <Typography style={{fontWeight:'bold'}}>Accommodations</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Accommodation viewAll={viewAll}  />
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<KeyboardArrowDown />}
-              aria-controls="panel1a-content"
-              id="panel1a-header">
-              <Typography style={{fontWeight:'bold'}}>Activites</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Activity />
-              <Typography>
-                This is where details for the activites of the day go.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<KeyboardArrowDown />}
-              aria-controls="panel1a-content"
-              id="panel1a-header">
-              <Typography style={{fontWeight:'bold'}}>Meals</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Meal viewAll={viewAll} />
-              <Typography>
-                This is where details for the meal of the day go.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<KeyboardArrowDown />}
-              aria-controls="panel1a-content"
-              id="panel1a-header">
-              <Typography style={{fontWeight:'bold'}}>Travel</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Travel day={activeDay} />
-              <Typography>
-                This is where details for the travel of the day go.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          </div>
-:
-          <div className="DayDetailContent">
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<KeyboardArrowDown />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            <Typography>Accommodations - Daily</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Accommodation day={activeDay} viewAll={viewAll}  />
-            <Typography>
-              This is where details for the accommodations of the day go.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<KeyboardArrowDown />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            <Typography>Activites</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Activity day={activeDay} />
-            <Typography>
-              This is where details for the activites of the day go.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<KeyboardArrowDown />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            <Typography>Meals</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Meal id={activeTrip._id} day={activeDay} tripDays={tripDays} />
-            <Typography>
-              This is where details for the meal of the day go.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<KeyboardArrowDown />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            <Typography>Travel</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Travel day={activeDay} />
-            <Typography>
-              This is where details for the travel of the day go.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+    <>
+    { activeTrip && activeTrip.tripDays ?
+      <Itinerary activeTrip={activeTrip} activeDay={activeDay} viewAll={viewAll} />
+      :
+      <div>
+        This is a placeholder 
       </div>
-      }
-      </Container>
-  </div>
+    }
+    </>
   );
 }

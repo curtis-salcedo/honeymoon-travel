@@ -1,4 +1,5 @@
 const Meal = require('../../models/meal');
+const Addresses = require('../../models/address');
 
 module.exports = {
   create,
@@ -11,7 +12,7 @@ module.exports = {
 async function index(req, res) {
   try {
     // Get all meal entries with the matching tripId from the database
-    const meals = (await Meal.find({ tripId: req.query.tripId })).populate('address');
+    const meals = await Meal.find({ tripId: req.query.tripId }).populate('address');
     res.json(meals);
   } catch (err) {
     res.status(400).json(err);
@@ -30,13 +31,21 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
+    const { mealData, address } = req.body;
+    // Create an address in the database
+    const createdAddress = await Addresses.create(address);
     // Create and save the meal entry in the database
-    const meal = await Meal.create(req.body);
+    const meal = await Meal.create({
+      ...mealData,
+      address: createdAddress, 
+    });
+    console.log('meal and address created at meal create', createdAddress, meal);
     res.json(meal);
   } catch (err) {
     res.status(400).json(err);
   }
 }
+
 
 async function update(req, res) {
   try {

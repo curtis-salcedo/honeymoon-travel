@@ -59,32 +59,39 @@ export default function Activity({ id, day, viewAll }) {
   console.log('activities', activities)
   
   return (
-
-    <Container sx={{ padding: 0, margin: 0 }}>
-      <AddButton
-        text='Add Activity'
-        primaryColor={`${'var(--dark)'}`}
-        secondaryColor={`${'var(--white)'}`}
-        onClick={handleShow}
-      />
+    <Container>
+      <div className='add-button'>
+        <AddButton
+          text='Add Activity'
+          primaryColor={`${'var(--dark)'}`}
+          secondaryColor={`${'var(--white)'}`}
+          onClick={handleShow}
+        />
+      </div>
       {/* <Button variant="contained" onClick={handleShow}>Add Activity</Button> */}
       { show ? <ActivityForm id={id} day={day} setShow={setShow} /> : null }
       {activities ? 
         activities.map((a) => (
-          <Card id='hotel-card' elevation={0} key={a._id} sx={{padding:1}}>
+          <Card id='hotel-card' elevation={0} key={a._id}>
           <Grid container spacing={2}>
+            {/* Left Column */}
             <Grid item xs={12} sm container>
-              <Grid item xs container
+              <Grid
+                item
+                container
+                xs={12}
                 direction="column"
                 spacing={2}
                 sx={{
+                  padding: 2,
                   backgroundColor:'var(--light)',
                   border:'none',
                   borderRadius:'1vmin',
-                  margin:'0',
-                  minHeight: '200px',
+                  width: '425px',
+                  height: '250px',
                 }}
                 >
+
                 <Grid item xs>
                   <Typography gutterBottom variant="text" component="div">
                     {a.name} - {a.type}
@@ -96,6 +103,7 @@ export default function Activity({ id, day, viewAll }) {
                     {a.details}
                   </Typography>
                 </Grid>
+
                 <Grid item>
                   <CardActions>
                     <Button>Remove</Button>
@@ -104,13 +112,24 @@ export default function Activity({ id, day, viewAll }) {
                     >Map</Button>
                   </CardActions>
                 </Grid>
+
               </Grid>
             </Grid>
-            <Grid item>
+
+            <Grid 
+              container
+              direction="column"
+              justifyContent="space-between"
+              sx={{
+                width: '250px', // Adjust the width as needed
+                height: '250px', // Adjust the height as needed
+                padding: '8px', // Add spacing as needed>
+              }}>
+
                 <ButtonBase sx={{ width: 250, height: 150 }}>
                 { a.address.images > 0 ?
                   <CardMedia
-                    className='hotel-card-media'
+                    className='card-media'
                     component="img"
                     src={a.address.images[0]}
                     alt="Image"
@@ -121,11 +140,10 @@ export default function Activity({ id, day, viewAll }) {
                       backgroundColor: 'var(--light)', // Background color
                       borderRadius: '1vmin', // Border radius
                       color: 'var(--your-icon-color)', // Icon color
-                      height: '50%',
-                      width: '50%',
                     }}
                   /> }
                 </ButtonBase>
+
                 <Grid item xs>
                   <Typography varient="body2" color="text.secondary" >
                     {a.address.name}, {a.address.city}, {a.address.state}
@@ -133,37 +151,10 @@ export default function Activity({ id, day, viewAll }) {
                     {a.address.country}, {a.address.zipCode}
                   </Typography>
                 </Grid>
+                
             </Grid>
           </Grid>
         </Card>
-
-
-        // <Card elevation={5} sx={{ backgroundColor:'#f3f4f5', margin: 0, padding: 0, marginBottom: '15px' }}>
-        //   <CardContent>
-        //     <Typography sx={{ mb:'5px',mt:'-2px'}} variant='h5'>
-        //       {a.name}
-        //     </Typography>
-        //     <Typography sx={{ mt:-1 }} color="text.secondary">
-        //       <div style={{display:'flex',justifyContent:'space-between'}}>
-        //         {a.type}
-        //         <div>
-        //           {convertDateToDetail(a.date)}
-        //         </div>
-        //           {a.startTime}
-        //       </div>
-        //     </Typography>
-        //     <Typography sx={{ mt:'5px'}} variant="body2">
-        //       {a.details}
-        //     </Typography>
-        //   </CardContent>
-        //   <CardActions>
-        //     {/* <Button size="small">Learn More</Button>
-        //     <Button size="small">Edit</Button>
-        //     <Button size="small">Delete</Button> */}
-        //     <Button size="small">Map</Button>
-        //     <Button onClick={(e) => getMapLocation(e, a.address)}>Map</Button>
-        //   </CardActions>
-        // </Card>
         ))
         :null }
     </Container>
