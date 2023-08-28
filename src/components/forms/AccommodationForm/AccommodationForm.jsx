@@ -36,7 +36,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
   const [accommodationData, setAccommodationData] = useState({
     tripId: activeTrip._id,
     type: '',
-    name: '',
     checkInDate: '',
     checkOutDate: '',
     checkInTime: '',
@@ -52,7 +51,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
           ...prevData,
           tripId: activeTrip._id,
           type: selectedData ? selectedData.type : '',
-          name: selectedData ? selectedData.name : '',
           checkInDate: convertDate(selectedData.checkInDate),
           checkOutDate: convertDate(selectedData.checkOutDate),
           checkInTime: selectedData.checkInTime,
@@ -135,19 +133,6 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
               </Select>
             </FormControl>
           </Grid>
-
-          { accommodationData && accommodationData.type === 'Hotel' ?  
-            <Grid item xs={12}>
-            <FormControl fullWidth>
-            <label>Name</label>
-            <TextField
-            type="text"
-            value={accommodationData.name}
-            onChange={handleNameChange}
-            />
-            </FormControl>
-            </Grid>
-          : null } 
 
           <Grid item xs={12} sm={6}>
             <div>Check-in</div>

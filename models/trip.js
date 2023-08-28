@@ -6,8 +6,6 @@ const tripSchema = new mongoose.Schema({
   startDate: { type: Date, required: true, index: true },
   endDate: { type: Date, required: true, index: true },
   tripDays: [{ type: Date, required: true }],
-  travelDays: [{ type: Date }],
-  nonTravelDays: [{ type: Date }],
 });
 
 function endDateValidator() {

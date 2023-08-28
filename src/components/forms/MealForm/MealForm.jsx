@@ -42,7 +42,6 @@ export default function MealForm({ id, day, setShow }) {
     date: '',
     type: '',
     isReservation: false,
-    time: '',
   });
 
   useEffect(() => {
@@ -137,21 +136,13 @@ export default function MealForm({ id, day, setShow }) {
                 <TextField
                   type="date"
                   name="date"
-                  value={mealData.arrival}
+                  value={mealData.date}
                   onChange={handleChange}
                   required
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="time"
-                  name="time"
-                  value={mealData.time}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
+
             </Grid>
           </Grid>
           

@@ -27,7 +27,7 @@ import {
 
 export default function Trip({ user }) {
   const { activeTrip, setActiveTrip } = useContext(DataContext)
-  const [allUserTrips, setAllUserTrips] = useState(getTrips)
+  const [allUserTrips, setAllUserTrips] = useState([])
   const [show, setShow] = useState(false)
   // Change the way Day Detail displays data, either all or by day.
   const [viewAll, setViewAll] = useState(true);

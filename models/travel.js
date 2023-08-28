@@ -6,8 +6,8 @@ const travelSchema = new mongoose.Schema({
   departureLocation: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true},
   arrivalLocation: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true},
   identifier: { type: String }, // Flight number, train number, etc.
-  departureDateTime: { type: String, required: true },
-  arrivalDateTime: { type: String, required: true },
+  departureDateTime: { type: Date, required: true },
+  arrivalDateTime: { type: Date, required: true },
 });
 
 const Travel = mongoose.model('Travel', travelSchema);

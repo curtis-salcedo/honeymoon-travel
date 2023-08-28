@@ -12,6 +12,7 @@ async function show(req, res) {
   try {
     // Get one trip from the database
     const trip = await Trip.findById(req.params.id);
+    console.log('trip', trip)
     res.json(trip);
   } catch (err) {
     res.status(400).json(err);
@@ -37,8 +38,6 @@ async function create(req, res) {
       'startDate': req.body.startDate,
       'endDate': req.body.endDate,
       'tripDays': req.body.tripDays,
-      'travelDays': req.body.travelDays,
-      'nonTravelDays': req.body.nonTravelDays,
     });
     trip.save();
     res.json(trip);

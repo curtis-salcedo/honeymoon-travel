@@ -29,6 +29,7 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
   const [expanded, setExpanded] = useState(false);
   // Highlight the selected day
   const [selectedDay, setSelectedDay] = useState(null);
+  const [trip, setTrip] = useState({})
 
   useEffect(() => {
     setTripDays(activeTrip.tripDays)
@@ -61,7 +62,6 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
     <div className='TripDetailsContainer'>
       {/* <div className='TripDetailsDays' > */}
       <Container style={{ padding:0, marginTop:50 }}>
-      { activeTrip && activeTrip.tripDays ?
       <Accordion elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -100,11 +100,6 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
           </Typography>
         </AccordionDetails>
       </Accordion>
-      : null }
-
-
-
-    { activeTrip && activeTrip.tripDays ?
       <>
       <Accordion elevation={0}>
         <AccordionSummary
@@ -134,7 +129,6 @@ export default function TripDetails({ activeTrip, handleDayDetailClick, handleVi
         </AccordionDetails>
       </Accordion>
       </>
-    : null }
     </Container>
   </div>
   );

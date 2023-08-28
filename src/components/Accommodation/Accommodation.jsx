@@ -3,7 +3,7 @@ import { DataContext } from '../../utilities/DataContext';
 import { MapContext } from '../../utilities/MapContext';
 
 // Serivce Imports
-import { convertDate } from '../../utilities/services/business-service';
+import { convertDate, convertDateToLongDetail } from '../../utilities/services/business-service';
 
 import * as MapService from '../../utilities/services/maps-service';
 
@@ -38,8 +38,6 @@ export default function Accommodation({ id, day, viewAll }) {
   const { mapLocation, setMapLocation } = useContext(MapContext)
   const [accommodations, setAccommodations] = useState([])
   const [show, setShow] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
-  const [selectedData, setSelectedData] = useState(null)
 
   useEffect(() => {
     setAccommodations(activeAccommodations);
@@ -55,8 +53,6 @@ export default function Accommodation({ id, day, viewAll }) {
     console.log('getMapLocation', address)
     MapService.getAddressLocation(address, setMapLocation)
   }
-
-  console.log('accommodations', accommodations)
 
   return (
     <Container >
@@ -89,13 +85,13 @@ export default function Accommodation({ id, day, viewAll }) {
               >
               <Grid item xs>
                 <Typography gutterBottom variant="text" component="div">
-                    {a.name} - {a.type}
+                    {a.address.name} - {a.type}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Check-in: { a.checkInDate ? a.checkInDate : '' }
+                    Check-in: { a.checkInDate ? convertDateToLongDetail(a.checkInDate) : '' }
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Check-out: { a.checkOutDate ? a.checkOutDate : '' }
+                    Check-out: { a.checkOutDate ? convertDateToLongDetail(a.checkOutDate) : '' }
                   </Typography>
               </Grid>
               <Grid item>
