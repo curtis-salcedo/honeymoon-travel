@@ -11,6 +11,7 @@ import * as tripsAPI from '../../../utilities/api/trips-api';
 // Page Imports
 
 // Style Imports
+import './TripForm.css';
 import {
   TextField,
   FormControl,
@@ -23,7 +24,7 @@ import {
   CardContent,
 } from '@mui/material';
 
-export default function TripForm({ user }) {
+export default function TripForm({ user, handleClose }) {
   const [tripData, setTripData] = useState({
     user: user._id,
     name: '',
@@ -31,7 +32,6 @@ export default function TripForm({ user }) {
     endDate: '',
     tripDays: [],
     travelDays: '',
-    nonTravelDays: '',
   });
 
   const [tripDays, setTripDays] = useState([])
@@ -87,7 +87,6 @@ export default function TripForm({ user }) {
     setTripData((prevData) => ({
       ...prevData,
       tripDays: tripArray,
-      nonTravelDays: tripArray,
     }));
   };
 
@@ -140,7 +139,7 @@ export default function TripForm({ user }) {
           <Grid item xs={12}>
             <div>Trip Length is {tripDays.length} days</div>
             { tripDays.map((day) => (
-              <Card key={day} sx={{ minWidth: 275 }}>
+              <Card className='TripFormLength' key={day} sx={{ minWidth: 275 }}>
                 <CardContent>
                   <div>{day}</div>
                 </CardContent>
@@ -148,10 +147,15 @@ export default function TripForm({ user }) {
             ))}
           </Grid>
           
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
+          <Grid item xs={12} >
+            <Button fullWidth type="submit" variant="contained" color="primary">
               Submit
             </Button>
+            { handleClose ?
+            <Button fullWidth onClick={handleClose} variant="contained" color="primary">
+              Cancel
+            </Button>
+            : null }
           </Grid>
         </Grid>
       </form>

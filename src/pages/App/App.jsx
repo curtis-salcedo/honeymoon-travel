@@ -14,7 +14,7 @@ import Home from '../Home/Home';
 import Trip from '../Trip/Trip';
 import NewOrderPage from '../NewOrderPage/NewOrderPage';
 import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
-import Mobile from '../Mobile/Mobile';
+import Mobile from '../../mobile/Mobile'
 
 // Style Imports
 import './App.css';
@@ -45,7 +45,7 @@ export default function App() {
           <AuthPage setUser={setUser} />
         }
       <div className="Mobile">
-        <Mobile />
+        <Mobile user={user} />
       </div>
     </main>
   );

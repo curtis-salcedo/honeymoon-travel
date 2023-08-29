@@ -6,7 +6,6 @@ import Map from '../../components/Map/Map'
 
 // Page imports
 import Trip from '../Trip/Trip';
-import Mobile from '../Mobile/Mobile';
 
 // Style imports
 import './Home.css';

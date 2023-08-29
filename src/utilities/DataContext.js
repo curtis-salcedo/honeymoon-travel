@@ -20,6 +20,8 @@ export const DataProvider = (props) => {
 
   const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
 
+  const activeData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels}
+
   useEffect(() => {
     fetchData();
     if (user) {
@@ -74,6 +76,7 @@ export const DataProvider = (props) => {
         activeAccommodations: activeAccommodations || [],
         activeTravels: activeTravels || [],
         setAddress: setAddress,
+        activeData: activeData || [],
       }}
     >
       {props.children}
