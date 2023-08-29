@@ -3,9 +3,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
 // Component imports
-import Accommodation from '../../components/Accommodation/Accommodation';
-import Activity from '../../components/Activity/Activity';
-import Meal from '../../components/Meal/Meal';
+import Accommodation from '../components/Accommodation';
+import Activity from '../components/Activity';
+import Meal from '../components/Meal';
 import Travel from '../components/Travel';
 
 // Style imports
@@ -29,9 +29,9 @@ export default function MobileTrip({ user, id }) {
   const [travels, setTravels] = useState([])
 
   useEffect(() => {
-    setAccommodations(activeData.activeAccommodation)
-    setActivities(activeData.activeActivity)
-    setMeals(activeData.activeMeal)
+    setAccommodations(activeData.activeAccommodations)
+    setActivities(activeData.activeActivities)
+    setMeals(activeData.activeMeals)
     setTravels(activeData.activeTrip)
   }, [activeData, id]);
 
@@ -41,33 +41,35 @@ export default function MobileTrip({ user, id }) {
 
   return (
     <Container>
-      <h1>Mobile Trip</h1>
       <Grid container >
 
+        <Typography>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
-            <Accommodation id={id} />
+            <Accommodation id={id} accommodations={accommodations}/>
           </Grid>
         : null }
 
-
+        <Typography>Activities</Typography>
         { activities ?
           <Grid item xs={12}>
-            <Activity id={id} />
+            <Activity id={id} activities={activities}/>
           </Grid>
         : null }
 
+        <Typography>Meals</Typography>
+        <Grid item xs={12}>
         { meals ?
-          <Grid item xs={12}>
-            <Meal id={id} />
-          </Grid>
+            <Meal id={id} meals={meals} />
         : null }
-        <Typography>Travel Information</Typography>
+        </Grid>
+        
+        <Typography>Travels</Typography>
+        <Grid fullWidth item xs={12}>
         { travels ?
-          <Grid fullWidth item xs={12}>
-            <Travel id={id} />
-          </Grid>
+          <Travel id={id} travels={travels} />
         : null }
+        </Grid>
 
       </Grid>
     </Container>

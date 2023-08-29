@@ -37,6 +37,7 @@ export default function Travel({ id, day, viewAll }) {
   
   useEffect(() => {
     setTravels(activeTravels)
+    setChecked(true)
   }, [activeTravels]);
 
   // Find a specific location on the map
@@ -46,23 +47,7 @@ export default function Travel({ id, day, viewAll }) {
   }
 
   // Test Area
-
-  const icon = (
-    <Paper sx={{ m: 1 }} elevation={4}>
-      <Box component="svg" sx={{ width: 100, height: 100 }}>
-        <Box
-          component="polygon"
-          sx={{
-            fill: (theme) => theme.palette.common.white,
-            stroke: (theme) => theme.palette.divider,
-            strokeWidth: 1,
-          }}
-          points="0,100 50,00, 100,100"
-        />
-      </Box>
-    </Paper>
-  );
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -72,10 +57,6 @@ export default function Travel({ id, day, viewAll }) {
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
       <Box sx={{ height: '300px' }}>
-      <FormControlLabel
-        control={<Switch checked={checked} onChange={handleChange} />}
-        label="Show"
-      />
       <Grid sx={{ 
         display: 'flex',
         gridAutoFlow: "column",
@@ -117,7 +98,7 @@ export default function Travel({ id, day, viewAll }) {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  width: '200px',
+                  width: '280px',
                 }}
               >
                 <Typography variant='body2' color='text.secondary'>
@@ -149,7 +130,7 @@ export default function Travel({ id, day, viewAll }) {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    width: '200px',
+                    width: '280px',
                   }}
                 >
                 <Typography variant='body2' color='text.secondary'>
