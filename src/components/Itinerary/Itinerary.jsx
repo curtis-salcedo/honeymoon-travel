@@ -26,6 +26,7 @@ import {
   Divider,
   Box,
   Card,
+  CardContent,
 
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -109,7 +110,8 @@ export default function Itinerary({ activeTrip }) {
           // Set departure first
           dayInfo.travelDeparture = activeTravels.filter(
             travel => travel.departureDateTime.slice(0,9) === date.slice(0,9)
-          );
+            );
+          
           // Set arrival next
           dayInfo.travelArrival = activeTravels.filter(
             travel => travel.arrivalDateTime.slice(0,9) === date.slice(0,9)
@@ -147,8 +149,8 @@ export default function Itinerary({ activeTrip }) {
         {day.name}
         <List
         sx={{
-          width: '750px',
-          maxWidth: '100%',
+
+          border: 'none',
         }}
         >
 
@@ -164,8 +166,6 @@ export default function Itinerary({ activeTrip }) {
               primary="Departure"
               secondary={travel.departureLocation.city}
             />
-          </ListItem>
-          <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <AirplanemodeActiveIcon />
@@ -200,34 +200,50 @@ export default function Itinerary({ activeTrip }) {
               <LocalDiningIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Meals" secondary={meal.type} />
+          <ListItemText primary="Meals" secondary={
+            <>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                {meal.address.name} - {meal.type}
+              </Typography>
+                {meal.isReservation ? 'Reservation' : ''}
+            </>
+            } />
         </ListItem>
         ))}
 
         <Divider variant="inset" component="li" />
 
-        {day.checkIn.map((accommodation, accommodationIndex) => (
-          <ListItem>
+        <ListItem>
+          { day.checkIn.length > 0 ?
+            day.checkIn.map((accommodation, accommodationIndex) => (
+              <>
           <ListItemAvatar>
             <Avatar>
               <HotelIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="CheckIn" secondary={accommodation.type} />
-        </ListItem>
-        ))}
-
-        {day.checkOut.map((accommodation, accommodationIndex) => (
-          <ListItem>
+            <ListItemText primary="Check In" secondary={`${accommodation.address.name}`} />
+              </>
+            ))
+          : null }
+          { day.checkOut.length > 0 ?
+            day.checkOut.map((accommodation, accommodationIndex) => (
+              <>
           <ListItemAvatar>
             <Avatar>
               <HotelIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="CheckOut" secondary={accommodation.type} />
+            <ListItemText primary="Check Out" secondary={`${accommodation.address.name}`} />
+              </>
+            ))
+          : null }
         </ListItem>
-        ))}
-
         </List>
       </Paper>
 

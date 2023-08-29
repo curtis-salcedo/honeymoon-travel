@@ -98,7 +98,7 @@ export default function Activity({ id, day, viewAll }) {
                   <CardActions>
                     <Button>Remove</Button>
                     <Button
-                      // onClick={(e) => getMapLocation(e, m.address)}
+                      onClick={(e) => getMapLocation(e, a.address._id)}
                     >Map</Button>
                   </CardActions>
                 </Grid>

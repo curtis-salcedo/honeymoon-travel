@@ -111,7 +111,7 @@ export default function Meal({ id, day, tripDays, viewAll }) {
                 <CardActions>
                   <Button>Remove</Button>
                   <Button
-                    // onClick={(e) => getMapLocation(e, m.address)}
+                    onClick={(e) => getMapLocation(e, m.address._id)}
                   >Map</Button>
                 </CardActions>
               </Grid>
