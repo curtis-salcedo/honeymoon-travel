@@ -16,6 +16,8 @@ export default function Map({}) {
   
   // Create the seach Query for Long/Lat from the address
   const query = mapLocation ? `${mapLocation.latitude},${mapLocation.longitude}` : 'denver';
+  const zoom = 'zoom=15'
+  const mapId = 'map_id=eb2f3cc6944a4293'
 
   return (
     <div className='MapContainer'>
@@ -25,7 +27,7 @@ export default function Map({}) {
         style={{ border: '0' }}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC-cmS2g3Y3yti-MmZe9A4TbISPziKMEP4&q=${query}`}>
+        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC-cmS2g3Y3yti-MmZe9A4TbISPziKMEP4&q=${query}&${zoom}`}>
         </iframe>
     </div>
   );

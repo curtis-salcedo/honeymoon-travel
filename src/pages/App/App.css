@@ -19,3 +19,22 @@
   flex-direction: row;
   height: 100%;
 }
+
+@media (max-width: 600px) {
+  .navbar {
+    display: none;
+  }
+  .main-content {
+    display: none;
+  }
+  .Trip {
+    display: none;
+  }
+  .Map {
+    display: none;
+  }
+  .Mobile {
+    display: flex;
+    flex-direction: column;
+  }
+}
