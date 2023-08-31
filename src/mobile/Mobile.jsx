@@ -116,6 +116,7 @@ export default function Mobile({ user }) {
     prevOpen.current = open;
   }, [open]);
 
+  // Need to add Itinerary view
 
 
   return (
@@ -131,6 +132,7 @@ export default function Mobile({ user }) {
             <Container>
               { activeTrip.name }
               <MobileTrip id={activeTrip._id} />
+
 
             </Container>
           :
