@@ -46,28 +46,32 @@ export default function MobileTrip({ user, id }) {
         <Typography>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
-            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen}/>
+            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen} />
           </Grid>
         : null }
 
         <Typography>Activities</Typography>
         { activities ?
           <Grid item xs={12}>
-            <Activity id={id} activities={activities}/>
+            <Activity id={id} activities={activities} open={open} setOpen={setOpen} />
           </Grid>
         : null }
 
         <Typography>Meals</Typography>
         <Grid item xs={12}>
         { meals ?
-            <Meal id={id} meals={meals} />
+          <Grid item xs={12}>
+            <Meal id={id} meals={meals} open={open} setOpen={setOpen} />
+          </Grid>
         : null }
         </Grid>
         
         <Typography>Travels</Typography>
         <Grid fullWidth item xs={12}>
         { travels ?
-          <Travel id={id} travels={travels} />
+          <Grid item xs={12}>
+            <Travel id={id} travels={travels} open={open} setOpen={setOpen} />
+          </Grid>
         : null }
         </Grid>
 

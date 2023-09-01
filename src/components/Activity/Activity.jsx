@@ -27,11 +27,9 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-
-
 export default function Activity({ id, day, viewAll }) {
   // Pull active activities from the data context file
-  const { activeActivities } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   // Set map location if the user clicks on the address
   const { mapLocation, setMapLocation } = useContext(MapContext)
   // Set state of activities to iterate through
@@ -41,9 +39,8 @@ export default function Activity({ id, day, viewAll }) {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    setActivities(activeActivities);
-  }, [activeActivities, viewAll])
-
+    setActivities(tripData.activities);
+  }, [viewAll])
   // Show the activity form
   const handleShow = (e) => {
     setShow(!show)

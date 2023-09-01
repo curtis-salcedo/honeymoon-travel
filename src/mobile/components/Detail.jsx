@@ -5,6 +5,7 @@ import { DataContext } from '../../utilities/DataContext';
 import { convertDateToDetail } from '../../utilities/services/business-service';
 import { convertDateToLongDetail } from '../../utilities/services/business-service';
 import { getAccommodationById } from '../../utilities/api/accommodations-api';
+import { getActivityById } from '../../utilities/api/activities-api';
 
 // Component imports
 import Address from './Address';
@@ -27,13 +28,13 @@ import {
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HikingIcon from '@mui/icons-material/Hiking';
 import Star from '@mui/icons-material/Star'
 
-export default function Detail({ id, category, category_id, open, setOpen }) {
+export default function Detail({ id, category, category_id, open, setOpen, data, setData }) {
   const { activeTrip } = useContext(DataContext)
   // State to hold the address for the map
   const [address, setAddress] = useState('')
-  const [data, setData] = useState('')
 
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
@@ -114,6 +115,67 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
     )
   }
 
+  function Activity() {
+    return (
+      <>
+      <CardMedia
+        sx={{
+          objectFit: 'cover',
+          height: '200px',
+          width: '100%',
+        }}
+      >
+        <HikingIcon
+          mt={3}
+          sx={{
+            height: '180px',
+            width: '200px',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            fontSize: '2rem', // Adjust the icon size as needed
+          }}
+        />
+      </CardMedia>
+
+        <CardHeader
+          title={data.name}
+          subheader={data.type}
+          sx={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            width: '280px',
+          }}
+        />
+        <Box
+          sx={{
+            backgroundColor: 'var(--light)',
+            border: 'none',
+            borderRadius: '1vmin',
+            padding: '1rem',
+            height: '48%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+          fullWidth
+        >
+          <Grid fullWidth>
+            <Typography variant='body1' color='text.secondary'>
+              {`${convertDateToLongDetail(data.date)}, ${data.startTime}`}
+            </Typography>
+            <Typography mt={3} variant='body2' color='text.secondary'>
+              {data.details}
+            </Typography>
+          </Grid>
+        </Box>
+      </>
+    )
+  }
+
   // Modal style
   const style = {
     position: 'absolute',
@@ -143,14 +205,20 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
       aria-describedby="parent-modal-description"
     >
     <Box sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>
-      <h2 id="parent-modal-title">Modal Detail View</h2>
-
       { data && category === 'accommodation' ? 
       <>
         <Accommodation />
         <Address address={data.address} />
       </>
       : null }
+      { data && category === 'activity' ? 
+      <>
+        <Activity />
+        <Address address={data.address} />
+      </>
+      : null }
+
+
 
       <Button fullWidth onClick={handleClose}>Close</Button>
 

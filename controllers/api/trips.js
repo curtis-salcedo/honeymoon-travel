@@ -20,6 +20,7 @@ async function getAllDataForTrip(req, res) {
     tripData.activities = await Activity.find({ tripId: req.params.id }).populate('address');
     tripData.meals = await Meal.find({ tripId: req.params.id }).populate('address');
     tripData.travels = await Travel.find({ tripId: req.params.id })
+    tripData.trip = await Trip.findById(req.params.id);
     res.json(tripData);
   } catch (err) {
     res.status(400).json(err);

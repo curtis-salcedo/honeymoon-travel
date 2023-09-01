@@ -34,14 +34,14 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function Accommodation({ id, day, viewAll }) {
-  const { activeAccommodations } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   const { mapLocation, setMapLocation } = useContext(MapContext)
   const [accommodations, setAccommodations] = useState([])
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    setAccommodations(activeAccommodations);
-  }, [activeAccommodations, viewAll])
+    setAccommodations(tripData.accommodations);
+  }, [accommodations, viewAll])
 
   // Show the accommodation form
   const handleShow = (e) => {

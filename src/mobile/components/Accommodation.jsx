@@ -57,13 +57,6 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
     setMapId(address);
     setOpenMap(true);
   };
-
-  console.log(address)
-  
-  const handleDetailClose = () => {
-    setOpen(false);
-    setCategoryId('')
-  }
   const handleWebsite = (e, website) => {
     window.open(website, '_blank')
   }
@@ -148,7 +141,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
                 </Typography>
 
                 <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
-                  <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button>
+                  { a.address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
                   <Button onClick={(e) => handleMapOpen(e, a.address)}>Map</Button>
                   <Button onClick={(e) => handleDetailOpen(e, a._id)} >Details</Button>
                 </Grid>

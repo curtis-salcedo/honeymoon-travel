@@ -46,23 +46,34 @@ export default function Activity({ id, activities, open, setOpen }) {
   const [openMap, setOpenMap] = useState(false);
   const [address, setAddress] = useState(null)
   const [selectedAddress, setSelectedAddress] = useState(null)
+  const [data, setData] = useState('')
 
   useEffect(() => {
     
   }
   , []);
+
   const handleDetailOpen = (e, id) => {
-    setCategoryId(id)
-    setOpen(true);
+    setCategoryId(id);
+  
+    // Find the activity with the matching ID in tripData.activities
+    const selectedActivity = tripData.activities.find((activity) => activity._id === id);
+  
+    if (selectedActivity) {
+      // Now, selectedActivity contains the object with the matching ID
+      console.log("Selected Activity:", selectedActivity);
+      setData(selectedActivity)
+      setOpen(true);
+    } else {
+      console.error("Activity not found with ID:", id);
+    }
   }
+
   const handleMapOpen = (e, address) => {
     setSelectedAddress(address)
     setMapId(address);
     setOpenMap(true);
   };
-
-  console.log(address)
-  
   const handleDetailClose = () => {
     setOpen(false);
     setCategoryId('')
@@ -151,7 +162,7 @@ export default function Activity({ id, activities, open, setOpen }) {
                 </Typography>
 
                 <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
-                  { address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
+                  { a.address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
                   <Button onClick={(e) => handleMapOpen(e, a.address)}>Map</Button>
                   <Button onClick={(e) => handleDetailOpen(e, a._id)} >Details</Button>
                 </Grid>
@@ -160,7 +171,7 @@ export default function Activity({ id, activities, open, setOpen }) {
           </Grow>
           ) : null }   
         </Grid>
-        { open ? <Detail id={id} category='accommodation' category_id={categoryId} open={open} setOpen={setOpen} /> : null }
+        { open ? <Detail id={id} category='activity' category_id={categoryId} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
         { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
       </Box>
     </Container>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { DataContext } from '../../utilities/DataContext';
 
 // Service Imports
 import { convertDate } from '../../utilities/services/business-service';
@@ -25,6 +26,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function TripDetails({ activeTrip, handleDayDetailClick, handleViewAll, viewAll, activeDay }) {
+  const { tripData } = useContext(DataContext)
   const [tripDays, setTripDays] = useState([])
   const [expanded, setExpanded] = useState(false);
   // Highlight the selected day
