@@ -58,7 +58,6 @@ export default function Activity({ id, meals, activities }) {
         }}>
         { activities
           ? activities.map((a) => 
-          <>
           <Grow
             key={a._id}
             in={checked}
@@ -145,7 +144,6 @@ export default function Activity({ id, meals, activities }) {
               </Box>
             </Paper>
           </Grow>
-          </>     
           ) : null }   
         </Grid>
       </Box>

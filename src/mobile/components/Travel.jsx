@@ -68,9 +68,8 @@ export default function Travel({ id, day, viewAll }) {
         }}>
         { travels
           ? travels.map((t) => 
-          <>
+          <React.Fragment key={t._id}>
           <Grow
-            key={t._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}
@@ -164,7 +163,7 @@ export default function Travel({ id, day, viewAll }) {
               {t.type} - {t.identifier}
             </Typography>
           </Grow> */}
-          </>     
+          </React.Fragment>     
           ) : null }   
         </Grid>
       </Box>

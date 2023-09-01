@@ -66,8 +66,8 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
         }}>
         { accommodations
           ? accommodations.map((a) => 
-          <>
           <Grow
+            key={a._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}
@@ -155,8 +155,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
                 </Grid>
               </Box>
             </Paper>
-          </Grow>
-          </>     
+          </Grow> 
           ) : null }   
         </Grid>
       </Box>

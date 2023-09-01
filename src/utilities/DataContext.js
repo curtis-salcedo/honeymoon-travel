@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { getUser } from "./services/users-service";
 
 import { getTripById } from "./api/trips-api";

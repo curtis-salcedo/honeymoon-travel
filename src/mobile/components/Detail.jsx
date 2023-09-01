@@ -6,6 +6,9 @@ import { convertDateToDetail } from '../../utilities/services/business-service';
 import { convertDateToLongDetail } from '../../utilities/services/business-service';
 import { getAccommodationById } from '../../utilities/api/accommodations-api';
 
+// Component imports
+import Address from './Address';
+
 // Style imports
 import {
   Typography,
@@ -59,40 +62,6 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
     setOpen(false);
     setData('')
   };
-
-  function AddressDisplay() {
-    // Function to determine amount of stars
-    const rating = Number(data.address.rating)
-    return (
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <Typography variant="body2" color='text.secondary'>
-            {`${data.address.name ? data.address.name : ''}`}
-          </Typography>
-          <Typography variant="body2" color='text.secondary'>
-            {`${data.address.addressNumber} ${data.address.streetName}`}
-          </Typography>
-          <Typography variant="body2" color='text.secondary'>
-            {`${data.address.city}, ${data.address.state} ${data.address.zipCode}`}
-          </Typography>
-          <Typography variant="body2" color='text.secondary'>
-            {`${data.address.country}`}
-          </Typography>
-        </Grid>
-        <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }}>
-        {[...Array(data.address.rating)].map((_, index) => (
-          <Star key={index} sx={{ color: 'primary.main', marginRight: '4px' }} />
-        ))}
-        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-          {rating}
-        </Typography>
-        <Typography>
-
-        </Typography>
-      </Grid>
-      </Grid>
-    );
-  }
 
   function Accommodation() {
     return (
@@ -178,7 +147,7 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
       { data && category === 'accommodation' ? 
       <>
         <Accommodation />
-        <AddressDisplay />
+        <Address address={data.address} />
       </>
       : null }
 

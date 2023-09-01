@@ -58,7 +58,6 @@ export default function Meal({ id, meals }) {
         }}>
         { meals
           ? meals.map((m) => 
-          <>
           <Grow
             key={m._id}
             in={checked}
@@ -148,8 +147,7 @@ export default function Meal({ id, meals }) {
                 </Grid>
               </Box>
             </Paper>
-          </Grow>
-          </>     
+          </Grow>   
           ) : null }   
         </Grid>
       </Box>
