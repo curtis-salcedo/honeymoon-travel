@@ -8,6 +8,7 @@ import { getAccommodationById } from '../../utilities/api/accommodations-api';
 
 // Component imports
 import Address from './Address';
+import MobileMap from './MobileMap';
 
 // Style imports
 import {
@@ -119,8 +120,8 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    height: '90vh',
-    width: '90vw',
+    height: '95vh',
+    width: '95vw',
     bgcolor: 'background.paper',
     border: 'var(--dark) solid 2px',
     boxShadow: 24,
@@ -136,11 +137,11 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
 
   return (
     <Modal
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="parent-modal-title"
-    aria-describedby="parent-modal-description"
-  >
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
     <Box sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>
       <h2 id="parent-modal-title">Modal Detail View</h2>
 
@@ -151,7 +152,7 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
       </>
       : null }
 
-      <Button fullWidth onClick={handleClose}>Cancel</Button>
+      <Button fullWidth onClick={handleClose}>Close</Button>
 
     </Box>
   </Modal>

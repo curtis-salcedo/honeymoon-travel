@@ -5,6 +5,10 @@ import { DataContext } from '../../utilities/DataContext';
 import { getTrips } from '../../utilities/services/trips-service';
 import { convertDateToDetail, convertDateToLongDetail } from '../../utilities/services/business-service';
 
+// Component imports
+import Detail from './Detail';
+import MobileMap from './MobileMap';
+
 
 // Style imports
 import {
@@ -34,14 +38,38 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
-export default function Activity({ id, meals, activities }) {
+export default function Activity({ id, activities, open, setOpen }) {
   const { tripData } = useContext(DataContext)
   const [checked, setChecked] = useState(true);
+  const [categoryId, setCategoryId] = useState('')
+  const [mapId, setMapId] = useState('')
+  const [openMap, setOpenMap] = useState(false);
+  const [address, setAddress] = useState(null)
+  const [selectedAddress, setSelectedAddress] = useState(null)
 
   useEffect(() => {
     
   }
   , []);
+  const handleDetailOpen = (e, id) => {
+    setCategoryId(id)
+    setOpen(true);
+  }
+  const handleMapOpen = (e, address) => {
+    setSelectedAddress(address)
+    setMapId(address);
+    setOpenMap(true);
+  };
+
+  console.log(address)
+  
+  const handleDetailClose = () => {
+    setOpen(false);
+    setCategoryId('')
+  }
+  const handleWebsite = (e, website) => {
+    window.open(website, '_blank')
+  }
 
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
@@ -82,17 +110,6 @@ export default function Activity({ id, meals, activities }) {
                   padding: 0,
                 }}
               >
-                <Button
-                  sx={{
-                    position: 'absolute',
-                    top: '0',
-                    left: '0',
-                    backgroundColor: 'var(--blue)',
-                    color: 'var(--white)',
-                  }}
-                >
-                  Map
-                </Button>
                 <CardMedia
                   component="img"
                   image={a.address.images[0]}
@@ -133,19 +150,18 @@ export default function Activity({ id, meals, activities }) {
                 { a.details }
                 </Typography>
 
-                <Grid>
-                  <Button variant='body2' color='text.secondary'>
-                    <a href={a.address.website}>Website</a>
-                  </Button>
-                  <Button
-                  // onClick={(e) => getMapLocation(e, m.address._id)}
-                  >Map</Button>
+                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
+                  { address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
+                  <Button onClick={(e) => handleMapOpen(e, a.address)}>Map</Button>
+                  <Button onClick={(e) => handleDetailOpen(e, a._id)} >Details</Button>
                 </Grid>
               </Box>
             </Paper>
           </Grow>
           ) : null }   
         </Grid>
+        { open ? <Detail id={id} category='accommodation' category_id={categoryId} open={open} setOpen={setOpen} /> : null }
+        { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
       </Box>
     </Container>
   )

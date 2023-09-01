@@ -34,6 +34,7 @@ export default function MobileTrip({ user, id }) {
     setActivities(tripData.activities)
     setMeals(tripData.meals)
     setTravels(tripData.travels)
+    
   }, [tripData]);
   
   // Potential handleViews function: Address, Map,
@@ -45,7 +46,7 @@ export default function MobileTrip({ user, id }) {
         <Typography>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
-            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen} />
+            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen}/>
           </Grid>
         : null }
 

@@ -120,4 +120,15 @@ code {
   .add-button {
     display: none;
   }
+  .mobile-map {
+    height: 75%;
+    width: 100%;
+  }
+  .mobile-map-area {
+    border-radius: 2vmin;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
 }

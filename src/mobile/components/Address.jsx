@@ -30,8 +30,7 @@ import Star from '@mui/icons-material/Star'
 import StarHalf from '@mui/icons-material/StarHalf'
 
 export default function Address({ address }) {
-  console.log(address)
-  const rating = (parseFloat(address.rating))
+  const rating = (address.rating ? parseFloat(address.rating) : 0)
   // Function to determine amount of stars and half stars
   function StarRating() {
     const fullStars = parseInt(rating);
@@ -52,8 +51,8 @@ export default function Address({ address }) {
   return (
     <Grid container spacing={1}>
       <Grid item xs={6}>
-        <Typography variant="body2" color='text.secondary'>
-          {`${address.name ? address.name : ''}`}
+      <Typography variant="body2" color="text.secondary" sx={{ overflow: 'hidden', maxHeight: '2.5em', textOverflow: 'ellipsis' }}>
+          {`${address && address.name ? address.name : ''}`}
         </Typography>
         <Typography variant="body2" color='text.secondary'>
           {`${address.addressNumber} ${address.streetName}`}
@@ -67,10 +66,14 @@ export default function Address({ address }) {
       </Grid>
       <Grid  item xs={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'  }}>
         <Grid item xs={12}>
+        { address && address.rating ?
+        <>
           <StarRating />
           <Typography variant="body2" color='text.secondary'>
             {`(${address.rating})`}
           </Typography>
+        </>
+          : '' }
         </Grid>
       </Grid>
     </Grid>
