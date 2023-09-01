@@ -34,9 +34,8 @@ async function create(req, res) {
   try {
     const departure = await Address.create(req.body.departureLocation);
     const arrival = await Address.create(req.body.arrivalLocation);
-    console.log('departure', departure)
-    console.log('arrival', arrival)
-
+    // console.log('departure', departure)
+    // console.log('arrival', arrival)
     // Create and save the travel situation in the database
     const travel = await Travel.create({
       ...req.body,

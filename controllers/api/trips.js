@@ -14,14 +14,12 @@ module.exports = {
 };
 
 async function getAllDataForTrip(req, res) {
-  console.log('get all data', req.params.id)
   let tripData = {};
   try {
     tripData.accommodations = await Accommodation.find({ tripId: req.params.id }).populate('address');
     tripData.activities = await Activity.find({ tripId: req.params.id }).populate('address');
     tripData.meals = await Meal.find({ tripId: req.params.id }).populate('address');
     tripData.travels = await Travel.find({ tripId: req.params.id })
-    console.log(tripData)
     res.json(tripData);
   } catch (err) {
     res.status(400).json(err);
@@ -32,7 +30,7 @@ async function show(req, res) {
   try {
     // Get one trip from the database
     const trip = await Trip.findById(req.params.id);
-    console.log('trip', trip)
+    // console.log('trip', trip)
     res.json(trip);
   } catch (err) {
     res.status(400).json(err);

@@ -40,7 +40,7 @@ async function create(req, res) {
       ...activityData,
       address: createdAddress._id
     });
-    console.log('activity created at activity create', activity)
+    // console.log('activity created at activity create', activity)
     res.json(activity);
   } catch (err) {
     res.status(400).json(err);

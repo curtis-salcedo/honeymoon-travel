@@ -12,7 +12,7 @@ async function show(req, res) {
   try {
     // Get one address from the database
     const address = await Address.findById(req.params.id);
-    console.log(address)
+    // console.log(address)
     res.json(address);
   } catch (err) {
     res.status(400).json(err);
@@ -23,7 +23,7 @@ async function index(req, res) {
   try {
     // Find all addresses for a trip
     const addresses = await Address.find({ tripId: req.query.tripId });
-    console.log(addresses)
+    // console.log(addresses)
     res.json(addresses);
   } catch (err) {
     res.status(400).json(err);

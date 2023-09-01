@@ -39,7 +39,7 @@ async function create(req, res) {
       ...mealData,
       address: createdAddress, 
     });
-    console.log('meal and address created at meal create', createdAddress, meal);
+    // console.log('meal and address created at meal create', createdAddress, meal);
     res.json(meal);
   } catch (err) {
     res.status(400).json(err);

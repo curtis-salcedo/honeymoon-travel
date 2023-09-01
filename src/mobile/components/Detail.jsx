@@ -37,8 +37,6 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
 
   }, [category]);
 
-  console.log(data)
-
   const fetchData = async () => {
     if (category === 'accommodation') {
       // Fetch the accommodation data by the category_id
@@ -95,9 +93,6 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
       </Grid>
     );
   }
-
-  console.log(data)
-  
 
   function Accommodation() {
     return (

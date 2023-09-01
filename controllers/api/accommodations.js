@@ -14,7 +14,7 @@ async function show(req, res) {
   try {
     // Get one accommodation from the database
     const accommodation = await Accommodation.findById(req.params.id).populate('address');
-    console.log(accommodation)
+    // console.log(accommodation)
     res.json(accommodation);
   } catch (err) {
     res.status(400).json(err);
@@ -36,13 +36,13 @@ async function create(req, res) {
     const { accommodationData, address } = req.body;
     // Create and save the address in the database
     const createdAddress = await Addresses.create(address);
-    console.log('Address created at accommodation create', createdAddress);
+    // console.log('Address created at accommodation create', createdAddress);
     // Create and save the accommodation in the database
     const accommodation = await Accommodation.create({
       ...accommodationData,
       address: createdAddress._id
     });
-    console.log('Accommodation created at accommodation create', accommodation);
+    // console.log('Accommodation created at accommodation create', accommodation);
     res.json(accommodation);
   } catch (err) {
     res.status(400).json(err);
