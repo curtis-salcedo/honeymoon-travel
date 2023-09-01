@@ -14,5 +14,6 @@ router.get('/:id', tripsCtrl.show);
 router.put('/:id', tripsCtrl.update);
 // DELETE /api/trips/:id
 router.delete('/:id', tripsCtrl.remove);
-
+// GET /api/trips/:id/data
+router.get('/:id/all', tripsCtrl.getAllDataForTrip);
 module.exports = router;

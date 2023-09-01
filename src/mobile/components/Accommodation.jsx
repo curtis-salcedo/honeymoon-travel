@@ -38,14 +38,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 export default function Accommodation({ id, accommodations, open, setOpen }) {
-  const { activeData } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   const [checked, setChecked] = useState(true);
   const [categoryId, setCategoryId] = useState('')
-
-  useEffect(() => {
-
-  }
-  , []);
 
   const handleDetailOpen = (e, id) => {
     setCategoryId(id)

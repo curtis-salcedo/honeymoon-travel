@@ -37,10 +37,7 @@ export default function Landing({ user }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log(user)
-    if (user.recentlySelectedTrip) {
-      setActiveTrip(user.recentlySelectedTrip)
-    } else {
+    if (activeTrip.length === 0) {
       async function fetchTrips() {
         try {
           const fetchedTrips = await getTrips();
@@ -51,7 +48,7 @@ export default function Landing({ user }) {
       }
       fetchTrips();
     }
-  }, []);
+  }, [activeTrip]);
 
   const handleShow = () => {
     setShow(!show)
@@ -67,9 +64,8 @@ export default function Landing({ user }) {
       // Wait for the promise to resolve
       const res = await getTripById(id)
       // PUT change to USER recently selected trip
+      setRecentlySelectedTrip(user._id, res)
       console.log(res)
-      setRecentlySelectedTrip(res)
-      console.log(setRecentlySelectedTrip)
       // Set the actual trip object to state
       setActiveTrip(res);
     } catch (error) {

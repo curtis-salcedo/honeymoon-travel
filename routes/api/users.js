@@ -9,6 +9,6 @@ router.post('/', usersCtrl.create);
 // POST /api/users/login
 router.post('/login', usersCtrl.login);
 // PUT /api/users/recent
-router.post('/recent', usersCtrl.setRecent);
+router.put('/:id/recent', usersCtrl.setRecent);
 
 module.exports = router;

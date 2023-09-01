@@ -32,7 +32,6 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
-  console.log(req.body);
   try {
     const { accommodationData, address } = req.body;
     // Create and save the address in the database

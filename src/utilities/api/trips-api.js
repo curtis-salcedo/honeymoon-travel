@@ -20,4 +20,8 @@ export async function getAll() {
 export async function getTripById(id) {
   return sendRequest(`${BASE_URL}/${id}`);
 }
+
+export async function getAllDataForTrip(id) {
+  return sendRequest(`${BASE_URL}/${id}/all`);
+}
 // Additional utility functions as needed

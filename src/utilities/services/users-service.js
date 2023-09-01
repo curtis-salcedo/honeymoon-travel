@@ -3,7 +3,6 @@
 // Service modules often depend upon API modules
 // for making AJAX requests to the server.
 
-import { Logout } from '@mui/icons-material';
 import * as usersAPI from '../api/users-api';
 
 export async function signUp(userData) {

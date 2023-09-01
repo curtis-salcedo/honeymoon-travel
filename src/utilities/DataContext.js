@@ -5,7 +5,8 @@ import { getTripById } from "./api/trips-api";
 import { getAccommodationsForTrip } from "./api/accommodations-api";
 import { getActivitiesForTrip } from "./api/activities-api";
 import { getMealsForTrip } from "./api/meals-api";
-import { getTravelsForTrip } from "./api/travels-api";
+import { getTravelsForTrip } from "./api/trips-api";
+import { getAllDataForTrip } from "./api/trips-api";
 
 export const DataContext = createContext();
 
@@ -17,52 +18,56 @@ export const DataProvider = (props) => {
   const [activeTravels, setActiveTravels] = useState([]);
   const [user, setUser] = useState(null);
   const [address, setAddress] = useState(null);
-
-  console.log(user)
-
-  const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
-
-  const activeData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels}
+  const [tripData, setTripData] = useState(null)
 
   useEffect(() => {
     fetchData();
-    if (user) {
-      getTripById(user._id).then((trip) => {
-        setActiveTrip(trip);
-      });
+    async function fetchTrip() {
+      try {
+        // Get the user data
+        const user = await getUser();
+        // Check if the user has a recentlySelectedTrip
+        if (user && user.recentlySelectedTrip) {
+          // Fetch the trip data based on the user's recentlySelectedTrip status
+          const tripId = user.recentlySelectedTrip;
+          const tripData = await getTripById(tripId);
+          // Set the active trip data
+          setActiveTrip(tripData);
+          fetchTripDetails(tripId);
+        } else {
+          // No recentlySelectedTrip, set activeTrip to null
+          setActiveTrip(null);
+        }
+      } catch (err) {
+        console.error('Error fetching and setting active trip:', err);
+      }
     }
+    // Call the fetchTrip function
+    fetchTrip();
   }, []);
 
-  useEffect(() => {
-    if (activeTrip) {
-      fetchTripDetails(activeTrip._id);
-    }
-  }, [activeTrip]);
+  // useEffect(() => {
+  //   if (activeTrip) {
+  //     fetchTripDetails(activeTrip._id);
+  //   }
+  // }, [activeTrip]);
 
   const fetchData = async () => {
+    let user;
     try {
-      const user = await getUser();
+      user = await getUser();
       setUser(user);
     } catch (err) {
-      console.log('Error at DataContext.js fetchData', err);
+      console.log('Error at DataContext.js fetchData for User Data', err);
     }
   };
 
-  const fetchTripDetails = async () => {
+  console.log(tripData)
+
+  const fetchTripDetails = async (tripId) => {
     try {
-
-      const meals = await getMealsForTrip(activeTrip._id);
-      setActiveMeals(meals);
-
-      const activities = await getActivitiesForTrip(activeTrip._id);
-      setActiveActivities(activities);
-
-      const accommodations = await getAccommodationsForTrip(activeTrip._id);
-      setActiveAccommodations(accommodations);
-
-      const travels = await getTravelsForTrip(activeTrip._id);
-      setActiveTravels(travels);
-    
+      const data = await getAllDataForTrip(tripId);
+      setTripData(data)
     } catch (err) {
       console.log('Error at DataContext.js fetchTripDetailsData', err);
     }
@@ -78,7 +83,7 @@ export const DataProvider = (props) => {
         activeAccommodations: activeAccommodations || [],
         activeTravels: activeTravels || [],
         setAddress: setAddress,
-        activeData: activeData || [],
+        tripData: tripData || [],
       }}
     >
       {props.children}

@@ -4,6 +4,8 @@ import { DataContext } from '../utilities/DataContext';
 
 // Service Imports
 import { getTrips } from '../utilities/services/trips-service';
+import { getTripById } from '../utilities/api/trips-api';
+import { logOut } from '../utilities/services/users-service'
 
 // Component imports
 import TripDetails from '../components/TripDetails/TripDetails';
@@ -49,25 +51,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Settings from '@mui/icons-material/Settings';
 
-
-export default function Mobile({ user }) {
-  const { activeTrip, setActiveTrip } = useContext(DataContext)
+export default function Mobile({ user, setUser }) {
+  const { activeTrip, setActiveTrip, tripData } = useContext(DataContext)
   const [value, setValue] = useState(0);
   const [show, setShow] = useState(false)
   const [userTrips, setUserTrips] = useState([])
   const [settingsOpen, setSettingsOpen] = useState(false)
-
-  useEffect(() => {
-    async function fetchTrips() {
-      try {
-        const fetchedTrips = await getTrips();
-        setUserTrips(fetchedTrips);
-      } catch (error) {
-        console.error('No Trips created or there was an error fetching trips:', error);
-      }
-    }
-    fetchTrips();
-  }, [activeTrip]);
+  const [trip, setTrip] = useState(null)
 
   const handleShow = () => {
     setShow(!show)
@@ -79,8 +69,6 @@ export default function Mobile({ user }) {
   // Get menu dropdown for selecting the correct trip
   // Get the data for the trip selected
   // Add a view on map button to replace the map component with the map view
-
-
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -117,6 +105,13 @@ export default function Mobile({ user }) {
 
   // Need to add Itinerary view
 
+  const handleLogout = () => {
+    logOut();
+    setUser(null)
+    console.log(user)
+    console.log(localStorage('token'))
+  }
+
 
   return (
     <>
@@ -127,7 +122,7 @@ export default function Mobile({ user }) {
             Honeymoon Travel
           </Container>
 
-          { activeTrip && activeTrip._id ?
+          { activeTrip ?
             <Container>
               { activeTrip.name }
               <MobileTrip id={activeTrip._id} />
@@ -183,7 +178,7 @@ export default function Mobile({ user }) {
                         >
                           <MenuItem onClick={handleClose}>Profile</MenuItem>
                           <MenuItem onClick={handleClose}>My account</MenuItem>
-                          <MenuItem onClick={handleClose}>Logout</MenuItem>
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>

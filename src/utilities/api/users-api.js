@@ -13,7 +13,7 @@ export async function checkToken() {
   return sendRequest(`${BASE_URL}/check-token`);
 }
 
-export async function setRecentlySelectedTrip(tripId) {
+export async function setRecentlySelectedTrip(userId, tripId) {
   console.log('TripId at setRecentlySelected', tripId)
-  return sendRequest(`${BASE_URL}/recent/`, 'PUT', tripId)
+  return sendRequest(`${BASE_URL}/${userId}/recent/`, 'PUT', tripId)
 }

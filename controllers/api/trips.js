@@ -1,4 +1,8 @@
 const Trip = require('../../models/trip');
+const Meal = require('../../models/meal');
+const Activity = require('../../models/activity');
+const Accommodation = require('../../models/accommodation');
+const Travel = require('../../models/travel');
 
 module.exports = {
   create,
@@ -6,7 +10,23 @@ module.exports = {
   remove,
   index,
   show,
+  getAllDataForTrip,
 };
+
+async function getAllDataForTrip(req, res) {
+  console.log('get all data', req.params.id)
+  let tripData = {};
+  try {
+    tripData.accommodations = await Accommodation.find({ tripId: req.params.id }).populate('address');
+    tripData.activities = await Activity.find({ tripId: req.params.id }).populate('address');
+    tripData.meals = await Meal.find({ tripId: req.params.id }).populate('address');
+    tripData.travels = await Travel.find({ tripId: req.params.id })
+    console.log(tripData)
+    res.json(tripData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
 async function show(req, res) {
   try {

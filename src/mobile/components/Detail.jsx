@@ -65,10 +65,6 @@ export default function Detail({ id, category, category_id, open, setOpen }) {
   function AddressDisplay() {
     // Function to determine amount of stars
     const rating = Number(data.address.rating)
-    const split = rating.slice('.', 0)
-    console.log(split)
-
-
     return (
       <Grid container spacing={1}>
         <Grid item xs={6}>

@@ -22,7 +22,7 @@ import {
 
 
 export default function MobileTrip({ user, id }) {
-  const {activeData} = useContext(DataContext)
+  const {tripData} = useContext(DataContext)
   const [accommodations, setAccommodations] = useState([])
   const [activities, setActivities] = useState([])
   const [meals, setMeals] = useState([])
@@ -30,11 +30,11 @@ export default function MobileTrip({ user, id }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setAccommodations(activeData.activeAccommodations)
-    setActivities(activeData.activeActivities)
-    setMeals(activeData.activeMeals)
-    setTravels(activeData.activeTrip)
-  }, [activeData, id]);
+    setAccommodations(tripData.accommodations)
+    setActivities(tripData.activities)
+    setMeals(tripData.meals)
+    setTravels(tripData.travels)
+  }, [tripData]);
   
   // Potential handleViews function: Address, Map,
 

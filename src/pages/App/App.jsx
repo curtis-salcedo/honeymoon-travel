@@ -40,13 +40,13 @@ export default function App() {
                 <Route path="/*" element={<Home user={user} />} />
               </Routes>
             </div>
+            <div className="Mobile">
+              <Mobile user={user} setUser={setUser} />
+            </div>
           </>
           :
           <AuthPage setUser={setUser} />
         }
-      <div className="Mobile">
-        <Mobile user={user} />
-      </div>
     </main>
   );
 }

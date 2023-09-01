@@ -17,7 +17,7 @@ import {
 import { model } from 'mongoose';
 
 export default function AccommodationDetail({ activeItem }) {
-  const { activeData } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   console.log(activeItem)
   
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function AccommodationDetail({ activeItem }) {
 
   }
 
-  // console.log(activeData)
+  // console.log(tripData)
 
 
 
@@ -40,14 +40,14 @@ export default function AccommodationDetail({ activeItem }) {
         <Grid container spacing={2}>
 
           <Grid item xs={12}>
-            <Typography>{activeData.type}</Typography>
+            <Typography>{tripData.type}</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Typography>Check Out {activeData.checkinDate} at {activeData.checkinTime}</Typography>
+            <Typography>Check Out {tripData.checkinDate} at {tripData.checkinTime}</Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography>Check Out {activeData.checkOutDate} at {activeData.checkOutTime}</Typography>
+            <Typography>Check Out {tripData.checkOutDate} at {tripData.checkOutTime}</Typography>
           </Grid>
 
           <Grid item xs={12}>

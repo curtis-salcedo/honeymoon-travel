@@ -35,7 +35,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 export default function Meal({ id, meals }) {
-  const { activeData } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   const [checked, setChecked] = useState(true);
 
   useEffect(() => {
