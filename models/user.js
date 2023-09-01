@@ -16,7 +16,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  recentlySelectedTrip: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: false },
 }, {
   timestamps: true,
   toJSON: {

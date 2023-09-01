@@ -12,3 +12,8 @@ export async function login(credentials) {
 export async function checkToken() {
   return sendRequest(`${BASE_URL}/check-token`);
 }
+
+export async function setRecentlySelectedTrip(tripId) {
+  console.log('TripId at setRecentlySelected', tripId)
+  return sendRequest(`${BASE_URL}/recent/`, 'PUT', tripId)
+}

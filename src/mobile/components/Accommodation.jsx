@@ -5,6 +5,9 @@ import { DataContext } from '../../utilities/DataContext';
 import { getTrips } from '../../utilities/services/trips-service';
 import { convertDateToDetail, convertDateToLongDetail } from '../../utilities/services/business-service';
 
+// Component imports
+import Detail from './Detail';
+
 
 // Style imports
 import {
@@ -34,16 +37,24 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
-export default function Accommodation({ id, meals, accommodations }) {
+export default function Accommodation({ id, accommodations, open, setOpen }) {
   const { activeData } = useContext(DataContext)
   const [checked, setChecked] = useState(true);
+  const [categoryId, setCategoryId] = useState('')
 
   useEffect(() => {
-    
+
   }
   , []);
 
-  console.log(meals)
+  const handleDetailOpen = (e, id) => {
+    setCategoryId(id)
+    setOpen(true);
+  }
+  const handleDetailClose = () => {
+    setOpen(false);
+    setCategoryId('')
+  }
 
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
@@ -84,7 +95,7 @@ export default function Accommodation({ id, meals, accommodations }) {
                   padding: 0,
                 }}
               >
-                <Button
+                {/* <Button
                   sx={{
                     position: 'absolute',
                     top: '0',
@@ -94,7 +105,7 @@ export default function Accommodation({ id, meals, accommodations }) {
                   }}
                 >
                   Map
-                </Button>
+                </Button> */}
                 <CardMedia
                   component="img"
                   image={a.address.images[0]}
@@ -142,6 +153,10 @@ export default function Accommodation({ id, meals, accommodations }) {
                   <Button
                   // onClick={(e) => getMapLocation(e, m.address._id)}
                   >Map</Button>
+                  <Button
+                  onClick={(e) => handleDetailOpen(e, a._id)}
+                  >Details</Button>
+                  { open ? <Detail id={id} category='accommodation' category_id={categoryId} open={open} setOpen={setOpen} /> : null }
                 </Grid>
               </Box>
             </Paper>

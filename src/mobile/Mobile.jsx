@@ -112,7 +112,6 @@ export default function Mobile({ user }) {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
 
@@ -132,8 +131,6 @@ export default function Mobile({ user }) {
             <Container>
               { activeTrip.name }
               <MobileTrip id={activeTrip._id} />
-
-
             </Container>
           :
             <Landing user={user} />

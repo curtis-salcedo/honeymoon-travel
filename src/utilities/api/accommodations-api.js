@@ -19,6 +19,6 @@ export async function getAccommodationsForTrip(id) {
   return sendRequest(`${BASE_URL}?tripId=${id}`, 'GET');
 }
 
-// export async function getAccommodationById(id) {
-//   return sendRequest(`${BASE_URL}/${id}`, 'GET');
-// }
+export async function getAccommodationById(id) {
+  return sendRequest(`${BASE_URL}/${id}`, 'GET');
+}

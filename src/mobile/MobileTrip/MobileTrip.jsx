@@ -27,6 +27,7 @@ export default function MobileTrip({ user, id }) {
   const [activities, setActivities] = useState([])
   const [meals, setMeals] = useState([])
   const [travels, setTravels] = useState([])
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setAccommodations(activeData.activeAccommodations)
@@ -34,9 +35,7 @@ export default function MobileTrip({ user, id }) {
     setMeals(activeData.activeMeals)
     setTravels(activeData.activeTrip)
   }, [activeData, id]);
-
-  console.log(activeData)
-
+  
   // Potential handleViews function: Address, Map,
 
   return (
@@ -46,7 +45,7 @@ export default function MobileTrip({ user, id }) {
         <Typography>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
-            <Accommodation id={id} accommodations={accommodations}/>
+            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen} />
           </Grid>
         : null }
 

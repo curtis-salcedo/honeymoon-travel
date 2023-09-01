@@ -43,8 +43,6 @@ export default function Meal({ id, meals }) {
   }
   , []);
 
-  console.log(meals)
-
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
       <Box sx={{ height: '400px', width: 'auto', padding:0, margin:0 }}>
@@ -62,6 +60,7 @@ export default function Meal({ id, meals }) {
           ? meals.map((m) => 
           <>
           <Grow
+            key={m._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}

@@ -18,6 +18,8 @@ export const DataProvider = (props) => {
   const [user, setUser] = useState(null);
   const [address, setAddress] = useState(null);
 
+  console.log(user)
+
   const allData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels, user}
 
   const activeData = {activeTrip, activeMeals, activeActivities, activeAccommodations, activeTravels}

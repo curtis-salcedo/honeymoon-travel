@@ -10,9 +10,11 @@ module.exports = {
 };
 
 async function show(req, res) {
+  console.log(req.params.id)
   try {
     // Get one accommodation from the database
-    const accommodation = await Accommodation.findById(req.params.id);
+    const accommodation = await Accommodation.findById(req.params.id).populate('address');
+    console.log(accommodation)
     res.json(accommodation);
   } catch (err) {
     res.status(400).json(err);

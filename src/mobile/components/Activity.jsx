@@ -43,8 +43,6 @@ export default function Activity({ id, meals, activities }) {
   }
   , []);
 
-  console.log(meals)
-
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
       <Box sx={{ height: '400px', width: 'auto', padding:0, margin:0 }}>
@@ -62,6 +60,7 @@ export default function Activity({ id, meals, activities }) {
           ? activities.map((a) => 
           <>
           <Grow
+            key={a._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}

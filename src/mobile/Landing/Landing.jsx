@@ -5,6 +5,7 @@ import { DataContext } from '../../utilities/DataContext';
 import { getTrips } from '../../utilities/services/trips-service';
 import { convertDateToDetail } from '../../utilities/services/business-service';
 import { getTripById } from '../../utilities/api/trips-api';
+import { setRecentlySelectedTrip } from '../../utilities/api/users-api'
 
 // Component imports
 import TripDetails from '../../components/TripDetails/TripDetails';
@@ -33,24 +34,28 @@ export default function Landing({ user }) {
   const [value, setValue] = useState(0);
   const [show, setShow] = useState(false)
   const [userTrips, setUserTrips] = useState([])
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    async function fetchTrips() {
-      try {
-        const fetchedTrips = await getTrips();
-        setUserTrips(fetchedTrips);
-      } catch (error) {
-        console.error('No Trips created or there was an error fetching trips:', error);
+    console.log(user)
+    if (user.recentlySelectedTrip) {
+      setActiveTrip(user.recentlySelectedTrip)
+    } else {
+      async function fetchTrips() {
+        try {
+          const fetchedTrips = await getTrips();
+          setUserTrips(fetchedTrips);
+        } catch (error) {
+          console.error('No Trips created or there was an error fetching trips:', error);
+        }
       }
+      fetchTrips();
     }
-    fetchTrips();
   }, []);
 
   const handleShow = () => {
     setShow(!show)
   };
-
-  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -60,63 +65,66 @@ export default function Landing({ user }) {
   const handleSubmit = async (e, id) => {
     try {
       // Wait for the promise to resolve
-      const fetchedActiveTrip = await getTripById(id);
+      const res = await getTripById(id)
+      // PUT change to USER recently selected trip
+      console.log(res)
+      setRecentlySelectedTrip(res)
+      console.log(setRecentlySelectedTrip)
       // Set the actual trip object to state
-      setActiveTrip(fetchedActiveTrip);
+      setActiveTrip(res);
     } catch (error) {
       console.error('Error fetching active trip details:', error);
     }
     setOpen(false);
   }
 
-
-  
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  height: '75vh',
-  width: '90vw',
-  bgcolor: 'background.paper',
-  border: 'var(--dark) solid 2px',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  borderRadius: '2vmin',
-  padding: '12px',
-};
-
-function ChildModal() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+    
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: '75vh',
+    width: '90vw',
+    bgcolor: 'background.paper',
+    border: 'var(--dark) solid 2px',
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+    borderRadius: '2vmin',
+    padding: '12px',
   };
 
-  return (
-    <Container>
-      <Button onClick={handleOpen}>Add a new trip!</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style }}>
-          {/* <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p> */}
-          <TripForm user={user} handleClose={handleClose} />
-        </Box>
-      </Modal>
-    </Container>
-  );
-}
+  function ChildModal() {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <Container>
+        <Button onClick={handleOpen}>Add a new trip!</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="child-modal-title"
+          aria-describedby="child-modal-description"
+        >
+          <Box sx={{ ...style }}>
+            {/* <h2 id="child-modal-title">Text in a child modal</h2>
+            <p id="child-modal-description">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            </p> */}
+            <TripForm user={user} handleClose={handleClose} />
+          </Box>
+        </Modal>
+      </Container>
+    );
+  }
 
   return (
     <Container>

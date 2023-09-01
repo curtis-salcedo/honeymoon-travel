@@ -68,7 +68,7 @@ export default function Accommodation({ id, day, viewAll }) {
       </div>
       {accommodations ? 
         accommodations.map((a) => (
-        <Card id='hotel-card' elevation={0} key={a._id} sx={{padding:1}}>
+        <Card key={a._id} id='hotel-card' elevation={0}sx={{padding:1}}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
             <Grid item xs container

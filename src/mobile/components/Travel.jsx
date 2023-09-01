@@ -70,6 +70,7 @@ export default function Travel({ id, day, viewAll }) {
           ? travels.map((t) => 
           <>
           <Grow
+            key={t._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}
