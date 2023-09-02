@@ -29,30 +29,27 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AddIcon from '@mui/icons-material/Add';
 
 
-export default function Travel({ id, day, viewAll }) {
-  const { activeTravels } = useContext(DataContext)
-  const { mapLocation, setMapLocation } = useContext(MapContext)
-  const [show, setShow] = useState(false)
-  const [travels, setTravels] = useState([])
+export default function Travel({ id, travels, open, setOpen }) {
+  const { tripData } = useContext(DataContext)
+  const [checked, setChecked] = useState(true);
+  const [categoryId, setCategoryId] = useState('')
+  const [mapId, setMapId] = useState('')
+  const [openMap, setOpenMap] = useState(false);
+  const [address, setAddress] = useState(null)
+  const [selectedAddress, setSelectedAddress] = useState(null)
   
-  useEffect(() => {
-    setTravels(activeTravels)
-    setChecked(true)
-  }, [activeTravels]);
-
-  // Find a specific location on the map
-  const getMapLocation = (e, address) => {
-    console.log('getMapLocation', address)
-    MapService.getAddressLocation(address, setMapLocation)
+  const handleDetailOpen = (e, id) => {
+    setCategoryId(id)
+    setOpen(true);
   }
-
-  // Test Area
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
+  const handleMapOpen = (e, address) => {
+    setSelectedAddress(address)
+    setMapId(address);
+    setOpenMap(true);
   };
-
+  const handleWebsite = (e, website) => {
+    window.open(website, '_blank')
+  }
 
   return (
     <Container sx={{ padding: 0, margin: 0 }}>

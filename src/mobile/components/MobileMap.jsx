@@ -76,9 +76,8 @@ export default function MobileMap({ address, setAddress, openMap, setOpenMap }) 
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
     >
-    <Box sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>
-
-      <Paper className='mobile-map'>
+    <Box sx={{ ...style, margin: 0, padding: 0, border: 'solid 2px black' }}>
+      <Paper container className='mobile-map'>
         <iframe 
           className='mobile-map-area'
           title='this is a title'
@@ -87,19 +86,14 @@ export default function MobileMap({ address, setAddress, openMap, setOpenMap }) 
           referrerPolicy="no-referrer-when-downgrade"
           src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC-cmS2g3Y3yti-MmZe9A4TbISPziKMEP4&q=${query}&${zoom}`}>
         </iframe>
-        <Box>
-          <Grid>
-            <Button fullWidth color="primary" size="small" variant="outlined" outlined>Find Nearby</Button>
-          </Grid>
-          <Grid mt={1}>
-            <Typography variant='body2' color='text.secondary'>
-              <Address address={address} />
-            </Typography>
-          </Grid>
-        </Box>
       </Paper>
-
+      <Box sx={{padding:1, margin:0, display:'flex',flexGrow:1, flexDirection:'column'}}>
+        <Button  fullWidth color="primary" size="small" variant="outlined" outlined>Find Nearby</Button>
+        <Box container sx={{padding:1, margin:0, display:'flex',flexGrow:1, flexDirection:'column'}}>
+          <Address address={address} />
+        </Box>
       <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
+      </Box>
 
     </Box>
   </Modal>

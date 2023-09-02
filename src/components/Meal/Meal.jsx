@@ -33,7 +33,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function Meal({ id, day, tripDays, viewAll }) {
   // Get the active meals from the data context
-  const { activeMeals } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   // Set map location if the user clicks on the address
   const { mapLocation, setMapLocation } = useContext(MapContext)
   const [meals, setMeals] = useState([])
@@ -41,23 +41,13 @@ export default function Meal({ id, day, tripDays, viewAll }) {
   
   useEffect(() => {
     // // Get the meals for each day
-    setMeals(activeMeals)
-  }, [activeMeals, viewAll])
+    setMeals(tripData.meals)
+  }, [meals, viewAll])
 
   // Show the meal form
   const handleShow = () => {
     setShow(!show)
   }
-
-  // Show the meal details
-  const handleShowDetails = (e, id) => {
-    console.log('Here is the meal id needed to find all the details for that meal and edit it.', id)
-  }
-
-  const handleClick = (e, id) => {
-    console.log('Here is the meal id needed to find all the details for that meal and edit it.', id)
-  }
-
   const getMapLocation = (e, address) => {
     console.log('getMapLocation', address)
     MapService.getAddressLocation(address, setMapLocation)

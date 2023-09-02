@@ -28,13 +28,20 @@ export default function MobileTrip({ user, id }) {
   const [meals, setMeals] = useState([])
   const [travels, setTravels] = useState([])
   const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState('')
+
+  const [openAccommodation, setOpenAccommodation] = useState(false);
+  const [openActivity, setOpenActivity] = useState(false);
+  const [openMeal, setOpenMeal] = useState(false);
+  const [openTravel, setOpenTravel] = useState(false);
+
+  console.log(category)
 
   useEffect(() => {
     setAccommodations(tripData.accommodations)
     setActivities(tripData.activities)
     setMeals(tripData.meals)
     setTravels(tripData.travels)
-    
   }, [tripData]);
   
   // Potential handleViews function: Address, Map,
@@ -46,14 +53,14 @@ export default function MobileTrip({ user, id }) {
         <Typography>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
-            <Accommodation id={id} accommodations={accommodations} open={open} setOpen={setOpen} />
+            <Accommodation id={id} setCategory={setCategory} accommodations={accommodations} open={openAccommodation} setOpen={setOpenAccommodation} />
           </Grid>
         : null }
 
         <Typography>Activities</Typography>
         { activities ?
           <Grid item xs={12}>
-            <Activity id={id} activities={activities} open={open} setOpen={setOpen} />
+            <Activity id={id} setCategory={setCategory} activities={activities} open={openActivity} setOpen={setOpenActivity} />
           </Grid>
         : null }
 
@@ -61,7 +68,7 @@ export default function MobileTrip({ user, id }) {
         <Grid item xs={12}>
         { meals ?
           <Grid item xs={12}>
-            <Meal id={id} meals={meals} open={open} setOpen={setOpen} />
+            <Meal id={id} setCategory={setCategory} meals={meals} open={openMeal} setOpen={setOpenMeal} />
           </Grid>
         : null }
         </Grid>
@@ -70,7 +77,7 @@ export default function MobileTrip({ user, id }) {
         <Grid fullWidth item xs={12}>
         { travels ?
           <Grid item xs={12}>
-            <Travel id={id} travels={travels} open={open} setOpen={setOpen} />
+            <Travel id={id} setCategory={setCategory} travels={travels} open={openTravel} setOpen={setOpenTravel} />
           </Grid>
         : null }
         </Grid>

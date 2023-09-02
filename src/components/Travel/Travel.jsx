@@ -29,20 +29,19 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 export default function Travel({ id, day, viewAll }) {
-  const { activeTravels } = useContext(DataContext)
+  const { tripData } = useContext(DataContext)
   const { mapLocation, setMapLocation } = useContext(MapContext)
   const [show, setShow] = useState(false)
   const [travels, setTravels] = useState([])
   
   useEffect(() => {
-    setTravels(activeTravels)
-  }, [activeTravels]);
+    setTravels(tripData.travels)
+  }, [travels]);
 
   // Show the travel form
   const handleShow = (e) => {
     setShow(!show)
   }
-
   // Find a specific location on the map
   const getMapLocation = (e, address) => {
     console.log('getMapLocation', address)

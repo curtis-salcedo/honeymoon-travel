@@ -52,23 +52,20 @@ export default function Activity({ id, activities, open, setOpen }) {
     
   }
   , []);
-
   const handleDetailOpen = (e, id) => {
     setCategoryId(id);
-  
     // Find the activity with the matching ID in tripData.activities
-    const selectedActivity = tripData.activities.find((activity) => activity._id === id);
-  
-    if (selectedActivity) {
+    const selected = tripData.activities.find((s) => s._id === id);
+    if (selected) {
       // Now, selectedActivity contains the object with the matching ID
-      console.log("Selected Activity:", selectedActivity);
-      setData(selectedActivity)
+      console.log("Selected Activity:", selected);
+      selected.category = 'activity'
+      setData(selected)
       setOpen(true);
     } else {
       console.error("Activity not found with ID:", id);
     }
   }
-
   const handleMapOpen = (e, address) => {
     setSelectedAddress(address)
     setMapId(address);

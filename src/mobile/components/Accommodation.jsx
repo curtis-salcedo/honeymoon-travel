@@ -45,12 +45,23 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
   const [mapId, setMapId] = useState('')
   const [openMap, setOpenMap] = useState(false);
   const [address, setAddress] = useState(null)
-  const [selectedAddress, setSelectedAddress] = useState(null)
+  const [selectedAddress, setSelectedAddress] = useState('null')
 
+  const [data, setData] = useState('')
 
   const handleDetailOpen = (e, id) => {
-    setCategoryId(id)
-    setOpen(true);
+    setCategoryId(id);
+    // Find the activity with the matching ID in tripData.activities
+    const selected = tripData.accommodations.find((s) => s._id === id);
+    if (selected) {
+      // Now, selectedActivity contains the object with the matching ID
+      console.log("Selected Accommodation:", selected);
+      selected.category = 'accommodation'
+      setData(selected)
+      setOpen(true);
+    } else {
+      console.error("Accommodation not found with ID:", id);
+    }
   }
   const handleMapOpen = (e, address) => {
     setSelectedAddress(address)
@@ -150,8 +161,8 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
           </Grow> 
           ) : null }   
         </Grid>
-          { open ? <Detail id={id} category='accommodation' category_id={categoryId} open={open} setOpen={setOpen} /> : null }
-          { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
+        { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
+        { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
       </Box>
     </Container>
   )

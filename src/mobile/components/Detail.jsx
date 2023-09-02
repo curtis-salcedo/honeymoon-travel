@@ -31,29 +31,20 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HikingIcon from '@mui/icons-material/Hiking';
 import Star from '@mui/icons-material/Star'
 
-export default function Detail({ id, category, category_id, open, setOpen, data, setData }) {
-  const { activeTrip } = useContext(DataContext)
+export default function Detail({ id, open, setOpen, data, setData }) {
+  const { tripData } = useContext(DataContext)
   // State to hold the address for the map
   const [address, setAddress] = useState('')
+  const [category, setCategory] = useState('');
+  const [image, setImage] = useState('')
 
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
-    fetchData();
+    setCategory(data.category)
+    setImage(data.address.images[0])
+  }, [data.category]);
 
-  }, [category]);
-
-  const fetchData = async () => {
-    if (category === 'accommodation') {
-      // Fetch the accommodation data by the category_id
-      try {
-        const d = await getAccommodationById(category_id);
-        setData(d)
-        setAddress(d.address)
-      } catch (error) {
-        console.error('Error fetching accommodation:', error);
-      }
-    }
-  }
+  console.log(image)
 
   // Handle the modal detail open
   const handleOpen = () => {
@@ -64,41 +55,32 @@ export default function Detail({ id, category, category_id, open, setOpen, data,
     setOpen(false);
     setData('')
   };
+  const handleWebsite = (e, website) => {
+    window.open(website, '_blank')
+  }
 
   function Accommodation() {
     return (
       <>
-          <CardMedia
-            component="img"
-            image={data.address ? data.address.images[0] : ''}
-            alt="location image"
-            sx={{
-              objectFit: 'cover',
-              width: '100%',
-              height: '180px',
-            }}
-          />
-
         <CardHeader
           title={data.address.name}
           subheader={data.type}
           sx={{
             overflow: 'hidden',
-            whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
-            width: '280px',
+            width: '100%',
           }}
         />
         <Box
           sx={{
-            backgroundColor: 'var(--light)',
             border: 'none',
             borderRadius: '1vmin',
             padding: '1rem',
-            height: '48%',
+            height: '100%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
+            flexgrow: 1,
           }}
           fullWidth
         >
@@ -118,28 +100,6 @@ export default function Detail({ id, category, category_id, open, setOpen, data,
   function Activity() {
     return (
       <>
-      <CardMedia
-        sx={{
-          objectFit: 'cover',
-          height: '200px',
-          width: '100%',
-        }}
-      >
-        <HikingIcon
-          mt={3}
-          sx={{
-            height: '180px',
-            width: '200px',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            margin: 'auto',
-            fontSize: '2rem', // Adjust the icon size as needed
-          }}
-        />
-      </CardMedia>
-
         <CardHeader
           title={data.name}
           subheader={data.type}
@@ -152,7 +112,6 @@ export default function Detail({ id, category, category_id, open, setOpen, data,
         />
         <Box
           sx={{
-            backgroundColor: 'var(--light)',
             border: 'none',
             borderRadius: '1vmin',
             padding: '1rem',
@@ -169,6 +128,90 @@ export default function Detail({ id, category, category_id, open, setOpen, data,
             </Typography>
             <Typography mt={3} variant='body2' color='text.secondary'>
               {data.details}
+            </Typography>
+          </Grid>
+        </Box>
+      </>
+    )
+  }
+
+  function Meal() {
+    return (
+      <>
+        <CardHeader
+          title={data.address.name}
+          subheader={data.type}
+          sx={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            width: '280px',
+          }}
+        />
+        <Box
+          sx={{
+            border: 'none',
+            borderRadius: '1vmin',
+            padding: '1rem',
+            height: '48%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+          fullWidth
+        >
+          <Grid fullWidth>
+            <Typography variant='body2' color='text.secondary'>
+            {convertDateToLongDetail(data.date)}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              { data.isReservation ? 
+                data.time ?
+                `There is a reservation made at ${data.time}` 
+                : 'There is a reservation made'
+                : 'Walk-In' }
+            </Typography>
+          </Grid>
+        </Box>
+      </>
+    )
+  }
+
+  function Travel() {
+    return (
+      <>
+        <CardHeader
+          title={data.address.name}
+          subheader={data.type}
+          sx={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            width: '280px',
+          }}
+        />
+        <Box
+          sx={{
+            border: 'none',
+            borderRadius: '1vmin',
+            padding: '1rem',
+            height: '48%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+          fullWidth
+        >
+          <Grid fullWidth>
+            <Typography variant='body2' color='text.secondary'>
+            {convertDateToLongDetail(data.date)}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              { data.isReservation ? 
+                data.time ?
+                `There is a reservation made at ${data.time}` 
+                : 'There is a reservation made'
+                : 'Walk-In' }
             </Typography>
           </Grid>
         </Box>
@@ -204,24 +247,65 @@ export default function Detail({ id, category, category_id, open, setOpen, data,
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
     >
-    <Box sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>
-      { data && category === 'accommodation' ? 
-      <>
-        <Accommodation />
-        <Address address={data.address} />
-      </>
-      : null }
-      { data && category === 'activity' ? 
-      <>
-        <Activity />
-        <Address address={data.address} />
-      </>
-      : null }
-
-
-
-      <Button fullWidth onClick={handleClose}>Close</Button>
-
+    <Box container sx={{ ...style, margin: 0, padding: 0, border: 'solid 2px black' }}>
+        { image ?
+        <CardMedia
+          component="img"
+          image={image}
+          alt="location image"
+          sx={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '25%',
+            padding: 0,
+          }}
+        />
+        :      
+        <CardMedia
+          sx={{
+            objectFit: 'cover',
+            height: '25%',
+            width: '100%',
+          }}>
+          <HikingIcon
+            mt={3}
+            sx={{
+              height: '25%',
+              width: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              margin: 'auto',
+              fontSize: '2rem',
+            }}
+        /></CardMedia>
+        }
+        <Box 
+          container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            height: 'auto',
+          }}>
+          { category === 'accommodation' ? <Accommodation /> : null }
+          { category === 'activity' ? <Activity /> : null }
+          { category === 'meal' ? <Meal /> : null }
+          { category === 'travel' ? <Travel /> : null }
+        </Box>
+        <Box sx={{padding:1, margin:0, display:'flex', flexDirection:'column'}}>
+          <Grid        
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              padding: 1,
+              margin: 0,
+            }} >
+            <Address address={data.address} />
+          </Grid>
+          <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
+        </Box>
     </Box>
   </Modal>
   )
