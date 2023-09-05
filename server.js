@@ -1,3 +1,21 @@
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDCRLjpbFNuloyFzaHwvd94oxvPyRwySKE",
+//   authDomain: "silent-nation-392514.firebaseapp.com",
+//   projectId: "silent-nation-392514",
+//   storageBucket: "silent-nation-392514.appspot.com",
+//   messagingSenderId: "798825895928",
+//   appId: "1:798825895928:web:f9e2ac10f193c3c8f5e80d",
+//   measurementId: "G-TZMD7VYR13"
+// };
+
+// const analytics = getAnalytics(app);
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -6,7 +24,7 @@ const logger = require('morgan');
 require('dotenv').config();
 // Connect to the database
 require('./config/database');
-
+// Initialize Firebase
 const app = express();
 
 app.use(logger('dev'));

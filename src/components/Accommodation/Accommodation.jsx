@@ -106,11 +106,11 @@ export default function Accommodation({ id, day, viewAll }) {
           </Grid>
           <Grid item>
               <ButtonBase sx={{ width: 200, height: 'auto' }}>
-              { a.address.images ?
+              { a.address.images > 0 ?
                 <CardMedia
                   className='hotel-card-media'
                   component="img"
-                  src={a.address.images[0]}
+                  src=''
                   sx={{
                     width: '200px',
                     height: '150px',

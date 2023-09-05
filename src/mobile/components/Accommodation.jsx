@@ -46,7 +46,6 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
   const [openMap, setOpenMap] = useState(false);
   const [address, setAddress] = useState(null)
   const [selectedAddress, setSelectedAddress] = useState('null')
-
   const [data, setData] = useState('')
 
   const handleDetailOpen = (e, id) => {
@@ -113,7 +112,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
               >
                 <CardMedia
                   component="img"
-                  image={a.address.images[0]}
+                  image=''
                   alt="location image"
                   sx={{
                     objectFit: 'cover',

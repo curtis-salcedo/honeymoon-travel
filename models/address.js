@@ -11,7 +11,6 @@ const addressSchema = new mongoose.Schema({
   streetName: { type: String },
   zipCode: { type: String },
   placeId: { type: String },
-  images: [{ type: String }],
   rating: { type: String },
   priceLevel: { type: String },
   phoneNumber: { type: String },

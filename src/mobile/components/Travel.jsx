@@ -7,7 +7,8 @@ import * as MapService from '../../utilities/services/maps-service';
 import { convertDate, convertDateToDetail } from '../../utilities/services/business-service';
 
 // Component Imports
-
+import Detail from './Detail';
+import MobileMap from './MobileMap';
 
 // Style Imports
 import {
@@ -37,19 +38,30 @@ export default function Travel({ id, travels, open, setOpen }) {
   const [openMap, setOpenMap] = useState(false);
   const [address, setAddress] = useState(null)
   const [selectedAddress, setSelectedAddress] = useState(null)
-  
+  const [data, setData] = useState('')
+
   const handleDetailOpen = (e, id) => {
-    setCategoryId(id)
-    setOpen(true);
+    setCategoryId(id);
+    // Find the activity with the matching ID in tripData.activities
+    const selected = tripData.travels.find((s) => s._id === id);
+    if (selected) {
+      // Now, selectedActivity contains the object with the matching ID
+      console.log("Selected Travel:", selected);
+      selected.category = 'accommodation'
+      setData(selected)
+      setOpen(true);
+    } else {
+      console.error("Travel not found with ID:", id);
+    }
   }
   const handleMapOpen = (e, address) => {
     setSelectedAddress(address)
     setMapId(address);
     setOpenMap(true);
   };
-  const handleWebsite = (e, website) => {
-    window.open(website, '_blank')
-  }
+  // const handleWebsite = (e, website) => {
+  //   window.open(website, '_blank')
+  // }
 
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
@@ -65,8 +77,8 @@ export default function Travel({ id, travels, open, setOpen }) {
         }}>
         { travels
           ? travels.map((t) => 
-          <React.Fragment key={t._id}>
           <Grow
+            key={t._id}
             in={checked}
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}
@@ -102,7 +114,7 @@ export default function Travel({ id, travels, open, setOpen }) {
                   Departure: <br /> {convertDateToDetail(t.departureDateTime)}
                 </Typography>
                 <Typography variant='body2' color='text.secondary'>
-                <a href={t.departureLocation.website}>Website</a>
+                {/* <a href={t.departureLocation.website}>Website</a> */}
                 </Typography>
                 {/* <Typography variant='body2' color='text.secondary'>
                   {t.departureLocation.name ? (
@@ -133,36 +145,20 @@ export default function Travel({ id, travels, open, setOpen }) {
                 <Typography variant='body2' color='text.secondary'>
                   Arrival: <br /> {convertDateToDetail(t.arrivalDateTime)}
                 </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  <a href={t.arrivalLocation.website}>Website</a>
-                </Typography>
-                {/* <Typography variant='body2' color='text.secondary'>
-                  {t.arrivalLocation.name ? (
-                    <>
-                      {t.arrivalLocation.name}, {t.arrivalLocation.city},{' '}
-                      {t.arrivalLocation.state}
-                      <br />
-                      {t.arrivalLocation.country}, {t.arrivalLocation.zipCode}
-                    </>
-                  ) : (
-                    'No address recorded'
-                  )}
-                </Typography> */}
+
+                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
+                  {/* { t.arrivalLocation.address.website ? <Button onClick={(e) => handleWebsite(e, t.address.website)}>Website</Button> : null } */}
+                  <Button onClick={(e) => handleMapOpen(e, t.address)}>Map</Button>
+                  <Button onClick={(e) => handleDetailOpen(e, t._id)} >Details</Button>
+                </Grid>
+
               </Box>
             </Paper>
-          </Grow>
-          {/* <Grow
-            in={checked}
-            style={{ transformOrigin: '0 0 0' }}
-            {...(checked ? { timeout: 1000 } : {})}
-            >
-            <Typography variant='subtitle1'>
-              {t.type} - {t.identifier}
-            </Typography>
-          </Grow> */}
-          </React.Fragment>     
+          </Grow>  
           ) : null }   
         </Grid>
+        { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
+        { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
       </Box>
     </Container>
   );  

@@ -41,7 +41,9 @@ export default function Detail({ id, open, setOpen, data, setData }) {
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
     setCategory(data.category)
-    setImage(data.address.images[0])
+    if (data.address.images && data.address.images.length > 0) {
+      setImage(data.address.images[0])
+    }
   }, [data.category]);
 
   console.log(image)
@@ -247,8 +249,8 @@ export default function Detail({ id, open, setOpen, data, setData }) {
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
     >
-    <Box container sx={{ ...style, margin: 0, padding: 0, border: 'solid 2px black' }}>
-        { image ?
+    <Box container sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>        
+    { image ?
         <CardMedia
           component="img"
           image={image}
@@ -288,24 +290,25 @@ export default function Detail({ id, open, setOpen, data, setData }) {
             flexDirection: 'column',
             flexGrow: 1,
             height: 'auto',
+            padding: 0,
           }}>
           { category === 'accommodation' ? <Accommodation /> : null }
           { category === 'activity' ? <Activity /> : null }
           { category === 'meal' ? <Meal /> : null }
           { category === 'travel' ? <Travel /> : null }
         </Box>
-        <Box sx={{padding:1, margin:0, display:'flex', flexDirection:'column'}}>
+        <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'20%', flexDirection:'column'}}>
           <Grid        
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              padding: 1,
+              padding: 0,
               margin: 0,
             }} >
             <Address address={data.address} />
           </Grid>
-          <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
         </Box>
+        <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
     </Box>
   </Modal>
   )

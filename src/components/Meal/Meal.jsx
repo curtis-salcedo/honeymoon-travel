@@ -109,11 +109,11 @@ export default function Meal({ id, day, tripDays, viewAll }) {
           </Grid>
           <Grid item>
               <ButtonBase sx={{ width: 200, height: 'auto' }}>
-              { m.address.images ?
+              { m.address.images > 0 ?
                 <CardMedia
                   className='hotel-card-media'
                   component="img"
-                  src={m.address.images[0]}
+                  src=''
                   sx={{
                     width: '200px',
                     height: '150px',

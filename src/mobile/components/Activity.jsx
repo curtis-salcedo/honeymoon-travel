@@ -120,7 +120,7 @@ export default function Activity({ id, activities, open, setOpen }) {
               >
                 <CardMedia
                   component="img"
-                  image={a.address.images[0]}
+                  image={a.address.images > 0 ? a.address.images[0]: null }
                   alt="location image"
                   sx={{
                     objectFit: 'cover',

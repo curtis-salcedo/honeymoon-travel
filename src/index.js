@@ -5,6 +5,7 @@ import './index.css';
 import App from './pages/App/App';
 import { DataProvider } from './utilities/DataContext';
 import { MapProvider } from './utilities/MapContext';
+import { initializeApp } from 'firebase/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

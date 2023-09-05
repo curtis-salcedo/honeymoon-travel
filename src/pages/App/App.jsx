@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Utility Imports
@@ -18,7 +18,11 @@ import Mobile from '../../mobile/Mobile'
 import './App.css';
 
 export default function App() {
-  const [user, setUser] = useState(getUser());
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    setUser(getUser());
+  }, []);
 
   return (
     <main className="App">

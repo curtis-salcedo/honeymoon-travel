@@ -62,7 +62,6 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       latitude: resultData ? resultData.geometry.location.lat() || '' : '',
       name: resultData ? resultData.name || '' : '',
       placeId: resultData ? resultData.place_id || '' : '',
-      images: resultData && resultData.photos ? resultData.photos.slice(0, 5).map(photo => photo.getUrl()) : [],
       rating: resultData ? resultData.rating || '' : '',
       priceLevel: resultData ? resultData.price_level || '' : '',
       phoneNumber: resultData ? resultData.formatted_phone_number || '' : '',

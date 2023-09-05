@@ -109,20 +109,9 @@ export default function Meal({ id, meals, open, setOpen }) {
                   padding: 0,
                 }}
               >
-                <Button
-                  sx={{
-                    position: 'absolute',
-                    top: '0',
-                    left: '0',
-                    backgroundColor: 'var(--blue)',
-                    color: 'var(--white)',
-                  }}
-                >
-                  Map
-                </Button>
                 <CardMedia
                   component="img"
-                  image={m.address.images[0]}
+                  image=''
                   alt="location image"
                   sx={{
                     objectFit: 'cover',

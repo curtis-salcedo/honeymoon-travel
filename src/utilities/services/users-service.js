@@ -4,6 +4,7 @@
 // for making AJAX requests to the server.
 
 import * as usersAPI from '../api/users-api';
+import * as DataContext from '../DataContext';
 
 export async function signUp(userData) {
   const token = await usersAPI.signUp(userData);

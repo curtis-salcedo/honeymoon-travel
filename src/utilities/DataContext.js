@@ -84,6 +84,7 @@ export const DataProvider = (props) => {
         activeTravels: activeTravels || [],
         setAddress: setAddress,
         tripData: tripData || [],
+        setUser: setUser,
       }}
     >
       {props.children}
