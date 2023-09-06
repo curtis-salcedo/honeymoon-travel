@@ -28,8 +28,6 @@ export default function MobileMap({ address, setAddress, openMap, setOpenMap }) 
   const [mapLocation, setMapLocation] = useState('')
   const [query, setQuery] = useState('')
 
-  console.log(address)
-
   useEffect(() => {
     // Calculate query directly from the address prop
     const newQuery = address ? `${address.latitude},${address.longitude}` : 'denver';
@@ -45,7 +43,7 @@ export default function MobileMap({ address, setAddress, openMap, setOpenMap }) 
 
   // Create the seach Query for Long/Lat from the address
   // const query = mapLocation ? `${mapLocation.latitude},${mapLocation.longitude}` : 'denver';
-  const zoom = 'zoom=15'
+  const zoom = 'zoom=14'
   const mapId = 'map_id=eb2f3cc6944a4293'
 
   // Modal style

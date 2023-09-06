@@ -30,7 +30,14 @@ import Star from '@mui/icons-material/Star'
 import StarHalf from '@mui/icons-material/StarHalf'
 
 export default function Address({ address }) {
-  const rating = (address.rating ? parseFloat(address.rating) : 0)
+  const [rating, setRating] = useState(0)
+
+  useEffect(() => {
+    if (address.rating) {
+      setRating(address.rating)
+    }
+  })
+  // const rating = (address.rating ? parseFloat(address.rating) : 0)
   // Function to determine amount of stars and half stars
   const handleWebsite = (e, website) => {
     window.open(website, '_blank')

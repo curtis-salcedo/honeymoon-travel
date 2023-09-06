@@ -19,9 +19,9 @@ async function getAllDataForTrip(req, res) {
     tripData.accommodations = await Accommodation.find({ tripId: req.params.id }).populate('address');
     tripData.activities = await Activity.find({ tripId: req.params.id }).populate('address');
     tripData.meals = await Meal.find({ tripId: req.params.id }).populate('address');
-    tripData.travels = await Travel.find({ tripId: req.params.id });
+    tripData.travels = await Travel.find({ tripId: req.params.id }).populate('arrivalLocation').populate('departureLocation');
 
-    tripData.trip = await Trip.findById(req.params.id);
+    console.log('tripData', tripData)
     res.json(tripData);
   } catch (err) {
     res.status(400).json(err);

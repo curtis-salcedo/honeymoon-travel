@@ -41,12 +41,10 @@ export default function Detail({ id, open, setOpen, data, setData }) {
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
     setCategory(data.category)
-    if (data.address.images && data.address.images.length > 0) {
-      setImage(data.address.images[0])
-    }
+    // if (data.address.images && data.address.images.length > 0) {
+    //   setImage(data.address.images[0])
+    // }
   }, [data.category]);
-
-  console.log(image)
 
   // Handle the modal detail open
   const handleOpen = () => {
@@ -94,6 +92,17 @@ export default function Detail({ id, open, setOpen, data, setData }) {
             Check-Out: {convertDateToLongDetail(data.checkOutDate)} { data.CheckInTime ? data.CheckOutTime : '' }
             </Typography>
           </Grid>
+          <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'20%', flexDirection:'column'}}>
+          <Grid        
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              padding: 0,
+              margin: 0,
+            }} >
+            <Address address={data.address} /> 
+          </Grid>
+        </Box>
         </Box>
       </>
     )
@@ -183,8 +192,7 @@ export default function Detail({ id, open, setOpen, data, setData }) {
     return (
       <>
         <CardHeader
-          title={data.address.name}
-          subheader={data.type}
+          title={data.type}
           sx={{
             overflow: 'hidden',
             whiteSpace: 'nowrap',
@@ -204,18 +212,29 @@ export default function Detail({ id, open, setOpen, data, setData }) {
           }}
           fullWidth
         >
-          <Grid fullWidth>
-            <Typography variant='body2' color='text.secondary'>
-            {convertDateToLongDetail(data.date)}
-            </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              { data.isReservation ? 
-                data.time ?
-                `There is a reservation made at ${data.time}` 
-                : 'There is a reservation made'
-                : 'Walk-In' }
-            </Typography>
-          </Grid>
+          <Typography sx={{textAlign:'center'}} variant='body1' color='text.primary'>Departure</Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {convertDateToLongDetail(data.departureDateTime)}
+          </Typography>
+          <Address address={data.departureLocation} />
+        </Box>
+        <Box
+          sx={{
+            border: 'none',
+            borderRadius: '1vmin',
+            padding: '1rem',
+            height: '48%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+          fullWidth
+        >
+          <Typography sx={{textAlign:'center'}} variant='body1' color='text.primary'>Arrival</Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {convertDateToLongDetail(data.arrivalDateTime)}
+          </Typography>
+          <Address address={data.arrivalLocation} />
         </Box>
       </>
     )
@@ -295,8 +314,9 @@ export default function Detail({ id, open, setOpen, data, setData }) {
           { category === 'accommodation' ? <Accommodation /> : null }
           { category === 'activity' ? <Activity /> : null }
           { category === 'meal' ? <Meal /> : null }
-          { category === 'travel' ? <Travel /> : null }
+          { category === 'travel' ? <Travel /> : null}
         </Box>
+        { data.address ?
         <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'20%', flexDirection:'column'}}>
           <Grid        
             sx={{
@@ -305,9 +325,10 @@ export default function Detail({ id, open, setOpen, data, setData }) {
               padding: 0,
               margin: 0,
             }} >
-            <Address address={data.address} />
+            <Address address={data.address} /> 
           </Grid>
         </Box>
+        : null }
         <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
     </Box>
   </Modal>

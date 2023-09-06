@@ -63,6 +63,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
     }
   }
   const handleMapOpen = (e, address) => {
+    console.log(address)
     setSelectedAddress(address)
     setMapId(address);
     setOpenMap(true);

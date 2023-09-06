@@ -5,10 +5,12 @@ import { MapContext } from '../../utilities/MapContext';
 // Service Imports
 import * as MapService from '../../utilities/services/maps-service';
 import { convertDate, convertDateToDetail } from '../../utilities/services/business-service';
+import { convertDateToLongDetail } from '../../utilities/services/business-service';
 
 // Component Imports
-import Detail from './Detail';
+import TravelDetail from './Detail';
 import MobileMap from './MobileMap';
+import Detail from './Detail';
 
 // Style Imports
 import {
@@ -24,6 +26,10 @@ import {
   FormControlLabel,
   Switch,
   Grow,
+  ButtonBase,
+  CardMedia,
+  CardHeader,
+
   
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -36,18 +42,24 @@ export default function Travel({ id, travels, open, setOpen }) {
   const [categoryId, setCategoryId] = useState('')
   const [mapId, setMapId] = useState('')
   const [openMap, setOpenMap] = useState(false);
-  const [address, setAddress] = useState(null)
   const [selectedAddress, setSelectedAddress] = useState(null)
   const [data, setData] = useState('')
+  
+  // Adress stores current address for map
+  const [address, setAddress] = useState(null)
+  // departureAddress helps display the address for the detail
+  const [depatureAddress, setDepartureAddress] = useState('')
+  // arrivalAddress helps display the address for the detail
+  const [arrivalAddress, setArrivalAddress] = useState('')
 
-  const handleDetailOpen = (e, id) => {
+  const handleDetailOpen = (e, id, a) => {
     setCategoryId(id);
     // Find the activity with the matching ID in tripData.activities
     const selected = tripData.travels.find((s) => s._id === id);
     if (selected) {
       // Now, selectedActivity contains the object with the matching ID
       console.log("Selected Travel:", selected);
-      selected.category = 'accommodation'
+      selected.category = 'travel'
       setData(selected)
       setOpen(true);
     } else {
@@ -55,25 +67,24 @@ export default function Travel({ id, travels, open, setOpen }) {
     }
   }
   const handleMapOpen = (e, address) => {
+    console.log('address at map open', address)
     setSelectedAddress(address)
     setMapId(address);
     setOpenMap(true);
   };
-  // const handleWebsite = (e, website) => {
-  //   window.open(website, '_blank')
-  // }
 
   return (
     <Container sx={{ padding: 0, margin: 0 }}>
-      <Box sx={{ height: '300px' }}>
-      <Grid sx={{ 
-        display: 'flex',
-        gridAutoFlow: "column",
-        gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-        gridAutoColumns: "minmax(160px, 2fr)",
-        height: '100%',
-        width: 'auto',
-        overflowX: 'scroll',
+      <Box sx={{ height: '400px', width: 'auto', padding:0, margin:0 }}>
+        <Grid sx={{ 
+          display: 'flex',
+          gridAutoFlow: "column",
+          gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
+          gridAutoColumns: "minmax(160px, 2fr)",
+          height: '400px',
+          overflowX: 'scroll',
+          margin: 0,
+          padding: 0,
         }}>
         { travels
           ? travels.map((t) => 
@@ -86,16 +97,25 @@ export default function Travel({ id, travels, open, setOpen }) {
             <Paper sx={{
               m: 1,
               backgroundColor: 'var(--white)',
-              height: 'auto',
-              width: '300px',
+              height: '380px',
+              width: '400px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
               }} 
-              elevation={4}
+              elevation={3}
               >
 
-              <Typography variant='title2'>{t.type} { t.identifier ? ` - ${t.identifier}` : '' }</Typography>
+              <CardHeader
+                title={t.type}
+                // subheader={a.type}
+                sx={{
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  width: '280px',
+                  textAlign: 'center',
+                }}
+              />
 
               <Box
                 sx={{
@@ -106,55 +126,44 @@ export default function Travel({ id, travels, open, setOpen }) {
                   height: '48%',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
                   width: '280px',
-                }}
-              >
+                }}>
                 <Typography variant='body2' color='text.secondary'>
-                  Departure: <br /> {convertDateToDetail(t.departureDateTime)}
+                  Departing: {`${convertDateToLongDetail(t.departureDateTime)}`}
                 </Typography>
                 <Typography variant='body2' color='text.secondary'>
-                {/* <a href={t.departureLocation.website}>Website</a> */}
+                  {`${t.departureLocation.city}, ${t.departureLocation.state}, ${t.departureLocation.country}`}
                 </Typography>
-                {/* <Typography variant='body2' color='text.secondary'>
-                  {t.departureLocation.name ? (
-                    <>
-                      {t.departureLocation.name}, {t.departureLocation.city},{' '}
-                      {t.departureLocation.state}
-                      <br />
-                      {t.departureLocation.country}, {t.departureLocation.zipCode}
-                    </>
-                  ) : (
-                    'No address recorded'
-                  )}
-                </Typography> */}
-              </Box>
-              <Box
-                  sx={{
-                    backgroundColor: 'var(--light)',
-                    border: 'none',
-                    borderRadius: '1vmin',
-                    padding: '1rem',
-                    height: '48%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    width: '280px',
-                  }}
-                >
-                <Typography variant='body2' color='text.secondary'>
-                  Arrival: <br /> {convertDateToDetail(t.arrivalDateTime)}
-                </Typography>
-
-                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
-                  {/* { t.arrivalLocation.address.website ? <Button onClick={(e) => handleWebsite(e, t.address.website)}>Website</Button> : null } */}
-                  <Button onClick={(e) => handleMapOpen(e, t.address)}>Map</Button>
-                  <Button onClick={(e) => handleDetailOpen(e, t._id)} >Details</Button>
+                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
+                  <Button onClick={(e) => handleMapOpen(e, t.departureLocation)}>Map</Button>
+                  <Button onClick={(e) => handleDetailOpen(e, t._id)}>Details</Button>
                 </Grid>
+              </Box>
 
+              <Box
+                sx={{
+                  backgroundColor: 'var(--light)',
+                  border: 'none',
+                  borderRadius: '1vmin',
+                  padding: '1rem',
+                  height: '40%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '280px',
+                }}>
+                <Typography variant='body2' color='text.secondary'>
+                  Arriving: {`${convertDateToLongDetail(t.arrivalDateTime)}`}
+                </Typography>
+                <Typography variant='body2' color='text.secondary'>
+                  {`${t.arrivalLocation.city}, ${t.arrivalLocation.state}, ${t.arrivalLocation.country}`}
+                </Typography>
+                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
+                  <Button onClick={(e) => handleMapOpen(e, t.arrivalLocation)}>Map</Button>
+                  <Button onClick={(e) => handleDetailOpen(e, t._id, t.departureLocation)}>Details</Button>
+                </Grid>
               </Box>
             </Paper>
-          </Grow>  
+          </Grow> 
           ) : null }   
         </Grid>
         { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
