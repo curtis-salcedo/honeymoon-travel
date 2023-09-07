@@ -5,7 +5,9 @@ import { DataContext } from '../../../utilities/DataContext';
 import AddressForm from '../AddressForm/AddressForm';
 
 // Service Imports
-import * as MapService from '../../../utilities/services/maps-service';
+import { LocalizationProvider, MobileDateTimePicker, TimePicker, DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 
 // API Imports
 import * as MealsAPI from '../../../utilities/api/meals-api';
@@ -37,11 +39,11 @@ export default function MealForm({ id, day, setShow }) {
   const [address, setAddress] = useState(null)
   const [tripId, setTripId] = useState(activeTrip)
   const [activeAddress, setActiveAddress] = useState(null)
-  const [mealData, setMealData] = useState({
+  const [data, setData] = useState({
     tripId: id,
     date: '',
     type: '',
-    isReservation: false,
+    isReservation: '',
   });
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function MealForm({ id, day, setShow }) {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
     console.log(name,value, type, checked, newValue)
-    setMealData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: newValue,
       tripId: activeTrip._id,
@@ -61,24 +63,32 @@ export default function MealForm({ id, day, setShow }) {
   };
   
   const handleSubmit = async (e) => {
-    console.log('meal data in submit', mealData, address)
+    console.log('meal data in submit', data, address)
     e.preventDefault();
     try {
       // Handle form submission to the backend here
-      console.log('meal data in submit', mealData)
-      await MealsAPI.createMeal(mealData, address);
+      console.log('meal data in submit', data)
+      await MealsAPI.createMeal(data, address);
     } catch (err) {
       console.log('Error at submitting meal', err)
     }
     setShow(false)
   };
 
-    // Save the address to state
-    const handleSaveAddress = (e) => {
-      e.preventDefault();
-      console.log('address data in handleSaveAddress', address)
-      setActiveAddress(address)
-    }
+  // Save the address to state
+  const handleSaveAddress = (e) => {
+    e.preventDefault();
+    console.log('address data in handleSaveAddress', address)
+    setActiveAddress(address)
+  }
+  // Dynamically handle the date/time changes
+  const handleDateChange = (e, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: e,
+    }));
+    console.log('date change data result', data)
+  };
 
   return (
     <main>
@@ -102,7 +112,7 @@ export default function MealForm({ id, day, setShow }) {
               <InputLabel>Type</InputLabel>
               <Select
                 name="type"
-                value={mealData.type}
+                value={data.type}
                 onChange={handleChange}
                 required
               >
@@ -114,37 +124,61 @@ export default function MealForm({ id, day, setShow }) {
               </Select>
             </FormControl>
           </Grid>
-
-              
           <Grid item xs={12}>
             <FormControlLabel
               control={
                 <Switch
                   type='checkbox'
                   name="isReservation"
-                  checked={mealData.isReservation}
+                  checked={data.isReservation}
                   onChange={handleChange}
                   color="primary"
                 />
               }
-              label="Reservation"
+              label="Is this a Reservation"
             />
           </Grid>
+          { !data.isReservation ? 
           <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  type="date"
-                  name="date"
-                  value={mealData.date}
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                />
-              </Grid>
-
-            </Grid>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ width:'100%' }}
+                label="Time"
+                name="date"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'date')}
+                // TextFieldComponent={(props) => (
+                //   <TextField fullWidth />
+                // )}
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
+              />
+            </LocalizationProvider>
           </Grid>
+          :
+          <Grid item xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker 
+              sx={{ width:'100%' }}
+              label="Time"
+              name="date"
+              value={data.checkOut}
+              onChange={(e) => handleDateChange(e, 'date')}
+              // TextFieldComponent={(props) => (
+              //   <TextField fullWidth />
+              // )}
+              viewRenderers={{
+                hours: renderTimeViewClock,
+                minutes: renderTimeViewClock,
+                seconds: renderTimeViewClock,
+              }}
+            />
+            </LocalizationProvider>
+          </Grid>
+          }
           
           {/* Add more fields as needed */}
           <Grid item xs={12}>

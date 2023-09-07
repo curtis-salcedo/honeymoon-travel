@@ -197,6 +197,7 @@ export default function ActivityForm({ id, day, setShow }) {
                   seconds: renderTimeViewClock,
                 }}
               />
+
             </LocalizationProvider>
           : null }
           </Grid>
