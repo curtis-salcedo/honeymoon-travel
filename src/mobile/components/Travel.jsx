@@ -74,101 +74,100 @@ export default function Travel({ id, travels, open, setOpen }) {
   };
 
   return (
-    <Container sx={{ padding: 0, margin: 0 }}>
-      <Box sx={{ height: '400px', width: 'auto', padding:0, margin:0 }}>
-        <Grid sx={{ 
-          display: 'flex',
-          gridAutoFlow: "column",
-          gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-          gridAutoColumns: "minmax(160px, 2fr)",
-          height: '400px',
-          overflowX: 'scroll',
-          margin: 0,
-          padding: 0,
-        }}>
-        { travels
-          ? travels.map((t) => 
-          <Grow
-            key={t._id}
-            in={checked}
-            style={{ transformOrigin: '0 0 0' }}
-            {...(checked ? { timeout: 1000 } : {})}
-          >
-            <Paper sx={{
-              m: 1,
-              backgroundColor: 'var(--white)',
-              height: '380px',
-              width: '400px',
-              display: 'flex',
-              flexDirection: 'column',
-              }} 
-              elevation={3}
-              >
+    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0 }}>
+      <Grid sx={{ 
+        display: 'flex',
+        gridAutoFlow: "column",
+        gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
+        gridAutoColumns: "minmax(160px, 2fr)",
+        height: '100%',
+        overflowX: 'scroll',
+        margin: 0,
+        padding: 0,
+      }}>
+      { travels
+        ? travels.map((t) => 
+        <Grow
+          key={t._id}
+          in={checked}
+          style={{ transformOrigin: '0 0 0' }}
+          {...(checked ? { timeout: 1000 } : {})}
+        >
+          <Paper sx={{
+            m: 1,
+            backgroundColor: 'var(--white)',
+            height: '90%',
+            width: '400px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignSelf: 'center',
+            }} 
+            elevation={3}
+            >
 
-              <CardHeader
-                title={t.type}
-                // subheader={a.type}
-                sx={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  width: '280px',
-                  textAlign: 'center',
-                }}
-              />
+            <CardHeader
+              title={t.type}
+              // subheader={a.type}
+              sx={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                width: '280px',
+                textAlign: 'center',
+              }}
+            />
 
-              <Box
-                sx={{
-                  backgroundColor: 'var(--light)',
-                  border: 'none',
-                  borderRadius: '1vmin',
-                  padding: '1rem',
-                  height: '48%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '280px',
-                }}>
-                <Typography variant='body2' color='text.secondary'>
-                  Departing: {`${convertDateToLongDetail(t.departureDateTime)}`}
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  {`${t.departureLocation.city}, ${t.departureLocation.state}, ${t.departureLocation.country}`}
-                </Typography>
-                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
-                  <Button onClick={(e) => handleMapOpen(e, t.departureLocation)}>Map</Button>
-                  <Button onClick={(e) => handleDetailOpen(e, t._id)}>Details</Button>
-                </Grid>
-              </Box>
+            <Box
+              sx={{
+                backgroundColor: 'var(--light)',
+                border: 'none',
+                borderRadius: '1vmin',
+                padding: '1rem',
+                height: '48%',
+                display: 'flex',
+                flexDirection: 'column',
+                width: '280px',
+              }}>
+              <Typography variant='body2' color='text.secondary'>
+                Departing: {`${convertDateToLongDetail(t.departureDateTime)}`}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {`${t.departureLocation.city}, ${t.departureLocation.state}, ${t.departureLocation.country}`}
+              </Typography>
+              <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
+                <Button onClick={(e) => handleMapOpen(e, t.departureLocation)}>Map</Button>
+                <Button onClick={(e) => handleDetailOpen(e, t._id)}>Details</Button>
+              </Grid>
+            </Box>
 
-              <Box
-                sx={{
-                  backgroundColor: 'var(--light)',
-                  border: 'none',
-                  borderRadius: '1vmin',
-                  padding: '1rem',
-                  height: '40%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '280px',
-                }}>
-                <Typography variant='body2' color='text.secondary'>
-                  Arriving: {`${convertDateToLongDetail(t.arrivalDateTime)}`}
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  {`${t.arrivalLocation.city}, ${t.arrivalLocation.state}, ${t.arrivalLocation.country}`}
-                </Typography>
-                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
-                  <Button onClick={(e) => handleMapOpen(e, t.arrivalLocation)}>Map</Button>
-                  <Button onClick={(e) => handleDetailOpen(e, t._id, t.departureLocation)}>Details</Button>
-                </Grid>
-              </Box>
-            </Paper>
-          </Grow> 
-          ) : null }   
-        </Grid>
-        { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
-        { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
-      </Box>
-    </Container>
+            <Box
+              sx={{
+                backgroundColor: 'var(--light)',
+                border: 'none',
+                borderRadius: '1vmin',
+                padding: '1rem',
+                height: '40%',
+                display: 'flex',
+                flexDirection: 'column',
+                width: '280px',
+              }}>
+              <Typography variant='body2' color='text.secondary'>
+                Arriving: {`${convertDateToLongDetail(t.arrivalDateTime)}`}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {`${t.arrivalLocation.city}, ${t.arrivalLocation.state}, ${t.arrivalLocation.country}`}
+              </Typography>
+              <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly', marginTop:'5%'}}>
+                <Button onClick={(e) => handleMapOpen(e, t.arrivalLocation)}>Map</Button>
+                <Button onClick={(e) => handleDetailOpen(e, t._id, t.departureLocation)}>Details</Button>
+              </Grid>
+            </Box>
+          </Paper>
+        </Grow> 
+        ) : null }   
+      </Grid>
+      { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
+      { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
+    </Box>
   );  
 }

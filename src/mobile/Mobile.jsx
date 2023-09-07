@@ -12,6 +12,7 @@ import TripDetails from '../components/TripDetails/TripDetails';
 import Landing from './Landing/Landing';
 import MobileTrip from './MobileTrip/MobileTrip';
 import Itinerary from './Itinerary/Itinerary';
+import Header from './components/Header';
 
 // Form Imports
 import TripForm from '../components/forms/TripForm/TripForm'
@@ -128,15 +129,12 @@ export default function Mobile({ user, setUser }) {
     <div className='MobileContainer'>
 
         <div className='MobileContent' >
-          <Container sx={{ display:'flex', backgroundColor: 'cyan', textAlign:'center', height: '6vh', justifyContent: 'center', alignItems: 'center' }}>
-            Honeymoon Travel
-          </Container>
 
           { activeTrip ?
             <Container>
-              { activeTrip.name }
+              <Header activeTrip={activeTrip} />
               { viewItinerary ?
-              <Itinerary />
+              <Itinerary viewItinerary={viewItinerary} />
               : 
               <MobileTrip id={activeTrip._id} />
               }

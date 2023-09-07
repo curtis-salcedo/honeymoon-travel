@@ -27,6 +27,9 @@ import {
   Box,
   Card,
   CardContent,
+  CardActions,
+  Grow,
+  SwipeableDrawer,
 
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -44,7 +47,8 @@ import {
 } from '@mui/icons-material';
 
 
-export default function Itinerary({}) {
+
+export default function Itinerary({ viewItinerary }) {
   const { tripData, activeTrip } = useContext(DataContext)
   const [tripDays, setTripDays] = useState(activeTrip.tripDays)
   const [expanded, setExpanded] = useState(null);
@@ -63,16 +67,6 @@ export default function Itinerary({}) {
     // getTripRange(tripDays)
     sortDataByDate()
   }, [])
-
-  const getTripRange = (tripDays) => {
-    // Get the trip days and convert the start date and end date to long format
-    // Gaurd against empty array
-    if (tripDays.length > 0) {
-      const start = convertDateToLongDetail(tripDays[0])
-      const end = convertDateToLongDetail(tripDays[tripDays.length - 1])
-      return `${start} to ${end}`
-    }
-  }
 
   // Show a breakdown by day
   async function sortDataByDate() {
@@ -145,12 +139,18 @@ export default function Itinerary({}) {
     setOpen(true)
   }
 
+  const listStyle = {
+    padding:0,
+    margin:0
+  }
+
   return (
   <Container sx={{
     margin: 0,
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
   }}>
     <Button onClick={sortDataByDate}>Refresh</Button>
     { daysObject ? 
@@ -167,13 +167,15 @@ export default function Itinerary({}) {
         <List
         sx={{
           border: 'none',
+          padding:0,
+          margin:0
         }}
         >
 
         {day.travelDeparture.map((travel, travelIndex) => (
           <>
-          <ListItem key={travelIndex}>
-            <ListItemAvatar>
+          <ListItem key={travelIndex} sx={{...listStyle}}>
+            <ListItemAvatar >
               <Avatar>
                 <AirplanemodeActiveIcon />
               </Avatar>
@@ -183,12 +185,9 @@ export default function Itinerary({}) {
               secondary={travel.departureLocation.city}
             />
             <Button onClick={(e) => handleClick(e,'travel', travel)}>Details</Button>
-            <Button onClick={(e) => handleClick(e,'travel', travel)}>Map</Button>
             </ListItem>
 
-            <Divider variant="inset" component="li" />
-
-            <ListItem>
+            <ListItem sx={{...listStyle}}>
             <ListItemAvatar>
               <Avatar>
                 <AirplanemodeActiveIcon />
@@ -198,26 +197,31 @@ export default function Itinerary({}) {
               primary="Arrival"
               secondary={travel.arrivalLocation.city}
               />
+            <Button onClick={(e) => handleClick(e,'travel', travel)}>Details</Button>
             </ListItem>
           </>
         ))} 
+
         <Divider variant="inset" component="li" />
 
         {day.activities.map((activity, activityIndex) => (
-          <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <HikingIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Activiities" secondary={activity.name} />
-        </ListItem>
+          <ListItem sx={{...listStyle}}>
+            <ListItemAvatar>
+              <Avatar>
+                <HikingIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Activiities" secondary={activity.name} />
+            <Button onClick={(e) => handleClick(e,'activity', activity)}>Details</Button>
+          </ListItem>
         ))}
+
 
         <Divider variant="inset" component="li" />
 
+
         {day.meals.map((meal, mealIndex) => (
-        <ListItem>
+        <ListItem sx={{...listStyle}}>
           <ListItemAvatar>
             <Avatar>
               <LocalDiningIcon />
@@ -236,22 +240,25 @@ export default function Itinerary({}) {
                 {meal.isReservation ? 'Reservation' : ''}
             </>
             } />
+          <Button onClick={(e) => handleClick(e,'meal', meal)}>Details</Button>
         </ListItem>
         ))}
 
+
         <Divider variant="inset" component="li" />
+
 
           { day.checkIn.length > 0 ?
             day.checkIn.map((accommodation, accommodationIndex) => (
               <>
-              <Divider variant="inset" component="li" />
-              <ListItem>
+              <ListItem sx={{...listStyle}}>
                 <ListItemAvatar>
                   <Avatar>
                     <HotelIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary="Check In" secondary={`${accommodation.address.name}`} />
+              <Button onClick={(e) => handleClick(e,'accommodation', accommodation)}>Details</Button>
               </ListItem>
               </>
             ))
@@ -261,14 +268,14 @@ export default function Itinerary({}) {
           { day.checkOut.length > 0 ?
             day.checkOut.map((accommodation, accommodationIndex) => (
               <>
-              <Divider variant="inset" component="li" />
-              <ListItem>
+              <ListItem sx={{...listStyle}}>
                 <ListItemAvatar>
                   <Avatar>
                     <HotelIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary="Check Out" secondary={`${accommodation.address.name}`} />
+                <Button onClick={(e) => handleClick(e,'accommodation', accommodation)}>Details</Button>
               </ListItem>
               </>
             ))
@@ -276,8 +283,9 @@ export default function Itinerary({}) {
         </List>
       </Paper>
 
+
       )) : null }
-    { open ? <Detail open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
+    { open ? <Detail open={open} setOpen={setOpen} data={data} setData={setData} viewItinerary={viewItinerary} /> : null }
   </Container>
   );
 }

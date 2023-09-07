@@ -62,8 +62,6 @@ export const DataProvider = (props) => {
     }
   };
 
-  console.log(tripData)
-
   const fetchTripDetails = async (tripId) => {
     try {
       const data = await getAllDataForTrip(tripId);

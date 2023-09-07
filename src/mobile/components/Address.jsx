@@ -34,6 +34,7 @@ export default function Address({ address }) {
 
   useEffect(() => {
     if (address.rating) {
+
       setRating(address.rating)
     }
   })

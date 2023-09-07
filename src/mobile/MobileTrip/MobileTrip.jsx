@@ -44,35 +44,50 @@ export default function MobileTrip({ user, id }) {
   
   // Potential handleViews function: Address, Map,
 
+  const titleStyle = {
+    margin: 2,
+    padding: 0,
+    // marginLeft: '32px'
+  }
+  const style = {
+    margin: 0,
+    padding: 0,
+    backgroundColor: 'var(--light)',
+    height: '450px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }
+
   return (
-    <Container>
+    <Container sx={{margin:0, padding:0}}>
       <Grid container >
 
-        <Typography variant='h5'>Stays</Typography>
+        <Typography variant='h5' sx={{ ...titleStyle }}>Stays</Typography>
         { accommodations ?
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ ...style }}>
             <Accommodation id={id} setCategory={setCategory} accommodations={accommodations} open={openAccommodation} setOpen={setOpenAccommodation} />
           </Grid>
         : null }
 
-        <Typography variant='h5'>Activities</Typography>
+        <Typography variant='h5' sx={{ ...titleStyle }}>Activities</Typography>
         { activities ?
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ ...style }}>
             <Activity id={id} setCategory={setCategory} activities={activities} open={openActivity} setOpen={setOpenActivity} />
           </Grid>
         : null }
 
-        <Typography variant='h5'>Meals</Typography>
+        <Typography variant='h5' sx={{ ...titleStyle }}>Meals</Typography>
         <Grid item xs={12}>
         { meals ?
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ ...style }}>
             <Meal id={id} setCategory={setCategory} meals={meals} open={openMeal} setOpen={setOpenMeal} />
           </Grid>
         : null }
         </Grid>
         
-        <Typography variant='h5'>Travels</Typography>
-        <Grid fullWidth item xs={12}>
+        <Typography variant='h5' sx={{ ...titleStyle }}>Travels</Typography>
+        <Grid fullWidth item xs={12} sx={{ ...style }}>
         { travels ?
           <Grid item xs={12}>
             <Travel id={id} setCategory={setCategory} travels={travels} open={openTravel} setOpen={setOpenTravel} />

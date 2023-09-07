@@ -73,100 +73,99 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
   }
 
   return (
-    <Container sx={{ padding: 0, margin: 0 }}>
-      <Box sx={{ height: '400px', width: 'auto', padding:0, margin:0 }}>
-        <Grid sx={{ 
-          display: 'flex',
-          gridAutoFlow: "column",
-          gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-          gridAutoColumns: "minmax(160px, 2fr)",
-          height: '400px',
-          overflowX: 'scroll',
-          margin: 0,
-          padding: 0,
-        }}>
-        { accommodations
-          ? accommodations.map((a) => 
-          <Grow
-            key={a._id}
-            in={checked}
-            style={{ transformOrigin: '0 0 0' }}
-            {...(checked ? { timeout: 1000 } : {})}
-          >
-            <Paper sx={{
-              m: 1,
-              backgroundColor: 'var(--white)',
-              height: '380px',
-              width: '400px',
-              display: 'flex',
-              flexDirection: 'column',
-              }} 
-              elevation={3}
-              >
+    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0 }}>
+      <Grid sx={{ 
+        display: 'flex',
+        gridAutoFlow: "column",
+        gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
+        gridAutoColumns: "minmax(160px, 2fr)",
+        height: '100%',
+        overflowX: 'scroll',
+        margin: 0,
+        padding: 0,
+      }}>
+      { accommodations
+        ? accommodations.map((a) => 
+        <Grow
+          key={a._id}
+          in={checked}
+          style={{ transformOrigin: '0 0 0' }}
+          {...(checked ? { timeout: 1000 } : {})}
+        >
+          <Paper sx={{
+            m: 1,
+            backgroundColor: 'var(--white)',
+            height: '90%',
+            width: '400px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignSelf: 'center',
+            }} 
+            elevation={3}
+            >
 
-              <Box
+            <Box
+              sx={{
+                position: 'relative',
+                margin: 0,
+                padding: 0,
+              }}
+            >
+              <CardMedia
+                component="img"
+                image=''
+                alt="location image"
                 sx={{
-                  position: 'relative',
-                  margin: 0,
-                  padding: 0,
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image=''
-                  alt="location image"
-                  sx={{
-                    objectFit: 'cover',
-                    width: '100%',
-                    height: '180px',
-                  }}
-                />
-              </Box>
-
-              <CardHeader
-                title={a.address.name ? a.address.name : a.address.street}
-                subheader={a.type}
-                sx={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  width: '280px',
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '180px',
                 }}
               />
+            </Box>
 
-              <Box
-                sx={{
-                  backgroundColor: 'var(--light)',
-                  border: 'none',
-                  borderRadius: '1vmin',
-                  padding: '1rem',
-                  height: '48%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  width: '280px',
-                }}
-              >
-                <Typography variant='body2' color='text.secondary'>
-                {`Check-in: ${convertDateToLongDetail(a.checkIn)}`}
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                {`Check-out: ${convertDateToLongDetail(a.checkOut)}`}
-                </Typography>
+            <CardHeader
+              title={a.address.name ? a.address.name : a.address.street}
+              subheader={a.type}
+              sx={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                width: '280px',
+              }}
+            />
 
-                <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
-                  { a.address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
-                  <Button onClick={(e) => handleMapOpen(e, a.address)}>Map</Button>
-                  <Button onClick={(e) => handleDetailOpen(e, a._id)} >Details</Button>
-                </Grid>
-              </Box>
-            </Paper>
-          </Grow> 
-          ) : null }
-        </Grid>
-        { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
-        { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
-      </Box>
-    </Container>
+            <Box
+              sx={{
+                backgroundColor: 'var(--light)',
+                border: 'none',
+                borderRadius: '1vmin',
+                padding: '1rem',
+                height: '48%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                width: '280px',
+              }}
+            >
+              <Typography variant='body2' color='text.secondary'>
+              {`Check-in: ${convertDateToLongDetail(a.checkIn)}`}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+              {`Check-out: ${convertDateToLongDetail(a.checkOut)}`}
+              </Typography>
+
+              <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
+                { a.address.website ? <Button onClick={(e) => handleWebsite(e, a.address.website)}>Website</Button> : null }
+                <Button onClick={(e) => handleMapOpen(e, a.address)}>Map</Button>
+                <Button onClick={(e) => handleDetailOpen(e, a._id)} >Details</Button>
+              </Grid>
+            </Box>
+          </Paper>
+        </Grow> 
+        ) : null }
+      </Grid>
+      { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
+      { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }
+    </Box>
   )
 }

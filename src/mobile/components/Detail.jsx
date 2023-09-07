@@ -32,7 +32,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HikingIcon from '@mui/icons-material/Hiking';
 import Star from '@mui/icons-material/Star'
 
-export default function Detail({ id, open, setOpen, data, setData }) {
+export default function Detail({ id, open, setOpen, data, setData, viewItinerary }) {
   const { tripData } = useContext(DataContext)
   // State to hold the address for the map
   const [address, setAddress] = useState('')
@@ -333,7 +333,7 @@ export default function Detail({ id, open, setOpen, data, setData }) {
           { category === 'travel' ? <Travel /> : null}
         </Box>
         { data.address ?
-        <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'20%', flexDirection:'column'}}>
+        <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'30%', flexDirection:'column'}}>
           <Grid        
             sx={{
               display: 'flex',
