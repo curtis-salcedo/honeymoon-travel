@@ -3,7 +3,8 @@ import { DataContext } from '../../utilities/DataContext';
 
 // Service Imports
 import { convertDateToDetail } from '../../utilities/services/business-service';
-import { convertDateToLongDetail } from '../../utilities/services/business-service';
+import { convertDateToLongDetail, convertDateToTime } from '../../utilities/services/business-service';
+
 import { getAccommodationById } from '../../utilities/api/accommodations-api';
 import { getActivityById } from '../../utilities/api/activities-api';
 
@@ -86,10 +87,12 @@ export default function Detail({ id, open, setOpen, data, setData }) {
         >
           <Grid fullWidth>
             <Typography variant='body2' color='text.secondary'>
-            Check-In: {convertDateToLongDetail(data.checkInDate)} { data.CheckInTime ? data.CheckInTime : '' }
+            Check-In Details: <br />
+            {`${convertDateToLongDetail(data.checkIn)} at ${convertDateToTime(data.checkIn)}`}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-            Check-Out: {convertDateToLongDetail(data.checkOutDate)} { data.CheckInTime ? data.CheckOutTime : '' }
+            Check-Out: <br />
+            {`${convertDateToLongDetail(data.checkOut)} at ${convertDateToTime(data.checkOut)}`}
             </Typography>
           </Grid>
           <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'20%', flexDirection:'column'}}>
@@ -100,7 +103,6 @@ export default function Detail({ id, open, setOpen, data, setData }) {
               padding: 0,
               margin: 0,
             }} >
-            <Address address={data.address} /> 
           </Grid>
         </Box>
         </Box>
@@ -135,7 +137,7 @@ export default function Detail({ id, open, setOpen, data, setData }) {
         >
           <Grid fullWidth>
             <Typography variant='body1' color='text.secondary'>
-              {`${convertDateToLongDetail(data.date)}, ${data.startTime}`}
+              {`${convertDateToLongDetail(data.date)}, ${convertDateToTime(data)}`}
             </Typography>
             <Typography mt={3} variant='body2' color='text.secondary'>
               {data.details}
@@ -325,7 +327,9 @@ export default function Detail({ id, open, setOpen, data, setData }) {
               padding: 0,
               margin: 0,
             }} >
-            <Address address={data.address} /> 
+          { category !== 'travel' ?
+            <Address address={data.address} />
+          : null }
           </Grid>
         </Box>
         : null }

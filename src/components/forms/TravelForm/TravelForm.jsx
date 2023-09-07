@@ -108,9 +108,7 @@ export default function TravelForm({ id, day, setShow }) {
   console.log('arrival location in useEffect', arrivalLocation)
 
   return (
-    <main>
-      <h1>Travel Form</h1>
-      <form onSubmit={handleSubmit}>
+    <div className='form-container'>
         <Container>
           <div className='add-button'></div>
 
@@ -189,13 +187,12 @@ export default function TravelForm({ id, day, setShow }) {
             </Grid>
 
             <Grid item xs={12}>
-              <Button type='submit' variant='contained' color='primary'>
-                Submit
-              </Button>
+            <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+          Submit
+        </Button>
             </Grid>
           </Grid>
         </Container>
-      </form>
-    </main>
+      </div>
   );
 }

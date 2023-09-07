@@ -35,8 +35,6 @@ export default function MobileTrip({ user, id }) {
   const [openMeal, setOpenMeal] = useState(false);
   const [openTravel, setOpenTravel] = useState(false);
 
-  console.log(category)
-
   useEffect(() => {
     setAccommodations(tripData.accommodations)
     setActivities(tripData.activities)
@@ -50,21 +48,21 @@ export default function MobileTrip({ user, id }) {
     <Container>
       <Grid container >
 
-        <Typography>Stays</Typography>
+        <Typography variant='h5'>Stays</Typography>
         { accommodations ?
           <Grid item xs={12}>
             <Accommodation id={id} setCategory={setCategory} accommodations={accommodations} open={openAccommodation} setOpen={setOpenAccommodation} />
           </Grid>
         : null }
 
-        <Typography>Activities</Typography>
+        <Typography variant='h5'>Activities</Typography>
         { activities ?
           <Grid item xs={12}>
             <Activity id={id} setCategory={setCategory} activities={activities} open={openActivity} setOpen={setOpenActivity} />
           </Grid>
         : null }
 
-        <Typography>Meals</Typography>
+        <Typography variant='h5'>Meals</Typography>
         <Grid item xs={12}>
         { meals ?
           <Grid item xs={12}>
@@ -73,7 +71,7 @@ export default function MobileTrip({ user, id }) {
         : null }
         </Grid>
         
-        <Typography>Travels</Typography>
+        <Typography variant='h5'>Travels</Typography>
         <Grid fullWidth item xs={12}>
         { travels ?
           <Grid item xs={12}>

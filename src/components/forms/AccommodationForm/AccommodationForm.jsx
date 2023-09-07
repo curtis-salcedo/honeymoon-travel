@@ -2,6 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 import { MapContext } from '../../../utilities/MapContext';
 
+// Service Imports
+import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 // Form Imports
 import AddressForm from '../AddressForm/AddressForm';
 
@@ -33,13 +37,11 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
   const [address, setAddress] = useState(null)
   const [tripId, setTripId] = useState(activeTrip)
   const [activeAddress, setActiveAddress] = useState(null)
-  const [accommodationData, setAccommodationData] = useState({
+  const [data, setData] = useState({
     tripId: activeTrip._id,
     type: '',
-    checkInDate: '',
-    checkOutDate: '',
-    checkInTime: '',
-    checkOutTime: '',
+    checkIn: '',
+    checkOut: '',
     hasWasherDryer: false,
   });
 
@@ -47,50 +49,54 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
     setTripId(activeTrip._id)
     const handleTest = (selectedData) => {
       if (selectedData) {
-        setAccommodationData((prevData) => ({
+        setData((prevData) => ({
           ...prevData,
           tripId: activeTrip._id,
           type: selectedData ? selectedData.type : '',
-          checkInDate: convertDate(selectedData.checkInDate),
-          checkOutDate: convertDate(selectedData.checkOutDate),
-          checkInTime: selectedData.checkInTime,
-          checkOutTime: selectedData.checkOutTime,
+          // checkInDate: convertDate(selectedData.checkInDate),
+          // checkOutDate: convertDate(selectedData.checkOutDate),
+          // checkInTime: selectedData.checkInTime,
+          // checkOutTime: selectedData.checkOutTime,
+          checkIn: selectedData.checkIn,
+          checkOut: selectedData.checkOut,
           hasWasherDryer: selectedData.hasWasherDryer,
         })
         )
-        console.log('accommodation data in useEffect', accommodationData)
+        console.log('accommodation data in useEffect', data)
       }
     }
     handleTest(selectedData)
   }, [activeTrip, selectedData, activeAddress])
+
+  console.log(data)
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
-    console.log(name,value, type, checked, newValue)
-    setAccommodationData((prevData) => ({
+    console.log(name, value, type, checked, newValue);
+    setData((prevData) => ({
       ...prevData,
       [name]: newValue,
     }));
   };
 
-  const handleNameChange = (e) => {
-    const { value } = e.target;
-  
-    setAccommodationData((prevData) => ({
+  const handleDateChange = (e, name) => {
+    console.log('name', e)
+    console.log('e', e)
+    setData((prevData) => ({
       ...prevData,
-      name: value,
+      [name]: e,
     }));
   };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('accommodation data in handleSubmit', accommodationData)
+    console.log('accommodation data in handleSubmit', data)
     try {
       if ( setShowEdit ) {
-        await accommodationsAPI.updateAccommodation(selectedData._id, accommodationData);
+        await accommodationsAPI.updateAccommodation(selectedData._id, data);
       } else {
-        await accommodationsAPI.createAccommodation(accommodationData, address);
+        await accommodationsAPI.createAccommodation(data, address);
       }
     } catch (err) {
       console.log('Error at submitting accommodation', err)
@@ -124,7 +130,7 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
               <InputLabel>Type</InputLabel>
               <Select
                 name="type"
-                value={accommodationData.type}
+                value={data.type}
                 onChange={handleChange}
                 required
               >
@@ -134,48 +140,41 @@ export default function AccommodationForm({ selectedData, id, day, setShow, setS
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <div>Check-in</div>
-            <TextField
-              type="date"
-              name="checkInDate"
-              value={accommodationData.checkInDate}
-              onChange={handleChange}
-              fullWidth
+          <Grid item xs={12}>
+            <LocalizationProvider  dateAdapter={AdapterDayjs}>
+              <MobileDateTimePicker
+                sx={{ width:'100%' }}
+                label="Check-In Date and Time"
+                name="checkIn"
+                value={data.checkIn}
+                onChange={(e) => handleDateChange(e, 'checkIn')}
+                TextFieldComponent={(props) => (
+                  <TextField {...props} fullWidth />
+                )}
               />
-            <TextField
-              type="time"
-              name="checkInTime"
-              value={accommodationData.checkInTime}
-              onChange={handleChange}
-              fullWidth
-              />
+            </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <div>Check-Out</div>
-            <TextField
-              type="date"
-              name="checkOutDate"
-              value={accommodationData.checkOutDate}
-              onChange={handleChange}
-              fullWidth
+          <Grid item xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <MobileDateTimePicker
+                sx={{ width:'100%' }}
+                label="Check-Out Date and Time"
+                name="checkOut"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'checkOut')}
+                TextFieldComponent={(props) => (
+                  <TextField fullWidth />
+                )}
               />
-            <TextField
-              type="time"
-              name="checkOutTime"
-              value={accommodationData.checkOutTime}
-              onChange={handleChange}
-              fullWidth
-              />
+            </LocalizationProvider>
           </Grid>
-
           <Grid item xs={12}>
             <FormControlLabel
               control={
                 <Switch
                   type='checkbox'
                   name="hasWasherDryer"
-                  checked={accommodationData.hasWasherDryer}
+                  checked={data.hasWasherDryer}
                   onChange={handleChange}
                   color="primary"
                 />

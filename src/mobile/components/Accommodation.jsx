@@ -148,7 +148,10 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
                 }}
               >
                 <Typography variant='body2' color='text.secondary'>
-                {`${convertDateToDetail(a.checkInDate)} - ${convertDateToDetail(a.checkOutDate)}`}
+                {`Check-in: ${convertDateToLongDetail(a.checkIn)}`}
+                </Typography>
+                <Typography variant='body2' color='text.secondary'>
+                {`Check-out: ${convertDateToLongDetail(a.checkOut)}`}
                 </Typography>
 
                 <Grid sx={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
@@ -159,7 +162,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
               </Box>
             </Paper>
           </Grow> 
-          ) : null }   
+          ) : null }
         </Grid>
         { open ? <Detail id={id} open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
         { openMap ? <MobileMap address={selectedAddress} setAddress={setAddress} openMap={openMap} setOpenMap={setOpenMap} /> : null }

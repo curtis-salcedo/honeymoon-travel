@@ -39,3 +39,15 @@ export function convertDateToLongDetail(date) {
   }
   return `${dayOfWeek}, ${month} ${dayOfMonth}${daySuffix}`;
 }
+
+// Function to extract times from date objects
+export function convertDateToTime(date) {
+  const detailedDay = new Date(date);
+  const options = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  const timeInLocal = detailedDay.toLocaleString(undefined, options);
+  return timeInLocal;
+}

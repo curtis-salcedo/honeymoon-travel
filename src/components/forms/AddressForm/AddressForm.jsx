@@ -17,6 +17,7 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
   console.log('google map type', googleMapType)
 
   useEffect(() => {
+    if (window.google && window.google.maps) {
     const options = {
       types: [googleMapType ? googleMapType : 'geocode'],
       fields: [
@@ -35,16 +36,18 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       },
     };
   
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+  
+    const autocomplete = new window.google.maps.places.Autocomplete(
       autoCompleteInputRef.current,
       options
     );
   
-    autoCompleteRef.current.addListener('place_changed', async function () {
-      const place = await autoCompleteRef.current.getPlace();
+    autocomplete.addListener('place_changed', async function () {
+      const place = await autocomplete.getPlace();
       console.log({ place });
       setResultData(place);
     });
+  }
   
   }, [googleMapType]);
   
@@ -73,18 +76,14 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
 
 
   return (
-    <Container>
     <Grid>
-      <Grid>
-        <TextField
-          label="Search by business name or address"
-          variant="outlined"
-          inputRef={autoCompleteInputRef}
-          fullWidth
-        />
-        <Button onClick={handleSaveAddress}>Save</Button>
-      </Grid>
+      <TextField
+        label="Search by business name or address"
+        variant="outlined"
+        inputRef={autoCompleteInputRef}
+        fullWidth
+      />
+      <Button onClick={handleSaveAddress}>Save</Button>
     </Grid>
-  </Container>
   );
 }

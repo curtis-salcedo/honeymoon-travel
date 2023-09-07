@@ -131,4 +131,22 @@ code {
     position: relative;
     overflow: hidden;
   }
+  .pac-container .pac-logo .hdpi  {
+    width: 50%;
+    left: 0;
+    top: 0;
+    position: relative;
+    margin: 0;
+    z-index: 1001;
+  }
+  .form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
 }

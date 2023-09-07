@@ -1,6 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
+// Service Imports
+import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 // Form Imports
 import AddressForm from '../AddressForm/AddressForm';
 
@@ -26,12 +30,15 @@ import {
 
 } from '@mui/material';
 
+
 export default function ActivityForm({ id, day, setShow }) {
+  console.log('id here', id)
   const { activeTrip } = useContext(DataContext)
   const [address, setAddress] = useState(null)
   const [activeAddress, setActiveAddress] = useState(null)
   const [tripId, setTripId] = useState(activeTrip)
-  const [activityData, setActivityData] = useState({
+  const googleMapType = 'geocode'
+  const [data, setData] = useState({
     tripId: activeTrip._id,
     name: '',
     type: '',
@@ -45,18 +52,18 @@ export default function ActivityForm({ id, day, setShow }) {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
     console.log(name,value, type, checked, newValue)
-    setActivityData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: newValue,
     }));
   };
   
   const handleSubmit = async (e) => {
-    console.log('activity data in submit', activityData)
+    console.log('activity data in submit', data)
     e.preventDefault();
     try {
-      console.log('activity data in submit', activityData)
-      await activitiesAPI.createActivity(activityData, address);
+      console.log('activity data in submit', data)
+      await activitiesAPI.createActivity(data, address);
     } catch (err) {
       console.log('Error at submitting activity', err)
     }
@@ -85,7 +92,7 @@ export default function ActivityForm({ id, day, setShow }) {
               type="text"
               label="Activity Name"
               name="name"
-              value={activityData.name}
+              value={data.name}
               onChange={handleChange}
               fullWidth
               required
@@ -98,7 +105,7 @@ export default function ActivityForm({ id, day, setShow }) {
               <InputLabel>Type</InputLabel>
               <Select
                 name="type"
-                value={activityData.type}
+                value={data.type}
                 onChange={handleChange}
                 required
               >
@@ -125,6 +132,7 @@ export default function ActivityForm({ id, day, setShow }) {
               handleSaveAddress={handleSaveAddress} 
               setAddress={setAddress}
               address={address}
+              googleMapType={googleMapType}
               fullWidth
             />
           </Grid>
@@ -133,31 +141,18 @@ export default function ActivityForm({ id, day, setShow }) {
             <TextField
               type="date"
               name="date"
-              value={activityData.arrival}
+              value={data.arrival}
               onChange={handleChange}
               fullWidth
               required
               />
             </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <label htmlFor="">Start Time</label>
-            <TextField
-              type="time"
-              name="startTime"
-              value={activityData.startTime}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
-          </Grid>
-
           <Grid item xs={12} sm={6}>
             <label htmlFor="">End Time</label>
             <TextField
               type="time"
               name="endTime"
-              value={activityData.endTime}
+              value={data.endTime}
               onChange={handleChange}
               fullWidth
             />
@@ -169,7 +164,7 @@ export default function ActivityForm({ id, day, setShow }) {
               type="textarea"
               label="Details"
               name="details"
-              value={activityData.details}
+              value={data.details}
               onChange={handleChange}
               fullWidth
               multiline

@@ -14,6 +14,7 @@ import MobileTrip from './MobileTrip/MobileTrip';
 
 // Form Imports
 import TripForm from '../components/forms/TripForm/TripForm'
+import AddMenu from './forms/AddMenu'
 
 
 // Page imports
@@ -46,10 +47,10 @@ import {
   IconButton,
   Collapse,
 } from '@mui/material';
-import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Settings from '@mui/icons-material/Settings';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export default function Mobile({ user, setUser }) {
   const { activeTrip, setActiveTrip, tripData } = useContext(DataContext)
@@ -58,6 +59,7 @@ export default function Mobile({ user, setUser }) {
   const [userTrips, setUserTrips] = useState([])
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [trip, setTrip] = useState(null)
+  const [openAddMenu, setOpenAddMenu] = useState(false)
 
   const handleShow = () => {
     setShow(!show)
@@ -112,6 +114,10 @@ export default function Mobile({ user, setUser }) {
     console.log(localStorage('token'))
   }
 
+  const handleAdd = () => {
+    setOpenAddMenu(!openAddMenu)
+  }
+
 
   return (
     <>
@@ -140,7 +146,7 @@ export default function Mobile({ user, setUser }) {
                 setValue(newValue);
               }}
             >
-              <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+              <BottomNavigationAction label="Add" icon={<AddCircleOutlineIcon />} onClick={handleAdd} />
               <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
               <BottomNavigationAction
                 ref={anchorRef}
@@ -190,6 +196,7 @@ export default function Mobile({ user, setUser }) {
         </div>
 
     </div>
+    { openAddMenu ? <AddMenu open={openAddMenu} setOpen={setOpenAddMenu} id={activeTrip._id} /> : null }
     </>
   );
 }
