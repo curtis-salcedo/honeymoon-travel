@@ -113,7 +113,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
             >
               <CardMedia
                 component="img"
-                image=''
+                image={a.address.image ? a.address.image : 'https://source.unsplash.com/random'}
                 alt="location image"
                 sx={{
                   objectFit: 'cover',

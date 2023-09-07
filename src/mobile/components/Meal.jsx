@@ -70,6 +70,8 @@ export default function Meal({ id, meals, open, setOpen }) {
     window.open(website, '_blank')
   }
 
+  console.log(meals)
+
   return (
     <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0 }}>
       <Grid sx={{ 
@@ -111,8 +113,8 @@ export default function Meal({ id, meals, open, setOpen }) {
             >
               <CardMedia
                 component="img"
-                image=''
-                alt="location image"
+                image={m.address.image ? m.address.image : 'https://source.unsplash.com/random'}
+                alt="meal image"
                 sx={{
                   objectFit: 'cover',
                   width: '100%',

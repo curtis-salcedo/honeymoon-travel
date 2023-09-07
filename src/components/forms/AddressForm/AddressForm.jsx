@@ -12,6 +12,7 @@ import {
 export default function AddressForm({ handleSaveAddress, setAddress, address, googleMapType }) {
   const [resultData, setResultData] = useState(null);
   const [additionalFields, setAdditionalFields] = useState([]);
+  const [image, setImage] = useState('');
   const autoCompleteRef = useRef();
   const autoCompleteInputRef = useRef();
   console.log('google map type', googleMapType)
@@ -36,7 +37,6 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       },
     };
   
-  
     const autocomplete = new window.google.maps.places.Autocomplete(
       autoCompleteInputRef.current,
       options
@@ -46,11 +46,11 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       const place = await autocomplete.getPlace();
       console.log({ place });
       setResultData(place);
+      setImage(place.photos[0].getUrl());
     });
   }
   
   }, [googleMapType]);
-  
 
   useEffect(() => {
     setAddress(prevAddress => ({
@@ -67,8 +67,10 @@ export default function AddressForm({ handleSaveAddress, setAddress, address, go
       placeId: resultData ? resultData.place_id || '' : '',
       rating: resultData ? resultData.rating || '' : '',
       priceLevel: resultData ? resultData.price_level || '' : '',
-      phoneNumber: resultData ? resultData.formatted_phone_number || '' : '',
+      phoneNumber: resultData ? resultData.formatted_phone_number || '' : 
+      '',
       website: resultData ? resultData.website || '' : '',
+      image: resultData && image ? image || '' : '',
     }));
   }, [resultData]);
 

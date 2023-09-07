@@ -46,12 +46,6 @@ export const DataProvider = (props) => {
     fetchTrip();
   }, []);
 
-  // useEffect(() => {
-  //   if (activeTrip) {
-  //     fetchTripDetails(activeTrip._id);
-  //   }
-  // }, [activeTrip]);
-
   const fetchData = async () => {
     let user;
     try {

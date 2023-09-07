@@ -32,7 +32,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HikingIcon from '@mui/icons-material/Hiking';
 import Star from '@mui/icons-material/Star'
 
-export default function Detail({ id, open, setOpen, data, setData, viewItinerary }) {
+export default function Detail({ id, open, setOpen, data, setData }) {
   const { tripData } = useContext(DataContext)
   // State to hold the address for the map
   const [address, setAddress] = useState('')
@@ -42,9 +42,11 @@ export default function Detail({ id, open, setOpen, data, setData, viewItinerary
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
     setCategory(data.category)
-    // if (data.address.images && data.address.images.length > 0) {
-    //   setImage(data.address.images[0])
-    // }
+    if (data.address.image) {
+      setImage(data.address.image)
+    } else {
+      setImage('')
+    }
   }, [data.category]);
 
   // Handle the modal detail open
@@ -284,12 +286,11 @@ export default function Detail({ id, open, setOpen, data, setData, viewItinerary
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
     >
-    <Box container sx={{ ...style, margin: 0, padding: 1, border: 'solid 2px black' }}>        
-    { image ?
+    <Box container sx={{ ...style, margin: 0, padding: 0, border: 'solid 2px black' }}>        
         <CardMedia
           component="img"
-          image={image}
-          alt="location image"
+          image={image ? image : 'https://source.unsplash.com/random'}
+          alt="detail image"
           sx={{
             objectFit: 'cover',
             width: '100%',
@@ -297,27 +298,6 @@ export default function Detail({ id, open, setOpen, data, setData, viewItinerary
             padding: 0,
           }}
         />
-        :      
-        <CardMedia
-          sx={{
-            objectFit: 'cover',
-            height: '25%',
-            width: '100%',
-          }}>
-          <HikingIcon
-            mt={3}
-            sx={{
-              height: '25%',
-              width: '100%',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              margin: 'auto',
-              fontSize: '2rem',
-            }}
-        /></CardMedia>
-        }
         <Box 
           container
           sx={{
@@ -338,7 +318,7 @@ export default function Detail({ id, open, setOpen, data, setData, viewItinerary
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              padding: 0,
+              padding: 1,
               margin: 0,
             }} >
           { category !== 'travel' ?
@@ -347,7 +327,9 @@ export default function Detail({ id, open, setOpen, data, setData, viewItinerary
           </Grid>
         </Box>
         : null }
-        <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
+        <Box sx={{padding:1}}>
+          <Button fullWidth color="primary" size="small" variant="outlined" outlined onClick={handleClose}>Close</Button>
+        </Box>
     </Box>
   </Modal>
   )

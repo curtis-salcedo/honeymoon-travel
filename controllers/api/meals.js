@@ -30,6 +30,7 @@ async function show(req, res) {
 }
 
 async function create(req, res) {
+  console.log(req.body)
   try {
     const { mealData, address } = req.body;
     // Create an address in the database
@@ -39,6 +40,7 @@ async function create(req, res) {
       ...mealData,
       address: createdAddress, 
     });
+    console.log(meal)
     // console.log('meal and address created at meal create', createdAddress, meal);
     res.json(meal);
   } catch (err) {

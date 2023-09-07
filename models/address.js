@@ -15,6 +15,7 @@ const addressSchema = new mongoose.Schema({
   priceLevel: { type: String },
   phoneNumber: { type: String },
   website: { type: String },
+  image: { type: String },
 });
 
 const Address = mongoose.model('Address', addressSchema);

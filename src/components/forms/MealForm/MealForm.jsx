@@ -43,7 +43,7 @@ export default function MealForm({ id, day, setShow }) {
     tripId: id,
     date: '',
     type: '',
-    isReservation: '',
+    isReservation: false,
   });
 
   useEffect(() => {

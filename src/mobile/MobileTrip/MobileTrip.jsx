@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
+// Service imports
+import { getImages } from '../../utilities/services/maps-service';
+
 // Component imports
 import Accommodation from '../components/Accommodation';
 import Activity from '../components/Activity';
@@ -40,9 +43,8 @@ export default function MobileTrip({ user, id }) {
     setActivities(tripData.activities)
     setMeals(tripData.meals)
     setTravels(tripData.travels)
+
   }, [tripData]);
-  
-  // Potential handleViews function: Address, Map,
 
   const titleStyle = {
     margin: 2,

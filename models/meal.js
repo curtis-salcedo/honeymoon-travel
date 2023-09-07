@@ -5,7 +5,7 @@ const mealSchema = new mongoose.Schema({
   tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
   date: { type: Date },
   type: { type: String },
-  isReservation: { type: Boolean, default: false, required: true },
+  isReservation: { type: Boolean, default: false },
   address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address'},
 });
 
