@@ -1,6 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
+// Service Imports
+import { LocalizationProvider, MobileDateTimePicker, TimePicker, DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+
 // Form Imports
 import AddressForm from '../AddressForm/AddressForm';
 
@@ -25,8 +30,8 @@ import { set } from 'mongoose';
 export default function TravelForm({ id, day, setShow }) {
   const { activeTrip } = useContext(DataContext);
   const [tripId, setTripId] = useState(activeTrip);
-  const [googleMapType, setGoogleMapType] = useState(null);
-  const [travelData, setTravelData] = useState({
+  const [googleMapType, setGoogleMapType] = useState('');
+  const [data, setData] = useState({
     tripId: activeTrip._id,
     type: '', // This is an ENUM ['Flight', 'Train', 'Cab', 'Bus', 'Ferry']
     identifier: '',
@@ -36,9 +41,7 @@ export default function TravelForm({ id, day, setShow }) {
     arrivalDateTime: '',
   });
   const [departureLocation, setDepartureLocation] = useState({});
-
   const [arrivalLocation, setArrivalLocation] = useState({});
-
   const handleSaveAddress = (e, location, isDeparture) => {
     if (isDeparture) {
       setDepartureLocation(location);
@@ -46,32 +49,28 @@ export default function TravelForm({ id, day, setShow }) {
       setArrivalLocation(location);
     }
   };
-
+  console.log(googleMapType)
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
     console.log(name, value, type, checked, newValue);
-    setTravelData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: newValue,
     }));
-    console.log(travelData)
+    console.log(data)
   };
-
-  console.log('travel data', travelData)
-  console.log('arrival location', arrivalLocation) 
-  console.log('departure location', departureLocation)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const newTravelData = {
         tripId: activeTrip._id,
-        type: travelData.type,
+        type: data.type,
         departureLocation: departureLocation,
         arrivalLocation: arrivalLocation,
-        identifier: travelData.identifier,
-        departureDateTime: travelData.departure,
-        arrivalDateTime: travelData.arrival,
+        identifier: data.identifier,
+        departureDateTime: data.departure,
+        arrivalDateTime: data.arrival,
       };
       console.log('new travel data', newTravelData);
       await travelsAPI.createTravel(newTravelData);
@@ -83,8 +82,8 @@ export default function TravelForm({ id, day, setShow }) {
 
   useEffect(() => {
     setTripId(activeTrip._id);
-    setGoogleMapType(getGoogleMapType(travelData.type));
-  }, [activeTrip, travelData.type, googleMapType, departureLocation, arrivalLocation]);
+    setGoogleMapType(getGoogleMapType(data.type));
+  }, [activeTrip, data.type, googleMapType, departureLocation, arrivalLocation]);
 
   const getGoogleMapType = (type) => {
     switch (type) {
@@ -98,12 +97,22 @@ export default function TravelForm({ id, day, setShow }) {
         return 'bus_station';
       case 'Ferry':
         return 'ferry_terminal';
-      default:
+      case 'Other':
         return 'geocode';
+      default:
+        return '';
     }
   }
+  // Dynamically handle the date/time changes
+  const handleDateChange = (e, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: e,
+    }));
+    console.log('date change data result', data)
+  };
 
-  console.log('travel data in useEffect', travelData)
+  console.log('travel data in useEffect', data)
   console.log('departure location in useEffect', departureLocation)
   console.log('arrival location in useEffect', arrivalLocation)
 
@@ -118,7 +127,7 @@ export default function TravelForm({ id, day, setShow }) {
                 <InputLabel>Type</InputLabel>
                 <Select
                   name='type'
-                  value={travelData.type}
+                  value={data.type}
                   onChange={handleChange}
                   required
                 >
@@ -127,6 +136,7 @@ export default function TravelForm({ id, day, setShow }) {
                   <MenuItem value='Cab'>Cab</MenuItem>
                   <MenuItem value='Bus'>Bus</MenuItem>
                   <MenuItem value='Ferry'>Ferry</MenuItem>
+                  <MenuItem value='Other'>Other</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -136,12 +146,13 @@ export default function TravelForm({ id, day, setShow }) {
                 type='text'
                 label='Identifier'
                 name='identifier'
-                value={travelData.identifier}
+                value={data.identifier}
                 onChange={handleChange}
                 fullWidth
               />
             </Grid>
-
+            { googleMapType ?
+            <>
             <Grid item xs={12}>
               <Typography>Search for departure location</Typography>
               <AddressForm
@@ -149,7 +160,27 @@ export default function TravelForm({ id, day, setShow }) {
                 setAddress={setDepartureLocation}
                 address={departureLocation}
                 googleMapType={googleMapType}
+                />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Departure</Typography>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker 
+                sx={{ width:'100%' }}
+                label="Time"
+                name="departure"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'departure')}
+                // TextFieldComponent={(props) => (
+                //   <TextField fullWidth />
+                // )}
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
               />
+              </LocalizationProvider>
             </Grid>
 
             <Grid item xs={12}>
@@ -161,36 +192,33 @@ export default function TravelForm({ id, day, setShow }) {
                 googleMapType={googleMapType}
               />
             </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Departure</label>
-              <TextField
-                type='datetime-local'
-                name='departure'
-                value={travelData.departure}
-                onChange={handleChange}
-                fullWidth
-                required
+            <Grid item xs={12}>
+              <Typography>Arrival</Typography>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker 
+                sx={{ width:'100%' }}
+                label="Time"
+                name="arrival"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'arrival')}
+                // TextFieldComponent={(props) => (
+                //   <TextField fullWidth />
+                // )}
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
               />
+              </LocalizationProvider>
             </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Arrival</label>
-              <TextField
-                type='datetime-local'
-                name='arrival'
-                value={travelData.arrival}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-            </Grid>
-
             <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-            </Grid>
+              Submit
+            </Button>
+          </Grid>
+        </> 
+        : null }
           </Grid>
         </Container>
       </div>

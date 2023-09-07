@@ -224,7 +224,10 @@ export default function Detail({ id, open, setOpen, data, setData }) {
         >
           <Typography sx={{textAlign:'center'}} variant='body1' color='text.primary'>Departure</Typography>
           <Typography variant='body2' color='text.secondary'>
-            {convertDateToLongDetail(data.departureDateTime)}
+            {`${convertDateToLongDetail(data.departureDateTime)}`}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {`Departing at ${convertDateToTime(data.departureDateTime)}`}
           </Typography>
           <Address address={data.departureLocation} />
         </Box>
@@ -243,6 +246,9 @@ export default function Detail({ id, open, setOpen, data, setData }) {
           <Typography sx={{textAlign:'center'}} variant='body1' color='text.primary'>Arrival</Typography>
           <Typography variant='body2' color='text.secondary'>
             {convertDateToLongDetail(data.arrivalDateTime)}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {`Arriving at ${convertDateToTime(data.arrivalDateTime)}`}
           </Typography>
           <Address address={data.arrivalLocation} />
         </Box>
