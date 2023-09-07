@@ -2,8 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../../../utilities/DataContext';
 
 // Service Imports
-import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider, MobileDateTimePicker, TimePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+
 
 // Form Imports
 import AddressForm from '../AddressForm/AddressForm';
@@ -27,6 +29,7 @@ import {
   FormControlLabel,
   Switch,
   Typography,
+  Checkbox,
 
 } from '@mui/material';
 
@@ -37,13 +40,13 @@ export default function ActivityForm({ id, day, setShow }) {
   const [address, setAddress] = useState(null)
   const [activeAddress, setActiveAddress] = useState(null)
   const [tripId, setTripId] = useState(activeTrip)
+  const [addEndTime, setAddEndTime] = useState(false)
   const googleMapType = 'geocode'
   const [data, setData] = useState({
     tripId: activeTrip._id,
     name: '',
     type: '',
     date: '',
-    startTime: '',
     endTime: '',
     details: '',
   });
@@ -56,6 +59,7 @@ export default function ActivityForm({ id, day, setShow }) {
       ...prevData,
       [name]: newValue,
     }));
+    console.log(data)
   };
   
   const handleSubmit = async (e) => {
@@ -73,19 +77,28 @@ export default function ActivityForm({ id, day, setShow }) {
   useEffect(() => {
     setTripId(activeTrip._id)
   }, [activeTrip])
-
   // Save the address to state
   const handleSaveAddress = (e) => {
     e.preventDefault();
     console.log('address data in handleSaveAddress', address)
     setActiveAddress(address)
   }
+  // Dynamically handle the date/time changes
+  const handleDateChange = (e, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: e,
+    }));
+    console.log('date change data result', data)
+  };
+  const handleCheckbox = () => {
+    setAddEndTime(!addEndTime)
+  }
 
   return (
     <div className='form-container'>
       <Container>
         <Grid container spacing={2}>
-
           {/* Activity Name */}
           <Grid item xs={12}>
             <TextField
@@ -138,27 +151,56 @@ export default function ActivityForm({ id, day, setShow }) {
           </Grid>
 
           <Grid item xs={12}>
-            <TextField
-              type="date"
-              name="date"
-              value={data.arrival}
-              onChange={handleChange}
-              fullWidth
-              required
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                sx={{ width:'100%' }}
+                label="Time"
+                name="date"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'date')}
+                // TextFieldComponent={(props) => (
+                //   <TextField fullWidth />
+                // )}
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
               />
-            </Grid>
-          <Grid item xs={12} sm={6}>
-            <label htmlFor="">End Time</label>
-            <TextField
-              type="time"
-              name="endTime"
-              value={data.endTime}
-              onChange={handleChange}
-              fullWidth
-            />
+            </LocalizationProvider>
           </Grid>
 
-          {/* Details */}
+          <Grid item xs={12}>
+          <FormControlLabel
+            label="End Time"
+            control={
+              <Checkbox
+              onChange={handleCheckbox}
+              />
+            }
+          />
+
+          { addEndTime ?
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                sx={{ width:'100%' }}
+                label="End Time"
+                name="endTime"
+                value={data.checkOut}
+                onChange={(e) => handleDateChange(e, 'endTime')}
+                // TextFieldComponent={(props) => (
+                //   <TextField fullWidth />
+                // )}
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
+              />
+            </LocalizationProvider>
+          : null }
+          </Grid>
+
           <Grid item xs={12}>
             <TextField
               type="textarea"

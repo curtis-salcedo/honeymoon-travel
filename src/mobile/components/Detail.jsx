@@ -137,8 +137,16 @@ export default function Detail({ id, open, setOpen, data, setData }) {
         >
           <Grid fullWidth>
             <Typography variant='body1' color='text.secondary'>
-              {`${convertDateToLongDetail(data.date)}, ${convertDateToTime(data)}`}
+              {`${convertDateToLongDetail(data.date)}`}
             </Typography>
+            <Typography variant='body1' color='text.secondary'>
+              {`Start Time: ${convertDateToTime(data.date)}`}
+            </Typography>
+            { data.endTime ?
+            <Typography variant='body1' color='text.secondary'>
+              {`End Time: ${convertDateToTime(data.endTime)}`}
+            </Typography>
+              : <Typography variant='body1' color='text.secondary'>There is no set end time for this activity.</Typography> }
             <Typography mt={3} variant='body2' color='text.secondary'>
               {data.details}
             </Typography>
