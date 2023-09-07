@@ -12,7 +12,6 @@ import Meal from '../components/Meal';
 import Travel from '../components/Travel';
 
 // Style imports
-import './MobileTrip.css';
 import {
   Button,
   Typography,

@@ -131,7 +131,7 @@ export default function Mobile({ user, setUser }) {
         <div className='MobileContent' >
 
           { activeTrip ?
-            <Container>
+            <Container sx={{margin:0,padding:0}}>
               <Header activeTrip={activeTrip} />
               { viewItinerary ?
               <Itinerary viewItinerary={viewItinerary} />

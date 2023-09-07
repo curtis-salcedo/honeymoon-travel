@@ -42,11 +42,12 @@ export default function AddMenu({ open, setOpen, id }) {
   const handleCancel = () => {
     if (selection) {
       setSelection(null);
-    }
-    if (!selection) {
-      handleClose();
+    } else {
+      setOpen(false)
     }
   }
+
+  console.log(open, selection, show)
 
   const style = {
     position: 'absolute',
@@ -154,6 +155,7 @@ export default function AddMenu({ open, setOpen, id }) {
           variant="outlined"
           outlined="true"
           onClick={() => handleCancel()}
+          sx={{marginTop:1}}
           >
           Cancel
         </Button>

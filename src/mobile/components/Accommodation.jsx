@@ -73,7 +73,7 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
   }
 
   return (
-    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0 }}>
+    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0, backgroundColor:'var(--light)' }}>
       <Grid sx={{ 
         display: 'flex',
         gridAutoFlow: "column",
@@ -101,28 +101,19 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
             flexDirection: 'column',
             alignSelf: 'center',
             }} 
-            elevation={3}
+            elevation={5}
             >
-
-            <Box
+            <CardMedia
+              component="img"
+              image={a.address.image ? a.address.image : 'https://source.unsplash.com/random'}
+              alt="location image"
               sx={{
-                position: 'relative',
-                margin: 0,
-                padding: 0,
+                objectFit: 'cover',
+                width: '100%',
+                height: '180px',
+                borderRadius: '1vmin 1vmin 0 0',
               }}
-            >
-              <CardMedia
-                component="img"
-                image={a.address.image ? a.address.image : 'https://source.unsplash.com/random'}
-                alt="location image"
-                sx={{
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: '180px',
-                }}
-              />
-            </Box>
-
+            />
             <CardHeader
               title={a.address.name ? a.address.name : a.address.street}
               subheader={a.type}

@@ -73,7 +73,7 @@ export default function Meal({ id, meals, open, setOpen }) {
   console.log(meals)
 
   return (
-    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0 }}>
+    <Box sx={{ height: '100%', width: 'auto', padding:0, margin:0, backgroundColor:'var(--light)' }}>
       <Grid sx={{ 
         display: 'flex',
         gridAutoFlow: "column",
@@ -101,28 +101,19 @@ export default function Meal({ id, meals, open, setOpen }) {
             flexDirection: 'column',
             alignSelf: 'center',
             }} 
-            elevation={3}
+            elevation={5}
             >
-
-            <Box
+            <CardMedia
+              component="img"
+              image={m.address.image ? m.address.image : 'https://source.unsplash.com/random'}
+              alt="meal image"
               sx={{
-                position: 'relative',
-                margin: 0,
-                padding: 0,
+                objectFit: 'cover',
+                width: '100%',
+                height: '180px',
+                borderRadius: '1vmin 1vmin 0 0',
               }}
-            >
-              <CardMedia
-                component="img"
-                image={m.address.image ? m.address.image : 'https://source.unsplash.com/random'}
-                alt="meal image"
-                sx={{
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: '180px',
-                }}
-              />
-            </Box>
-
+            />
             <CardHeader
               title={m.address.name}
               subheader={m.type}
