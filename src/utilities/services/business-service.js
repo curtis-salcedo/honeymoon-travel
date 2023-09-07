@@ -10,7 +10,7 @@ export function convertDate(date) {
     console.log('Error at convertDate in trips-service.js', err);
     throw err;
   }
-}
+};
 
 export function convertDateToDetail(date) {
   const detailedDay = new Date(date);
@@ -20,7 +20,7 @@ export function convertDateToDetail(date) {
   const dayOfMonth = detailedDay.getDate();
 
   return `${dayOfWeekShort} ${monthNumber}/${dayOfMonth}`;
-}
+};
 
 export function convertDateToLongDetail(date) {
   const detailedDay = new Date(date);
@@ -38,7 +38,7 @@ export function convertDateToLongDetail(date) {
     daySuffix = 'th';
   }
   return `${dayOfWeek}, ${month} ${dayOfMonth}${daySuffix}`;
-}
+};
 
 // Function to extract times from date objects
 export function convertDateToTime(date) {
@@ -50,4 +50,12 @@ export function convertDateToTime(date) {
   };
   const timeInLocal = detailedDay.toLocaleString(undefined, options);
   return timeInLocal;
+};
+
+export function compare(date) {
+  const detailedDay = new Date(date);
+  const monthName = detailedDay.toLocaleString('default', { month: 'long' });
+  const dayOfMonth = detailedDay.getDate();
+  const year = detailedDay.getFullYear();
+  return `${monthName} ${dayOfMonth}, ${year}`;
 }

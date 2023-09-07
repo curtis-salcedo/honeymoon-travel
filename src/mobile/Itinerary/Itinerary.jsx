@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
-import { convertDateToLongDetail, convertDateToDetail, compare } from '../../utilities/services/business-service';
+import { convertDateToDetail, convertDateToLongDetail, compare } from '../../utilities/services/business-service';
 import { convertDate } from '../../utilities/services/business-service';
 
 // Component imports
-import Meal from '../Meal/Meal';
-import Travel from '../Travel/Travel';
-import Accommodation from '../Accommodation/Accommodation';
-import Activity from '../Activity/Activity';
+import Meal from '../components/Meal';
+import Travel from '../components/Travel';
+import Accommodation from '../components/Accommodation';
+import Activity from '../components/Activity';
+import Detail from '../components/Detail'
 
 // Style imports
-import './Itinerary.css';
 import { 
   Container,
   Button,
@@ -44,13 +44,15 @@ import {
 } from '@mui/icons-material';
 
 
-export default function Itinerary() {
+export default function Itinerary({}) {
   const { tripData, activeTrip } = useContext(DataContext)
   const [tripDays, setTripDays] = useState(activeTrip.tripDays)
   const [expanded, setExpanded] = useState(null);
   const [tripRange, setTripRange] = useState([])
   const categories = ['Accomodations', 'Activities', 'Meals', 'Travel'];
   const [daysObject, setDaysObject] = useState([])
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState('')
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -74,69 +76,82 @@ export default function Itinerary() {
 
   // Show a breakdown by day
   async function sortDataByDate() {
-  try {
-    // Initialize daysObject
-    const daysObject = [];
-    // For each day in tripDays
-    activeTrip.tripDays.forEach((date, index) => {
-      // Create an object for the current day
-      console.log('active trip date', convertDateToDetail(date))
-      const dayInfo = {
-        name: convertDateToLongDetail(date),
-        date: compare(date),
-      };
-      console.log(console.log(compare(date)))
-      // Filter accommodations for the current day
-      if (tripData.accommodations) {
-        dayInfo.checkIn = tripData.accommodations.filter(
-          accommodation => compare(accommodation.checkIn) === compare(date)
-        );
-        dayInfo.checkOut = tripData.accommodations.filter(
-          accommodation => compare(accommodation.checkOut) === compare(date)
-        );
-      }
-      // Filter activities for each day
-      if (tripData.activities) {
-        dayInfo.activities = tripData.activities.filter(
-          activity => compare(activity.date) === compare(date)
-        );
-      }
-      // Filter meals for each day
-      if (tripData.meals) {
-        dayInfo.meals = tripData.meals.filter(
-          meal => compare(meal.date) === compare(date)
-        );
-      }
-      // Filter travels for each day
-      if (tripData.travels) {
-        // Set departure first
-        dayInfo.travelDeparture = tripData.travels.filter(
-          travel => compare(travel.departureDateTime) === compare(date)
+    try {
+      // Initialize daysObject
+      const daysObject = [];
+      // For each day in tripDays
+      activeTrip.tripDays.forEach((date, index) => {
+        // Create an object for the current day
+        console.log('active trip date', convertDateToDetail(date))
+        const dayInfo = {
+          name: convertDateToLongDetail(date),
+          date: compare(date),
+        };
+        console.log(console.log(compare(date)))
+        // Filter accommodations for the current day
+        if (tripData.accommodations) {
+          dayInfo.checkIn = tripData.accommodations.filter(
+            accommodation => compare(accommodation.checkIn) === compare(date)
           );
-        
-        // Set arrival next
-        dayInfo.travelArrival = tripData.travels.filter(
-          travel => compare(travel.arrivalDateTime) === compare(date)
-        );
-      }
+          dayInfo.checkOut = tripData.accommodations.filter(
+            accommodation => compare(accommodation.checkOut) === compare(date)
+          );
+        }
+        // Filter activities for each day
+        if (tripData.activities) {
+          dayInfo.activities = tripData.activities.filter(
+            activity => compare(activity.date) === compare(date)
+          );
+        }
+        // Filter meals for each day
+        if (tripData.meals) {
+          dayInfo.meals = tripData.meals.filter(
+            meal => compare(meal.date) === compare(date)
+          );
+        }
+        // Filter travels for each day
+        if (tripData.travels) {
+          // Set departure first
+          dayInfo.travelDeparture = tripData.travels.filter(
+            travel => compare(travel.departureDateTime) === compare(date)
+            );
+          
+          // Set arrival next
+          dayInfo.travelArrival = tripData.travels.filter(
+            travel => compare(travel.arrivalDateTime) === compare(date)
+          );
+        }
 
-      // Push the day's info to the daysObject
-      daysObject.push(dayInfo);
-    });
-    setDaysObject(daysObject)
-  } catch (err) {
-    console.log(err);
+        // Push the day's info to the daysObject
+        daysObject.push(dayInfo);
+      });
+      setDaysObject(daysObject)
+    } catch (err) {
+      console.log(err);
+    }
   }
-}
 
+  // console.log(daysObject)
   // Display the accomodations for that day, if there is a check in and check out on same day, display both
   // Display the activities for that day
   // Display the meals for that day
   // Sort each day by time, potentially highlight conflicting times
   // Get all map place ids and plot them on the map via google
 
+  const handleClick = (e, category, selection) => {
+    console.log(selection)
+    selection.category = category
+    setData(selection)
+    setOpen(true)
+  }
+
   return (
-  <Container>
+  <Container sx={{
+    margin: 0,
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+  }}>
     <Button onClick={sortDataByDate}>Refresh</Button>
     { daysObject ? 
       daysObject.map((day, index) => (
@@ -151,7 +166,6 @@ export default function Itinerary() {
         {day.name}
         <List
         sx={{
-
           border: 'none',
         }}
         >
@@ -168,6 +182,13 @@ export default function Itinerary() {
               primary="Departure"
               secondary={travel.departureLocation.city}
             />
+            <Button onClick={(e) => handleClick(e,'travel', travel)}>Details</Button>
+            <Button onClick={(e) => handleClick(e,'travel', travel)}>Map</Button>
+            </ListItem>
+
+            <Divider variant="inset" component="li" />
+
+            <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <AirplanemodeActiveIcon />
@@ -176,8 +197,8 @@ export default function Itinerary() {
             <ListItemText
               primary="Arrival"
               secondary={travel.arrivalLocation.city}
-            />
-          </ListItem>
+              />
+            </ListItem>
           </>
         ))} 
         <Divider variant="inset" component="li" />
@@ -220,36 +241,43 @@ export default function Itinerary() {
 
         <Divider variant="inset" component="li" />
 
-        <ListItem>
           { day.checkIn.length > 0 ?
             day.checkIn.map((accommodation, accommodationIndex) => (
               <>
-          <ListItemAvatar>
-            <Avatar>
-              <HotelIcon />
-            </Avatar>
-          </ListItemAvatar>
-            <ListItemText primary="Check In" secondary={`${accommodation.address.name}`} />
+              <Divider variant="inset" component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <HotelIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Check In" secondary={`${accommodation.address.name}`} />
+              </ListItem>
               </>
             ))
           : null }
+
+
           { day.checkOut.length > 0 ?
             day.checkOut.map((accommodation, accommodationIndex) => (
               <>
-          <ListItemAvatar>
-            <Avatar>
-              <HotelIcon />
-            </Avatar>
-          </ListItemAvatar>
-            <ListItemText primary="Check Out" secondary={`${accommodation.address.name}`} />
+              <Divider variant="inset" component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <HotelIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Check Out" secondary={`${accommodation.address.name}`} />
+              </ListItem>
               </>
             ))
           : null }
-        </ListItem>
         </List>
       </Paper>
 
       )) : null }
+    { open ? <Detail open={open} setOpen={setOpen} data={data} setData={setData} /> : null }
   </Container>
   );
 }

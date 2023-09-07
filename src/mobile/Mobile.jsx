@@ -11,6 +11,7 @@ import { logOut } from '../utilities/services/users-service'
 import TripDetails from '../components/TripDetails/TripDetails';
 import Landing from './Landing/Landing';
 import MobileTrip from './MobileTrip/MobileTrip';
+import Itinerary from './Itinerary/Itinerary';
 
 // Form Imports
 import TripForm from '../components/forms/TripForm/TripForm'
@@ -51,6 +52,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Settings from '@mui/icons-material/Settings';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import ViewAgendaIcon from '@mui/icons-material/ViewAgenda';
 
 export default function Mobile({ user, setUser }) {
   const { activeTrip, setActiveTrip, tripData } = useContext(DataContext)
@@ -60,6 +63,7 @@ export default function Mobile({ user, setUser }) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [trip, setTrip] = useState(null)
   const [openAddMenu, setOpenAddMenu] = useState(false)
+  const [viewItinerary, setViewItinerary] = useState(false)
 
   const handleShow = () => {
     setShow(!show)
@@ -104,18 +108,18 @@ export default function Mobile({ user, setUser }) {
     }
     prevOpen.current = open;
   }, [open]);
-
   // Need to add Itinerary view
-
   const handleLogout = () => {
     logOut();
     setUser(null)
     console.log(user)
     console.log(localStorage('token'))
   }
-
   const handleAdd = () => {
     setOpenAddMenu(!openAddMenu)
+  }
+  const handleItinerary = () => {
+    setViewItinerary(!viewItinerary)
   }
 
 
@@ -131,7 +135,11 @@ export default function Mobile({ user, setUser }) {
           { activeTrip ?
             <Container>
               { activeTrip.name }
+              { viewItinerary ?
+              <Itinerary />
+              : 
               <MobileTrip id={activeTrip._id} />
+              }
             </Container>
           :
             <Landing user={user} />
@@ -148,6 +156,11 @@ export default function Mobile({ user, setUser }) {
             >
               <BottomNavigationAction label="Add" icon={<AddCircleOutlineIcon />} onClick={handleAdd} />
               <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+              { viewItinerary ?
+                <BottomNavigationAction label="Itinerary" icon={<ListAltIcon />} onClick={handleItinerary} />
+                : 
+                <BottomNavigationAction label="Trip" icon={<ViewAgendaIcon />} onClick={handleItinerary} />
+              }
               <BottomNavigationAction
                 ref={anchorRef}
                 icon={<Settings />}
