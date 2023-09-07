@@ -24,8 +24,6 @@ export default function Header({ activeTrip }) {
   return (
     <Container
       sx={{
-        margin:0,
-        padding:0,
         marginTop: 2,
       }}
     >
@@ -38,13 +36,14 @@ export default function Header({ activeTrip }) {
         flexDirection: 'column',
         justifyContent: 'center',
         textAlign: 'center',
+        alignContent: 'center',
         margin:0,
         padding:0,
         }} 
         elevation={1}
       >
-        <Grid>
-          <Typography variant="h5">
+        <Grid item xs={12}>
+          <Typography sx={{textAlign:'center'}} variant="h5">
           { activeTrip &&
             activeTrip.name
           }

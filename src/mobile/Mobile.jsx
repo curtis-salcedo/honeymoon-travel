@@ -144,7 +144,7 @@ export default function Mobile({ user, setUser }) {
           }
         </div>
         <div className='MobileFooter'>
-          <Box sx={{ width: '100%', bottom: 0, position: 'sticky'  }}>
+          <Box sx={{ width: '100%', bottom: 0, position: 'sticky', margin: 0, padding: 0 }}>
             <BottomNavigation
               showLabels
               value={value}

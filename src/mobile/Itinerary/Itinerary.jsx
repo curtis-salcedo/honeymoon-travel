@@ -162,8 +162,25 @@ export default function Itinerary({ viewItinerary }) {
           margin: 2,
           backgroundColor: 'var(--light)',
         }}
+        key={index}
         >
-        {day.name}
+          <Paper sx={{
+            m: 1,
+            backgroundColor: 'var(--white)',
+            minHeight: '3vh',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            textAlign: 'center',
+            alignContent: 'center',
+            margin:0,
+            padding:1,
+            }} 
+            elevation={2}
+            >
+            {day.name}
+          </Paper>
         <List
         sx={{
           border: 'none',

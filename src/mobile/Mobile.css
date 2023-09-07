@@ -3,6 +3,8 @@
   flex-direction: column;
   height: 100vh;
   background-color: var(--gray);
+  margin: 0;
+  padding: 0;
 }
 
 .MobileContent {
@@ -24,5 +26,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 8vh;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }

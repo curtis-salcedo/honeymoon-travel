@@ -20,6 +20,7 @@ import {
   Grid,
   Box,
   Container,
+  Paper,
 } from '@mui/material';
 
 
@@ -46,9 +47,15 @@ export default function MobileTrip({ user, id }) {
   }, [tripData]);
 
   const titleStyle = {
-    margin: 2,
+    margin: .5,
     padding: 0,
     // marginLeft: '32px'
+  }
+  const titleCont = {
+    margin: 2,
+    padding: 0,
+    width: '100%',
+    textAlign: 'center',
   }
   const style = {
     margin: 0,
@@ -63,22 +70,26 @@ export default function MobileTrip({ user, id }) {
   return (
     <Container sx={{margin:0, padding:0}}>
       <Grid container >
-
-        <Typography variant='h5' sx={{ ...titleStyle }}>Stays</Typography>
+        <Paper sx={{...titleCont}}>
+          <Typography variant='h5' sx={{ ...titleStyle }}>Stays</Typography>
+        </Paper>
         { accommodations ?
           <Grid item xs={12} sx={{ ...style }}>
             <Accommodation id={id} setCategory={setCategory} accommodations={accommodations} open={openAccommodation} setOpen={setOpenAccommodation} />
           </Grid>
         : null }
 
-        <Typography variant='h5' sx={{ ...titleStyle }}>Activities</Typography>
+        <Paper sx={{...titleCont}}>
+          <Typography variant='h5' sx={{ ...titleStyle }}>Activities</Typography>
+        </Paper>
         { activities ?
           <Grid item xs={12} sx={{ ...style }}>
             <Activity id={id} setCategory={setCategory} activities={activities} open={openActivity} setOpen={setOpenActivity} />
           </Grid>
         : null }
-
-        <Typography variant='h5' sx={{ ...titleStyle }}>Meals</Typography>
+        <Paper sx={{...titleCont}}>
+          <Typography variant='h5' sx={{ ...titleStyle }}>Meals</Typography>
+        </Paper>
         <Grid item xs={12}>
         { meals ?
           <Grid item xs={12} sx={{ ...style }}>
@@ -86,8 +97,9 @@ export default function MobileTrip({ user, id }) {
           </Grid>
         : null }
         </Grid>
-        
-        <Typography variant='h5' sx={{ ...titleStyle }}>Travels</Typography>
+        <Paper sx={{...titleCont}}>
+          <Typography variant='h5' sx={{ ...titleStyle }}>Travels</Typography>
+        </Paper>
         <Grid fullWidth item xs={12} sx={{ ...style }}>
         { travels ?
           <Grid item xs={12}>
