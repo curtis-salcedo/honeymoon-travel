@@ -15,6 +15,7 @@ import {
 export default function Header({ activeTrip }) {
   const [year, setYear] = useState('')
 
+
   useEffect(() => {
     // if (activeTrip) {
     //   setYear(activeTrip.startDate.slice(0, 4))

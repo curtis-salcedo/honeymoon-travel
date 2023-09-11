@@ -313,7 +313,7 @@ export default function Detail({ id, open, setOpen, data, setData }) {
           { category === 'travel' ? <Travel /> : null}
         </Box>
         { data.address ?
-        <Box sx={{padding:1, margin:0, display:'flex', flexGrow:1, maxHeight:'30%', flexDirection:'column'}}>
+        <Box sx={{padding:1, margin:0, display:'flex', flexGrow:.25, flexDirection:'column'}}>
           <Grid        
             sx={{
               display: 'flex',

@@ -103,17 +103,18 @@ export default function Accommodation({ id, accommodations, open, setOpen }) {
             }} 
             elevation={5}
             >
-            <CardMedia
-              component="img"
-              image={a.address.image ? a.address.image : 'https://source.unsplash.com/random'}
-              alt="location image"
-              sx={{
-                objectFit: 'cover',
-                width: '100%',
-                height: '180px',
-                borderRadius: '1vmin 1vmin 0 0',
-              }}
-            />
+              <CardMedia
+                component="img"
+                image={a.address.image ? a.address.image : 'https://source.unsplash.com/random'}
+                alt="location image"
+                sx={{
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '180px',
+                  borderRadius: '1vmin 1vmin 0 0',
+                }}
+              />
+
             <CardHeader
               title={a.address.name ? a.address.name : a.address.street}
               subheader={a.type}

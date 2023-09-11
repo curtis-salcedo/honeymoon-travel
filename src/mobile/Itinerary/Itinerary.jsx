@@ -10,6 +10,7 @@ import Travel from '../components/Travel';
 import Accommodation from '../components/Accommodation';
 import Activity from '../components/Activity';
 import Detail from '../components/Detail'
+import MarkerMap from '../components/MarkerMap'
 
 // Style imports
 import { 
@@ -57,6 +58,7 @@ export default function Itinerary({ viewItinerary }) {
   const [daysObject, setDaysObject] = useState([])
   const [open, setOpen] = useState(false);
   const [data, setData] = useState('')
+  const [openMap, setOpenMap] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -138,6 +140,11 @@ export default function Itinerary({ viewItinerary }) {
     setData(selection)
     setOpen(true)
   }
+  const [selected, setSelected] = useState('')
+  const handleMap = (e, d) => {
+    setSelected(d)
+    setOpenMap(!openMap)
+  }
 
   const listStyle = {
     padding:0,
@@ -181,6 +188,10 @@ export default function Itinerary({ viewItinerary }) {
             >
             {day.name}
           </Paper>
+          <Button onClick={(e) => handleMap(e, day)}>Map Day</Button>
+          { openMap ?
+          <MarkerMap selected={selected} openMap={openMap} setOpenMap={setOpenMap} />
+          : null}
         <List
         sx={{
           border: 'none',

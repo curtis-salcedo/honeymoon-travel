@@ -13,12 +13,8 @@ import Travel from '../components/Travel';
 
 // Style imports
 import {
-  Button,
   Typography,
-  Card,
-  CardActions,
   Grid,
-  Box,
   Container,
   Paper,
 } from '@mui/material';

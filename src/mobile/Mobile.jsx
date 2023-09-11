@@ -17,6 +17,7 @@ import Header from './components/Header';
 // Form Imports
 import TripForm from '../components/forms/TripForm/TripForm'
 import AddMenu from './forms/AddMenu'
+import MarkerMap from './components/MarkerMap'
 
 
 // Page imports
