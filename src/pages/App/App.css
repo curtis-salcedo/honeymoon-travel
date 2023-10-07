@@ -28,6 +28,7 @@
   .App {
     display: flex;
     flex-direction: column;
+    background-color: var(--primary);
   }
   .navbar {
     display: none;

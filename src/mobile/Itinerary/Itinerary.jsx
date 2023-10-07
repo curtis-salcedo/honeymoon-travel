@@ -188,7 +188,7 @@ export default function Itinerary({ viewItinerary }) {
             >
             {day.name}
           </Paper>
-          <Button onClick={(e) => handleMap(e, day)}>Map Day</Button>
+          {/* <Button onClick={(e) => handleMap(e, day)}>Map Day</Button> */}
           { openMap ?
           <MarkerMap selected={selected} openMap={openMap} setOpenMap={setOpenMap} />
           : null}

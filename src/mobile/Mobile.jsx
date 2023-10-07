@@ -115,7 +115,6 @@ export default function Mobile({ user, setUser }) {
     logOut();
     setUser(null)
     console.log(user)
-    console.log(localStorage('token'))
   }
   const handleAdd = () => {
     setOpenAddMenu(!openAddMenu)

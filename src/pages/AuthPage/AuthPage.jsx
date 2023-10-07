@@ -25,13 +25,13 @@ import {
 export default function AuthPage({ setUser }) {
   const [showSignUp, setShowSignUp] = useState(false);
   return (
-    <Container sx={{backgroundColor:'gray', height: '100vh', display:'flex', flexDirection:'column', justifyContent:'center', alignContent:'center', alignItems:'center'}}>
+    <Container sx={{height: '100vh', display:'flex', flexDirection:'column', justifyContent:'center', alignContent:'center', alignItems:'center', width:'100vw'}}>
       { showSignUp ?
           <SignUpForm setUser={setUser} />
           :
-          <LoginForm setUser={setUser} />
+          <LoginForm setUser={setUser} setShowSignUp={setShowSignUp} />
         }
-        <Button onClick={() => setShowSignUp(!showSignUp)}>{showSignUp ? 'Already have an account?' : 'Sign Up'}</Button>
+        <Button style={{color:'var(--secondary)'}} onClick={() => setShowSignUp(!showSignUp)}>{showSignUp ? 'Already have an account? Login here' : "Don't have an account? Sign up here"}</Button>
     </Container>
   );
 }

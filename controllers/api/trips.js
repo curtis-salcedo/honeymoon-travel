@@ -51,6 +51,13 @@ async function index(req, res) {
 
 async function create(req, res) {
   try {
+     // Check if the user already has a trip
+    const existingTrip = await Trip.findOne({ user: req.body.user });
+
+    if (existingTrip) {
+       // If a trip already exists for the user, return an error
+      return res.status(400).json({ error: 'User already has a trip.' });
+    }
     // Create and save the trip in the database
     const trip = await Trip.create({
       'user': req.body.user,

@@ -1,5 +1,7 @@
 /* CSS Custom Properties */
 :root {
+  --primary: #49cfcf;
+  --secondary: #4964e3;
   --blue: #3498db;
   --indigo: #4964e3;
   --purple: #7b5faf;
@@ -13,8 +15,6 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #4964e3;
-  --secondary: #6c757d;
   --success: #18c080;
   --info: #16aeb8;
   --warning: #ed9d3b;

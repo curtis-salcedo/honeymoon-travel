@@ -38,12 +38,12 @@ export default function Detail({ id, open, setOpen, data, setData }) {
   const [address, setAddress] = useState('')
   const [category, setCategory] = useState('');
   const [image, setImage] = useState('')
-
+  console.log(data)
   useEffect(() => {
     // useEffect to fetch the data for the category item selected
     setCategory(data.category)
-    if (data.address.image) {
-      setImage(data.address.image)
+    if (category === 'travel') {
+      setImage('')
     } else {
       setImage('')
     }

@@ -50,31 +50,36 @@ export default function LoginForm({ setUser }) {
         elevation={3}
         container
         sx={{
-          height: '75%',
+          maxHeight: '400px',
+          maxWidth: '400px',
+          minHeight: '275px',
+          minWidth: '275px',
+          width: '90%',
+          height: '90%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-around',
           alignItems: 'center',
-          borderRadius: '3vmin',
-          width: '280px',
+          borderRadius: '10px',
         }}>
-        <Box>
-          <Typography>Logo goes here</Typography>
-          <Typography>Login form</Typography>
-        </Box>
-        <Box
-          sx={{
-          height: '50%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          width: '90%'
-        }}>
+          <Box>
+            <img src="/logo192.png" alt="logo" style={{height:'50px', width: '50px'}} />
+          </Box>
+          <Typography>Welcome to Honeymoon Travel</Typography>
+          <Typography>Login to your account below.</Typography>
+          <Box
+            sx={{
+            height: '60%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            width: '90%'
+          }}>
           <TextField label="Email" type="text" name="email" value={credentials.email} onChange={handleChange} required />
 
           <TextField label="Password" type="password" name="password" value={credentials.password} onChange={handleChange} required />
 
-          <Button fullWidth type="submit" variant="contained" color="primary" onClick={handleSubmit}>LOGIN!</Button>
+          <Button fullWidth type="submit" variant="contained" color="primary" onClick={handleSubmit}>LOGIN</Button>
           
         </Box>
         

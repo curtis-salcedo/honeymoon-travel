@@ -4,21 +4,9 @@ import { signUp } from '../../../utilities/services/users-service';
 import {
   Button,
   Typography,
-  Card,
-  CardActions,
-  CardContent,
-  Grid,
-  Container,
   Box,
   Paper,
-  FormControlLabel,
-  Switch,
-  Grow,
-  FormGroup,
-  Input,
   TextField,
-
-  
 } from '@mui/material';
 
 export default class SignUpForm extends Component {
@@ -63,36 +51,39 @@ export default class SignUpForm extends Component {
           elevation={3}
           container
           sx={{
-            height: '75%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          borderRadius: '3vmin',
-          width: '280px',
-          }}
-          >
-            <Box>
-              <Typography>Logo goes here</Typography>
-              <Typography>Sign up form</Typography>
+            maxHeight: '400px',
+            maxWidth: '400px',
+            minHeight: '275px',
+            minWidth: '275px',
+            width: '90%',
+            height: '90%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            borderRadius: '10px',
+          }}>
+          <Box>
+            <img src="/logo192.png" alt="logo" style={{height:'50px', width: '50px'}} />
+          </Box>
+          <Typography>Welcome to Honeymoon Travel</Typography>
+          <Typography>Sign up for an account below.</Typography>
+          <Box
+            sx={{
+            height: '60%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            width: '90%'
+          }}>
+            <TextField label="Email" type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
 
-            </Box>
-            <Box
-              sx={{
-              height: '50%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              width: '90%'
-            }}>
-              <TextField label="Email" type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
+            <TextField label="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
 
-              <TextField label="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
+            <TextField label="Confirm Password" id="outlined-basic" variant="outlined" type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
 
-              <TextField label="Confirm Password" id="outlined-basic" variant="outlined" type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
-
-              <Button fullWidth type="submit" variant="contained" color="primary" disabled={disable} onClick={this.handleSubmit}>SIGN UP!</Button>
-            </Box>
+            <Button fullWidth type="submit" variant="contained" color="primary" disabled={disable} onClick={this.handleSubmit}>SIGN UP!</Button>
+          </Box>
         </Paper>
         <div className="error-message">&nbsp;{this.state.error}</div>
       </>
