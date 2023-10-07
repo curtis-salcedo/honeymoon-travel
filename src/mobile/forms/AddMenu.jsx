@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { DataContext } from '../../utilities/DataContext';
 
+// Component imports
+import AddMenuButton from '../components/buttons/AddMenuButton';
+import Header from '../components/Header';
+
 // Form Imports
 import AccommodationForm from '../../components/forms/AccommodationForm/AccommodationForm';
 import ActivityForm from '../../components/forms/ActivityForm/ActivityForm';
@@ -19,6 +23,8 @@ import {
   Paper,
   CardHeader,
   CardMedia,
+  CardContent,
+  Card
 } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -26,7 +32,12 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HikingIcon from '@mui/icons-material/Hiking';
 import Star from '@mui/icons-material/Star'
 
-export default function AddMenu({ open, setOpen, id }) {
+import HotelIcon from '@mui/icons-material/Hotel';
+import FlightIcon from '@mui/icons-material/Flight';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import DiningIcon from '@mui/icons-material/Dining';
+
+export default function AddMenu({ open, setOpen, activeTrip }) {
   const [show, setShow] = useState(false)
   const [selection, setSelection] = useState(null)
 
@@ -73,9 +84,23 @@ export default function AddMenu({ open, setOpen, id }) {
     <Box sx={{ ...style, border: 'solid 2px black' }}>
       { selection ?
       null
-      : 
+      :  
+      <>
       <Grid>
-        
+
+        <Typography variant="h5" sx={{textAlign: 'center', marginBottom:'20px'}}>
+          Select a category to add to the {activeTrip.name} trip
+        </Typography>
+
+        <Grid item xs={12} style={{display:"flex", flexDirection:"column"}}>
+          <AddMenuButton text="Stay" icon={<HotelIcon/>} onClick={() => handleOpen('accommodation')} />
+          <AddMenuButton text="Activity" icon={<LocalActivityIcon/>}         onClick={() => handleOpen('activity')} />
+          <AddMenuButton text="Meal" icon={<DiningIcon/>} onClick={() => handleOpen('travel')} />
+          <AddMenuButton text="Travel" icon={<FlightIcon/>} onClick={() => handleOpen('travel')} />
+        </Grid>
+      </Grid>
+
+      {/* <Grid>
       <Button
         fullWidth
         color="primary"
@@ -116,21 +141,25 @@ export default function AddMenu({ open, setOpen, id }) {
       >
         Add Travel
       </Button>
-    </Grid> }
+    </Grid>  */}
+    </>
+    }
 
       {selection && (
         <Grid container>
           {show && selection === 'accommodation' ? (
-            <AccommodationForm id={id} setShow={setShow} />
+            <AccommodationForm id={activeTrip.id} setShow={setShow} />
           ) : null}
           {show && selection === 'activity' ? (
-            <ActivityForm id={id} setShow={setShow} />
+            <ActivityForm id={activeTrip.id} setShow={setShow} />
           ) : null}
           {show && selection === 'meal' ? (
-            <MealForm id={id} setShow={setShow} />
+            <MealForm id={activeTrip.id} setShow={setShow} />
           ) : null}
           {show && selection === 'travel' ? (
-            <TravelForm id={id} setShow={setShow} />
+            <>
+            <TravelForm id={activeTrip.id} setShow={setShow} />
+            </>
             ) : null}
         </Grid>
       )}

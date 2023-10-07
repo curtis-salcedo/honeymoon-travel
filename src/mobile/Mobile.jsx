@@ -154,12 +154,9 @@ export default function Mobile({ user, setUser }) {
               }}
             >
               <BottomNavigationAction label="Add" icon={<AddCircleOutlineIcon />} onClick={handleAdd} />
-              <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-              { viewItinerary ?
-                <BottomNavigationAction label="Itinerary" icon={<ListAltIcon />} onClick={handleItinerary} />
-                : 
-                <BottomNavigationAction label="Trip" icon={<ViewAgendaIcon />} onClick={handleItinerary} />
-              }
+              {/* <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} /> */}
+              <BottomNavigationAction label="Summary" icon={<ViewAgendaIcon />} onClick={handleItinerary} />
+              <BottomNavigationAction label="Itinerary" icon={<ListAltIcon />} onClick={handleItinerary} />
               <BottomNavigationAction
                 ref={anchorRef}
                 icon={<Settings />}
@@ -208,7 +205,7 @@ export default function Mobile({ user, setUser }) {
         </div>
 
     </div>
-    { openAddMenu ? <AddMenu open={openAddMenu} setOpen={setOpenAddMenu} id={activeTrip._id} /> : null }
+    { openAddMenu ? <AddMenu open={openAddMenu} setOpen={setOpenAddMenu} activeTrip={activeTrip} /> : null }
     </>
   );
 }

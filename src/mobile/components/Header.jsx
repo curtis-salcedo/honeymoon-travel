@@ -32,7 +32,7 @@ export default function Header({ activeTrip }) {
         m: 1,
         backgroundColor: 'var(--white)',
         minHeight: '10vh',
-        width: '90vw',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

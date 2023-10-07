@@ -6,7 +6,6 @@ import { getUser } from '../../utilities/services/users-service';
 
 // Component Imports
 import NavBar from '../../components/NavBar/NavBar';
-import SideBar from '../../components/SideBar/SideBar';
 
 // Page Imports
 import AuthPage from '../AuthPage/AuthPage';

@@ -73,19 +73,21 @@ export default function Trip({ user }) {
 
   return (
     <div className="TripContainer">
+
       <Container style={{ padding:'12px', margin:0 }}>
+        <Button
+          id='side-bar-button'
+          variant="outlined"
+          onClick={handleShow}
+          className="NewTripButton"
+        >
+          Add a new Trip
+        </Button>
+        {show ? <TripForm user={user} /> : null}
+
         {allUserTrips && allUserTrips.length > 0 ? (
           allUserTrips.map((trip) => (
             <div key={trip._id} className="TripButtonContainer">
-              <Button
-                id='side-bar-button'
-                variant="outlined"
-                onClick={handleShow}
-                className="NewTripButton"
-              >
-                Add a new Trip
-              </Button>
-              {show ? <TripForm user={user} /> : null}
               <Button
                 id='side-bar-button'
                 variant="outlined"
@@ -95,14 +97,16 @@ export default function Trip({ user }) {
               >
                 {trip.name}
               </Button>
-                {activeTrip ? (
-                    <TripDetails
-                      activeTrip={activeTrip}
-                      handleDayDetailClick={handleDayDetailClick}
-                      handleViewAll={handleViewAll}
-                      viewAll={viewAll}
-                    />
-                ) : null}
+
+              {activeTrip ? (
+                  <TripDetails
+                    activeTrip={activeTrip}
+                    handleDayDetailClick={handleDayDetailClick}
+                    handleViewAll={handleViewAll}
+                    viewAll={viewAll}
+                  />
+              ) : null}
+
             </div>
           ))
         ) : null}

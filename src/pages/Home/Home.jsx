@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Component imports
-import SideBar from '../../components/SideBar/SideBar';
 import Map from '../../components/Map/Map'
 
 // Page imports
